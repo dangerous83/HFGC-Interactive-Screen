@@ -12,21 +12,25 @@ For a local preview, run `python -m http.server 8000` and open `http://localhost
 
 ## Registration setup
 
-The approved form URL was not supplied. Join Us currently directs visitors to speak with the Hospitality booth team. It does not collect personal information or display a sample QR code or a registration confirmation.
+**Join Us opens a working interest form.** Visitors provide their full name, a phone number or email, a preferred team (including “I’m not sure”), and their reason for joining. Church/location and availability are optional. Choosing “I’m Interested” on a team page prefills that team. The form keeps its draft while the visitor explores, and clears it on Home, Start Over, inactivity reset, or successful submission.
 
-When the form is approved, edit `config.js`:
+Entries are saved in **localStorage in the kiosk’s browser**, not a server or GitHub. A confirmation appears only after saving and verifying the record. If storage fails, the form stays open and displays an error; it never reports a successful submission. Private browsing, clearing browser data, or changing browser profiles can remove or hide the records. Use the normal kiosk browser profile and export records regularly.
+
+Open **[organizer.html](https://dangerous83.github.io/HFGC-Interactive-Screen/organizer.html)** on the same kiosk, in the same browser/profile, to review names, contact details, preferred teams, reasons for joining, and availability. Download Sign-Ups (CSV) exports the records for follow-up. The organizer page is separate from the visitor navigation; it has no account authentication and displays only that browser’s local records. Control access to the kiosk itself. No personal details are embedded in the repository.
+
+For an optional online form, edit `config.js`:
 
 - Set `signupUrl` to the approved form URL.
 - Add a locally hosted QR image that encodes that exact URL and set `signupQrImage` to its relative path. Test scanning on real phones at the installed display.
 - Set `teamQueryParameter` only if the approved form supports a prefilled team parameter. Otherwise visitors are instructed to select the team in the form.
 
-Registration uses the approved external form. The touchscreen cannot verify external form submission and therefore never displays a successful-registration confirmation.
+The optional online form appears as a second sign-up choice. Its entries are managed by that external service and do not appear in the kiosk’s local list. The touchscreen does not claim to verify external submissions. For shared collection across devices, connect an approved online form or backend; GitHub Pages does not provide a registration database.
 
 ## Kiosk behavior
 
 The initial screen shows the logo with a soft looping gold glow and direct navigation to **Our Heart**, **What We Do**, **VIP Hospitality**, **Our Teams**, and **Get Involved**. The logo has no moving light sweep or scale animation. **Touch to Explore** opens the welcome menu. **Home**, the header logo, and **Start Over** clear the selected team, filters, and navigation history and return to the opening screen. Finishing a visit and an inactivity reset also return to that screen. Team selection stays in memory only until a session reset or page reload. Motion is disabled when the device requests reduced motion.
 
-After 90 seconds without interaction, **Still exploring?** offers Continue or Return to Home. After a further 15 seconds without a response, the session resets to the logo attract screen. The visiting thank-you screen returns home after 12 seconds. These durations can be changed in `config.js`.
+After 90 seconds without interaction, **Still exploring?** offers Continue or Return to Home. Typing, selecting fields, and scrolling count as activity. After a further 15 seconds without a response, the session resets to the logo attract screen. The confirmation screen appears after a saved submission and returns home after 20 seconds. These durations can be changed in `config.js`.
 
 ## Display checks
 

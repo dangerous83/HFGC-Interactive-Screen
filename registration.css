@@ -1,0 +1,52 @@
+.registration-page{max-width:1080px;margin:auto}
+.registration-page .page-title{margin-bottom:22px}
+.join-benefits{border-left:3px solid var(--gold);padding:8px 0 8px 22px;margin-bottom:26px}
+.join-benefits p{margin:0;color:var(--muted)}
+.join-benefits strong{color:var(--gold);font-weight:600}
+.registration-links{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px}
+.registration-links .text-button{padding-left:0;color:var(--gold);text-align:left}
+.registration-form{border:1px solid #f3d16f70;border-radius:24px;background:linear-gradient(145deg,#08457480,#04294e);padding:30px}
+.form-heading{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:20px}
+.form-heading h2{font-size:34px}.form-heading p{margin:0;color:var(--muted);font-size:15px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.form-field{display:flex;flex-direction:column;gap:8px;font-size:18px;font-weight:600;text-align:left}
+.form-field.wide,.contact-hint{grid-column:1/-1}
+.form-field small{color:var(--muted);font-size:.8em;font-weight:400}
+.registration-form input,.registration-form select,.registration-form textarea{width:100%;font:inherit;font-weight:400;line-height:1.4;min-height:64px;padding:15px 18px;border:1px solid #8eabc6;border-radius:12px;background:#021f3d;color:var(--ink);outline-offset:4px}
+.registration-form select{cursor:pointer}.registration-form textarea{min-height:116px;resize:vertical}
+.registration-form :is(input,select,textarea):focus-visible{outline:3px solid var(--gold)}
+.registration-form input::placeholder,.registration-form textarea::placeholder{color:#a1b9cf}
+.contact-hint{color:var(--muted);font-size:16px;margin:-9px 0 0}
+.form-notice{font-size:16px;color:var(--muted);margin:24px 0 18px;max-width:760px}
+.form-error{color:#ffdbd2;background:#582637;border:1px solid #e8a296;border-radius:12px;padding:16px;margin:0 0 18px;font-size:18px}
+.form-error[hidden]{display:none}.registration-form>.btn{width:100%;min-height:74px}
+.external-signup{margin-top:24px;padding:24px;border:1px solid var(--line);border-radius:18px;display:flex;flex-wrap:wrap;align-items:center;gap:18px}
+.external-signup p{margin:0;flex:1;min-width:180px}.external-signup .qr{width:150px;height:150px;background:white;padding:8px}
+.saved-summary{margin:24px auto;max-width:680px;padding:24px;border:1px solid #f3d16f70;border-radius:20px;background:#06345b}
+.saved-summary p{margin:0}.saved-summary strong{color:var(--gold)}
+.thankyou-page .receipt-note{font-size:18px;color:var(--muted)}
+.organizer-page{max-width:1200px;margin:0 auto;padding:40px 26px}
+.organizer-page h1{font-size:48px;margin:20px 0}.organizer-page .actions{margin:24px 0}
+.organizer-notice{color:var(--muted);max-width:900px}.organizer-status{padding:18px 22px;border:1px solid var(--line);border-radius:16px}
+.record-list{display:grid;gap:18px}.signup-record{border:1px solid #f3d16f60;border-radius:20px;background:#052b50;padding:25px;overflow-wrap:anywhere}
+.signup-record h2{font-size:30px;margin-bottom:10px}.signup-record .record-time{font-size:15px;color:var(--muted)}
+.signup-record dl{display:grid;grid-template-columns:160px 1fr;gap:10px;margin:0}.signup-record dt{color:var(--gold);font-weight:600}.signup-record dd{margin:0;white-space:pre-wrap}
+@media(orientation:portrait) and (min-width:700px){
+ .registration-page .page-title h1{font-size:58px}.registration-page .page-title p:last-child{font-size:25px}
+ .join-benefits{font-size:24px;margin-bottom:20px}.registration-links .text-button{font-size:20px;min-height:52px}
+ .registration-form{padding:32px}.form-heading h2{font-size:37px}.form-heading p{font-size:19px}
+ .form-grid{gap:22px}.form-field{font-size:24px}.registration-form input,.registration-form select,.registration-form textarea{min-height:76px;font-size:24px;padding:18px 20px}
+ .registration-form textarea{min-height:132px}.contact-hint,.form-notice{font-size:20px}.form-error{font-size:22px}
+ .registration-form>.btn{min-height:86px;font-size:27px}.saved-summary{font-size:27px}.thankyou-page .receipt-note{font-size:23px}
+}
+@media(max-width:650px){
+ .registration-form{padding:23px 18px}.form-grid{grid-template-columns:1fr;gap:18px}.form-heading{align-items:flex-start;flex-direction:column;gap:8px}.form-heading h2{font-size:30px}
+ .registration-form input,.registration-form select,.registration-form textarea{font-size:18px}.registration-links{gap:0}.form-notice{font-size:15px}
+ .organizer-page h1{font-size:36px}.signup-record dl{grid-template-columns:1fr;gap:4px}.signup-record dd{margin-bottom:12px}
+}
+
+.optional-fields{margin-top:24px;border-top:1px solid var(--line);padding-top:16px}
+.optional-fields summary{cursor:pointer;min-height:52px;display:flex;align-items:center;justify-content:space-between;gap:18px;color:var(--gold);font-size:18px;padding:10px 0}
+.optional-fields summary small{font-size:.85em;color:var(--muted)}
+.optional-fields .form-grid{margin-top:18px}
+@media(orientation:portrait) and (min-width:700px){.optional-fields summary{font-size:23px;min-height:62px}.registration-page .join-benefits{font-size:22px}.registration-page .page-title p:last-child{font-size:24px}.registration-page .page-title h1{font-size:56px}.thankyou-page .lead{font-size:27px;max-width:800px}}

@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#03264b">
+  <title>Hospitality Sign-Ups · Booth Organizer</title>
+  <link rel="icon" type="image/png" href="pmcc_logo_icon.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="portrait.css">
+  <link rel="stylesheet" href="registration.css?v=20261002">
+  <script defer src="signups.js?v=20261002"></script>
+  <script defer src="organizer.js?v=20261002"></script>
+</head>
+<body>
+  <main class="organizer-page">
+    <p class="eyebrow gold-text">HFGC HOSPITALITY · BOOTH ORGANIZER</p>
+    <h1>People ready to serve.</h1>
+    <p class="organizer-notice">Review the interest forms saved on this kiosk. Open this page in the same browser and browser profile used by visitors. Records stay on this device; they are not synchronized between devices. Download a CSV after each booth session to keep a copy.</p>
+    <div class="actions">
+      <button id="export-signups" class="btn primary" disabled>Download Sign-Ups (CSV)</button>
+      <button id="refresh-signups" class="btn secondary">Refresh List</button>
+      <a class="btn secondary" href="index.html">Return to Kiosk</a>
+    </div>
+    <p id="organizer-status" class="organizer-status" role="status" aria-live="polite"></p>
+    <div id="record-list" class="record-list"></div>
+  </main>
+  <noscript>Enable JavaScript to review the records saved on this kiosk.</noscript>
+</body>
+</html>
