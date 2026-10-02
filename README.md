@@ -30,4 +30,6 @@ After 90 seconds without interaction, **Still exploring?** offers Continue or Re
 
 ## Display checks
 
+The Greeters detail screen uses the approved `Greeters.png` as its background, with dark blue panels for readable content. Other screens keep the standard blue background. The browser favicon and Apple touch icon use the uploaded `pmcc_logo_icon.png`.
+
 Before the expo, check the actual screen orientation and resolution, viewing-distance readability, touch calibration, browser full-screen settings, and approved registration link/QR on real phones. Motion respects the device's reduced-motion preference. Ministry photographs can be incorporated when authentic approved assets are available.
