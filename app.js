@@ -69,7 +69,8 @@
     return `<div class="team-grid ${large ? 'general-grid' : ''}">${list.map(t => `<button class="team-card" data-team="${t.id}">${tile(t.icon)}<div>${!large ? `<p class="mini-label">${t.category === 'general' ? 'GENERAL HOSPITALITY' : 'VIP HOSPITALITY'}</p>` : ''}<h3>${t.name}</h3><p>${t.short}</p>${large ? '<span class="card-link">Explore This Team</span>' : ''}</div></button>`).join('')}</div>`;
   }
   function home() {
-    return `<section class="page home-page"><div class="home-layout"><div class="welcome-copy"><p class="eyebrow gold-text">HFGC EXPO 2026 · HOSPITALITY MINISTRY</p><h1>A warm welcome.<br>A willing heart.<br><em>A place for you.</em></h1><p class="lead">Making every guest feel welcomed, valued, and cared for through the love of Christ.</p><p class="invitation">There is a place for you in Hospitality.</p><div class="actions">${btn('Explore Our Ministry','heart','primary','heart')}${btn('Find Your Team','finder','secondary','compass')}</div><div class="home-join"><span>Ready to be part of the welcome?</span><button data-page="join">Join Us</button></div></div><div class="welcome-art"><div class="art-label"><span>HFGC HOSPITALITY MINISTRY</span><span class="year">EXPO 2026</span></div><img src="${logo}" alt="HFGC EXPO 2026" width="956" height="561"><p class="art-message">Every guest matters.<br><em>Every person matters<br>to Christ.</em></p><div class="art-values">${pillars.map(p=>`<div>${icon(p.id)}<span>${p.name.toUpperCase()}</span></div>`).join('')}</div></div></div><div class="scripture-strip">${icon('book')}<p>“Accept one another, then, just as Christ accepted you, in order to bring praise to God.” <cite>Romans 15:7</cite></p></div></section>`;
+    const destinations=[['heart','heart','Our Heart','The love behind every welcome.'],['general','serve','What We Do','Intentional care for every guest.'],['vip','honor','VIP Hospitality','Personalized care, every step.'],['teams','users','Our Teams','Nine ways to make a difference.'],['join','care','Get Involved','Find your place to serve.']];
+    return `<section class="page home-page portrait-home"><div class="portrait-welcome"><p class="eyebrow gold-text">WELCOME TO HOSPITALITY</p><h1>There’s a place<br><em>for you.</em></h1><p class="lead">Every guest matters.<br>Every person matters to Christ.</p></div><div class="welcome-menu">${destinations.map(([page,name,label,description])=>`<button type="button" data-page="${page}">${tile(name)}<span><strong>${label}</strong><small>${description}</small></span><span class="welcome-arrow" aria-hidden="true">›</span></button>`).join('')}</div><div class="scripture-strip">${icon('book')}<p>“Accept one another, then, just as Christ accepted you, in order to bring praise to God.” <cite>Romans 15:7</cite></p></div></section>`;
   }
   function heart() {
     return `<section class="page">${title('OUR HEART','Hospitality is a ministry of love.','We reflect Christ through the way we welcome, honor, serve, and care for people.')}<div class="split-cards"><button class="feature-card" data-page="general">${tile('users')}<h2>General Hospitality</h2><p>Intentional care for every guest. A warm welcome, a guiding hand, and practical help.</p><span class="card-link">Explore General Hospitality</span></button><button class="feature-card dark" data-page="vip">${tile('honor')}<h2>VIP Hospitality</h2><p>Personalized care for guests with special roles and responsibilities, from arrival to departure.</p><span class="card-link">Explore VIP Hospitality</span></button></div><div class="heart-bottom"><div><h3>Everyone receives Christ-centered care.</h3><p>Welcome. Honor. Serve. Care. Four pillars. One heart.</p></div>${btn('Explore Our Four Pillars','pillars','primary')}</div></section>`;
@@ -192,7 +193,8 @@
   document.addEventListener('click',e=>{
     const b=e.target.closest('button');
     if (!b) return;
-    if (b.dataset.page) navigate(b.dataset.page);
+    if (b.dataset.introPage) { enter(); navigate(b.dataset.introPage); }
+    else if (b.dataset.page) navigate(b.dataset.page);
     else if (b.dataset.team) navigate('team',{team:b.dataset.team});
     else if (b.dataset.pillar) navigate('pillar',{pillar:b.dataset.pillar});
     else if (b.dataset.interest) { selectedTeam=teams.find(t=>t.id===b.dataset.interest);navigate('join'); }
@@ -204,6 +206,7 @@
   });
   ['pointerdown','keydown','wheel'].forEach(type=>document.addEventListener(type,()=>{if (!idleDialog.open) lastActivity=Date.now();},{passive:true}));
   document.addEventListener('scroll',()=>{if (!idleDialog.open) lastActivity=Date.now();},true);
+  document.querySelectorAll('[data-intro-icon]').forEach(el=>{el.innerHTML=icon(el.dataset.introIcon);});
   document.getElementById('enter').addEventListener('click',enter);
   document.getElementById('restart').addEventListener('click',()=>reset(true));
   document.getElementById('continue').addEventListener('click',continueExploring);
