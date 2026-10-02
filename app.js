@@ -151,6 +151,7 @@
   function render(focus=true) {
     main.classList.toggle('greeters-background',state.page==='team' && state.team==='greeters');
     main.classList.toggle('ushers-background',state.page==='team' && state.team==='ushers');
+    main.classList.toggle('assistance-background',state.page==='team' && state.team==='assistance');
     main.classList.toggle('reception-background',state.page==='team' && state.team==='reception');
     main.classList.toggle('transport-background',state.page==='team' && state.team==='transportation');
     main.innerHTML=(screens[state.page] || home)();
