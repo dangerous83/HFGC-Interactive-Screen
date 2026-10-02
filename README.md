@@ -8,7 +8,9 @@ Live site: https://dangerous83.github.io/HFGC-Interactive-Screen/
 
 GitHub Pages publishes this repository’s `main` branch. Merging a pull request into `main` triggers the Pages build and deployment.
 
-For a local preview, run `python -m http.server 8000` and open `http://localhost:8000`. The layout prioritizes 1080 × 1920 portrait screens and adapts to smaller screens. Use the top-right full-screen control or the browser's kiosk mode on the installed touchscreen. `portrait.css` contains the blue and gold design and portrait display rules.
+For a local preview, run `python -m http.server 8000` and open `http://localhost:8000`. The visitor experience always renders at **1080 × 1920** inside `kiosk.html`. `index.html` and `screen-fit.js` scale and center that complete portrait screen to fit the device, including mobile. Navigation, card columns, typography, photo crops, and footer remain the same composition. Different device proportions leave blue space around the screen instead of stretching or cropping it. The content area still scrolls, and touch controls, the form, and the idle dialog remain interactive. The organizer page keeps its normal responsive layout.
+
+Use the top-right full-screen control or the browser's kiosk mode on the installed touchscreen. Full screen expands the outer page while preserving the 1080 × 1920 design viewport. `portrait.css` contains the blue and gold design and portrait display rules. Sign-up records remain in the same origin's browser storage and can still be reviewed in `organizer.html`.
 
 ## Registration setup
 
