@@ -287,13 +287,17 @@
   document.getElementById('idle-home').addEventListener('click',()=>reset());
   idleDialog.addEventListener('cancel',e=>{e.preventDefault();continueExploring();});
   const full=document.getElementById('fullscreen');
-  const fullState=()=>{full.innerHTML=icon(document.fullscreenElement?'collapse':'expand');full.setAttribute('aria-label',document.fullscreenElement?'Exit full screen':'Enter full screen');};
+  let fullscreenDocument=document;
+  try {
+    if (window.frameElement?.id==='kiosk-frame') fullscreenDocument=window.parent.document;
+  } catch { /* A separately embedded kiosk uses its own fullscreen control. */ }
+  const fullState=()=>{full.innerHTML=icon(fullscreenDocument.fullscreenElement?'collapse':'expand');full.setAttribute('aria-label',fullscreenDocument.fullscreenElement?'Exit full screen':'Enter full screen');};
   fullState();
-  document.addEventListener('fullscreenchange',fullState);
+  fullscreenDocument.addEventListener('fullscreenchange',fullState);
   full.addEventListener('click',async()=>{
     try {
-      if (document.fullscreenElement) await document.exitFullscreen();
-      else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+      if (fullscreenDocument.fullscreenElement) await fullscreenDocument.exitFullscreen();
+      else if (fullscreenDocument.documentElement.requestFullscreen) await fullscreenDocument.documentElement.requestFullscreen();
       else throw new Error('unsupported');
     } catch {
       document.querySelector('.unsupported-fullscreen')?.remove();
