@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#123e35">
+  <meta name="theme-color" content="#03264b">
   <meta name="description" content="Explore HFGC Hospitality Ministry. Welcome, honor, serve and care. Find your place to serve at HFGC EXPO 2026.">
   <title>HFGC EXPO 2026 · Hospitality Ministry</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="portrait.css">
   <script defer src="config.js"></script>
   <script defer src="app.js"></script>
 </head>
@@ -16,14 +17,19 @@
     <div class="intro-orbit orbit-two" aria-hidden="true"></div>
     <div class="intro-orbit orbit-three" aria-hidden="true"></div>
     <div class="intro-content">
-      <p class="eyebrow">A MINISTRY OF WELCOME</p>
+      <h1 class="intro-heading">WHO WE ARE</h1>
       <div class="logo-reveal"><img src="HFGC%20EXPO%20GOLD%20FLAT%20LOGO.png" alt="HFGC EXPO 2026" width="956" height="561"></div>
-      <div class="intro-divider"></div>
-      <h1>Hospitality Ministry</h1>
-      <p class="intro-pillars">WELCOME <span>·</span> HONOR <span>·</span> SERVE <span>·</span> CARE</p>
-      <button id="enter" class="btn gold intro-enter" type="button">Touch to Explore <span class="touch-mark" aria-hidden="true">✦</span></button>
+      <p class="intro-subtitle">HOSPITALITY MINISTRY</p>
+      <nav class="intro-menu" aria-label="Explore Hospitality">
+        <button type="button" data-intro-page="heart"><span data-intro-icon="heart" aria-hidden="true"></span><span>Our Heart</span><span class="intro-arrow" aria-hidden="true">›</span></button>
+        <button type="button" data-intro-page="general"><span data-intro-icon="serve" aria-hidden="true"></span><span>What We Do</span><span class="intro-arrow" aria-hidden="true">›</span></button>
+        <button type="button" data-intro-page="vip"><span data-intro-icon="honor" aria-hidden="true"></span><span>VIP Hospitality</span><span class="intro-arrow" aria-hidden="true">›</span></button>
+        <button type="button" data-intro-page="teams"><span data-intro-icon="users" aria-hidden="true"></span><span>Our Teams</span><span class="intro-arrow" aria-hidden="true">›</span></button>
+        <button type="button" data-intro-page="join"><span data-intro-icon="care" aria-hidden="true"></span><span>Get Involved</span><span class="intro-arrow" aria-hidden="true">›</span></button>
+      </nav>
+      <button id="enter" class="intro-enter" type="button">TOUCH TO EXPLORE <span class="touch-mark" aria-hidden="true">↓</span></button>
     </div>
-    <p class="intro-caption">EVERY GUEST MATTERS. EVERY PERSON MATTERS TO CHRIST.</p>
+    <p class="intro-caption">WELCOME · HONOR · SERVE · CARE</p>
   </div>
   <div id="experience" class="experience" inert>
     <header class="topbar">
