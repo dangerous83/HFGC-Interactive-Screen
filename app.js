@@ -140,6 +140,7 @@
   }
   function navigate(page, changes={}, remember=true) {
     if (!screens[page]) return;
+    if (page==='home') { reset(true); return; }
     if (remember) history.push({...state,scroll:main.scrollTop});
     state={...state,page,...changes};
     if (page==='thanks') thankYouStarted=Date.now(); else thankYouStarted=0;
@@ -163,7 +164,7 @@
     lastActivity=Date.now();
     render();
   }
-  function reset(showIntro=false) {
+  function reset(showIntro=true) {
     selectedTeam=null;
     history=[];
     thankYouStarted=0;
@@ -179,7 +180,7 @@
       intro.inert=false;
       intro.removeAttribute('aria-hidden');
       intro.classList.remove('dismissed');
-      // Replay the logo reveal for the next visitor.
+      // Restart the opening screen's glow and menu animations for the next visitor.
       const content=intro.querySelector('.intro-content');
       content.getAnimations({subtree:true}).forEach(a=>{a.cancel();a.play();});
       document.getElementById('enter').focus({preventScroll:true});

@@ -24,7 +24,7 @@ Registration uses the approved external form. The touchscreen cannot verify exte
 
 ## Kiosk behavior
 
-The initial screen shows the animated logo and direct navigation to **Our Heart**, **What We Do**, **VIP Hospitality**, **Our Teams**, and **Get Involved**. **Touch to Explore** opens the welcome menu. **Start Over** clears the selected team, filters, and navigation history and replays the opening. **Home** remains available across all screens. Team selection stays in memory only until a session reset or page reload.
+The initial screen shows the logo with a soft looping gold glow and direct navigation to **Our Heart**, **What We Do**, **VIP Hospitality**, **Our Teams**, and **Get Involved**. The logo has no moving light sweep or scale animation. **Touch to Explore** opens the welcome menu. **Home**, the header logo, and **Start Over** clear the selected team, filters, and navigation history and return to the opening screen. Finishing a visit and an inactivity reset also return to that screen. Team selection stays in memory only until a session reset or page reload. Motion is disabled when the device requests reduced motion.
 
 After 90 seconds without interaction, **Still exploring?** offers Continue or Return to Home. After a further 15 seconds without a response, the session resets to the logo attract screen. The visiting thank-you screen returns home after 12 seconds. These durations can be changed in `config.js`.
 
