@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#123e35">
+  <meta name="description" content="Explore HFGC Hospitality Ministry. Welcome, honor, serve and care. Find your place to serve at HFGC EXPO 2026.">
+  <title>HFGC EXPO 2026 · Hospitality Ministry</title>
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="config.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+  <div id="intro" class="intro" aria-label="Welcome to HFGC EXPO 2026">
+    <div class="intro-orbit orbit-one" aria-hidden="true"></div>
+    <div class="intro-orbit orbit-two" aria-hidden="true"></div>
+    <div class="intro-orbit orbit-three" aria-hidden="true"></div>
+    <div class="intro-content">
+      <p class="eyebrow">A MINISTRY OF WELCOME</p>
+      <div class="logo-reveal"><img src="HFGC%20EXPO%20GOLD%20FLAT%20LOGO.png" alt="HFGC EXPO 2026" width="956" height="561"></div>
+      <div class="intro-divider"></div>
+      <h1>Hospitality Ministry</h1>
+      <p class="intro-pillars">WELCOME <span>·</span> HONOR <span>·</span> SERVE <span>·</span> CARE</p>
+      <button id="enter" class="btn gold intro-enter" type="button">Touch to Explore <span class="touch-mark" aria-hidden="true">✦</span></button>
+    </div>
+    <p class="intro-caption">EVERY GUEST MATTERS. EVERY PERSON MATTERS TO CHRIST.</p>
+  </div>
+  <div id="experience" class="experience" inert>
+    <header class="topbar">
+      <button class="brand" data-page="home" aria-label="HFGC Hospitality Ministry home">
+        <img src="HFGC%20EXPO%20GOLD%20FLAT%20LOGO.png" alt="HFGC EXPO 2026" width="956" height="561">
+        <span>HOSPITALITY<br><strong>MINISTRY</strong></span>
+      </button>
+      <nav aria-label="Main navigation" id="main-nav">
+        <button data-page="heart">Our Heart</button>
+        <button data-page="general">What We Do</button>
+        <button data-page="vip">VIP Hospitality</button>
+        <button data-page="teams">Our Teams</button>
+        <button data-page="join" class="nav-join">Join Us</button>
+      </nav>
+      <button id="fullscreen" class="icon-button" aria-label="Enter full screen" title="Full screen"></button>
+    </header>
+    <main id="main" tabindex="-1"></main>
+    <footer class="bottom-bar">
+      <button data-page="home" class="home-button" id="home-button"></button>
+      <p>WELCOME <span>·</span> HONOR <span>·</span> SERVE <span>·</span> CARE</p>
+      <button id="restart" class="text-button">Start Over</button>
+    </footer>
+  </div>
+  <dialog id="idle-dialog" class="idle-dialog" aria-labelledby="idle-title">
+    <div class="idle-icon" aria-hidden="true">✦</div>
+    <p class="eyebrow">TAKE YOUR TIME</p>
+    <h2 id="idle-title">Still exploring?</h2>
+    <p>We’ll return to the welcome screen in <strong id="idle-count">15</strong> seconds.</p>
+    <div class="actions"><button id="continue" class="btn primary">Continue Exploring</button><button id="idle-home" class="btn secondary">Return to Home</button></div>
+  </dialog>
+  <noscript>This interactive experience needs JavaScript. Please enable it in this browser.</noscript>
+</body>
+</html>
