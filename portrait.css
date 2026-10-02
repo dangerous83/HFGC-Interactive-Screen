@@ -102,4 +102,17 @@ main.greeters-background{
 .greeters-background .fit-card,.greeters-background .responsibility-panel{background:#032747ed;border-color:#f3d16f70}
 .greeters-background .back-button,.greeters-background .detail-top .eyebrow{text-shadow:0 2px 10px #021b35}
 @media(max-width:650px){.greeters-background .detail-layout{padding-top:190px}}
+/* The uploaded reception photo belongs to the VIP Reception detail screen. */
+main.reception-background{
+ background-image:linear-gradient(180deg,#021b350a 0%,#021b3510 28%,#021b3570 52%,#021b35e8 100%),url('VIP%20Reception.png');
+ background-size:cover;
+ background-position:center top;
+ background-repeat:no-repeat;
+}
+.reception-background .detail-page{margin:0 auto}
+.reception-background .detail-layout{padding-top:clamp(280px,43vw,465px)}
+.reception-background .detail-summary{background:linear-gradient(130deg,#064677eb,#032448f2);border-color:#f3d16f80}
+.reception-background .fit-card,.reception-background .responsibility-panel{background:#032747ed;border-color:#f3d16f70}
+.reception-background .back-button,.reception-background .detail-top .eyebrow{background:#021b35b8;border-radius:10px;padding:10px 16px;width:fit-content;text-shadow:0 2px 10px #021b35}
+@media(max-width:650px){.reception-background .detail-layout{padding-top:240px}}
 @media(prefers-reduced-motion:reduce){.intro-menu button{animation:none!important}}

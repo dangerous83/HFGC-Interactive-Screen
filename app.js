@@ -150,6 +150,7 @@
   const screens={home,heart,pillars:pillarOverview,pillar:pillarDetail,general,vip,teams:directory,team:teamDetail,finder,why,join,thanks};
   function render(focus=true) {
     main.classList.toggle('greeters-background',state.page==='team' && state.team==='greeters');
+    main.classList.toggle('reception-background',state.page==='team' && state.team==='reception');
     main.innerHTML=(screens[state.page] || home)();
     const active = state.page==='team' ? teams.find(t=>t.id===state.team)?.category : ({pillars:'heart',pillar:'heart',finder:'teams',why:'join',thanks:'join'})[state.page] || state.page;
     document.querySelectorAll('#main-nav button').forEach(b=>{
