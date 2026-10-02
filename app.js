@@ -19,6 +19,7 @@
     protocol: '<rect x="5" y="4" width="14" height="18" rx="2"/><path d="M9 4V2h6v2M9 10l1 1 2-2M14 10h2M9 16l1 1 2-2M14 16h2"/>',
     home: '<path d="m3 10 9-7 9 7v11H3V10ZM9 21v-8h6v8"/>',
     back: '<path d="m14 5-7 7 7 7M7 12h14"/>',
+    next: '<path d="m10 5 7 7-7 7M17 12H3"/>',
     expand: '<path d="M8 3H3v5M16 3h5v5M21 16v5h-5M3 16v5h5"/>',
     collapse: '<path d="M3 8h5V3M21 8h-5V3M16 21v-5h5M8 21v-5H3"/>',
     book: '<path d="M12 5c-3-2-7-2-10-1v15c3-1 7-1 10 1 3-2 7-2 10-1V4c-3-1-7-1-10 1ZM12 5v15"/>',
@@ -53,6 +54,9 @@
   const idleDialog = document.getElementById('idle-dialog');
   let state = {page:'home', filter:'all', team:null, pillar:null, unsure:false};
   let selectedTeam = null;
+  let registrationDraft = {};
+  let savedRegistration = null;
+  let submitting = false;
   let history = [];
   let lastActivity = Date.now();
   let idleStarted = 0;
@@ -115,24 +119,39 @@
     } catch { return ''; }
   }
   function join() {
-    const url=signupUrl();
-    const qr= typeof config.signupQrImage==='string' && /^(?!\/\/)[\w./% -]+\.(png|svg|webp|jpe?g)$/i.test(config.signupQrImage) ? config.signupQrImage : '';
-    const signup = url ? `${qr ? `<img class="qr" src="${escape(qr)}" width="240" height="240" alt="QR code for the approved Hospitality sign-up form"><p class="qr-label">Scan with your phone camera.</p>` : tile('phone')}<h2>Your place to serve starts here.</h2><p>${qr ? 'Complete the form on your phone to express your interest.' : 'Open the approved form to express your interest.'} Choose your preferred team in the form.</p><a class="btn primary" href="${escape(url)}" target="_blank" rel="noopener noreferrer">Open Sign-Up Form</a>${btn('View Sign-Up Instructions','instructions','secondary')}` : `${tile('chat')}<h2>Let’s find your place.</h2><p>Speak with our Hospitality booth team to express your interest and learn how to join.</p><p>We’d love to meet you and help you discover a place to serve.</p>${btn('View Sign-Up Instructions','instructions','primary')}`;
-    return `<section class="page">${title('JOIN US','Your place to serve starts here.','One smile. One helping hand. One thoughtful act. One guest at a time.')}<div class="join-layout"><div class="join-copy"><p class="eyebrow">A WILLING HEART IS A BEAUTIFUL START</p><h2>Your hands can serve.<br>Your smile can welcome.<br>Your heart can care.</h2><p class="lead">Your life can reflect Christ.</p><div class="selected-team">${selectedTeam ? `<p class="eyebrow">YOU’RE INTERESTED IN</p><h3>${selectedTeam.name}</h3><button class="text-button" data-page="teams">Change Team</button><button class="text-button" data-clear-team>Still Exploring</button>` : '<p>Still exploring? You can express your interest without choosing a team yet.</p><button class="text-button" data-page="finder">Find My Team</button>'}</div><div class="join-scripture">“Whatever you do, do it heartily, as to the Lord…”<cite>Colossians 3:23</cite></div></div><div class="signup-card">${signup}<button class="text-button" data-page="why">Why Join Hospitality?</button><button class="text-button" data-page="teams">Explore Other Teams</button></div></div></section>`;
-  }
-  function instructions() {
-    const url=signupUrl();
-    const steps=url ? [['Open the approved form',config.signupQrImage?'Scan the QR code on the Join Us screen with your phone camera, or open the sign-up link.':'Use the Open Sign-Up Form button on the Join Us screen.'],['Choose your preferred team',selectedTeam ? `Choose ${selectedTeam.name} in the form. If you’re still exploring, ask the booth team for help.` : 'Choose a team that interests you, or let the ministry team know you’re still exploring.'],['Complete and submit the form','Your interest is registered when the form confirms successful submission. Opening or scanning the link does not submit it.']] : [['Meet the Hospitality team','Speak with a member of our Hospitality booth team.'],['Share what you enjoy',selectedTeam ? `Let them know you’re interested in ${selectedTeam.name}.` : 'Tell them what you enjoy. You can ask for help finding a team.'],['Ask how to express your interest','The Hospitality booth team can guide you through the approved sign-up process.']];
-    return `<section class="page">${back('Back to Join Us')}${title('TAKE THE NEXT STEP',url?'Express your interest.':'We’d love to meet you.')}<div class="instructions-layout"><div class="steps">${steps.map(([heading,text],i)=>`<div class="step"><span>0${i+1}</span><div><h3>${heading}</h3><p>${escape(text)}</p></div></div>`).join('')}</div><div class="instruction-aside"><p class="eyebrow">THERE IS A PLACE FOR YOU</p><h2>One guest at a time.<br>One act of love<br>at a time.</h2><p>Bring a willing heart and a desire to serve. We hope to serve with you soon.</p><button class="btn gold" data-page="thanks">${url?'I’ll Complete the Form on My Phone':'Thank You — Finish Exploring'}</button></div></div></section>`;
+    const draft = registrationDraft;
+    const preferred = draft.team ?? selectedTeam?.id ?? '';
+    const field = name => escape(draft[name] || '');
+    const url = signupUrl();
+    const qr = typeof config.signupQrImage==='string' && /^(?!\/\/)[\w./% -]+\.(png|svg|webp|jpe?g)$/i.test(config.signupQrImage) ? config.signupQrImage : '';
+    return `<section class="page registration-page">${title('JOIN HFGC HOSPITALITY','There’s a place for you.','Share your details and discover your place to serve.')}<div class="join-benefits"><p><strong>Welcome. Honor. Serve. Care.</strong> Reflect Christ through hospitality.</p><div class="registration-links"><button type="button" class="text-button" data-page="why">Why Join Hospitality? ${icon('next')}</button><button type="button" class="text-button" data-page="finder">Help Me Choose a Team ${icon('next')}</button></div></div>
+      <form id="interest-form" class="registration-form" autocomplete="off">
+        <div class="form-heading"><h2>Express your interest</h2><p>* Required fields</p></div>
+        <div class="form-grid">
+          <label class="form-field wide" for="signup-name">Full name *<input id="signup-name" name="name" type="text" required maxlength="120" autocomplete="off" value="${field('name')}" placeholder="Your first and last name"></label>
+          <label class="form-field" for="signup-phone">Phone number<input id="signup-phone" name="phone" type="tel" inputmode="tel" maxlength="40" aria-describedby="contact-hint" value="${field('phone')}" placeholder="Your mobile number"></label>
+          <label class="form-field" for="signup-email">Email address<input id="signup-email" name="email" type="email" inputmode="email" maxlength="254" aria-describedby="contact-hint" value="${field('email')}" placeholder="Your email address"></label>
+          <p class="contact-hint" id="contact-hint">* Provide a phone number or email so the team can contact you.</p>
+          <label class="form-field wide" for="signup-team">Where would you like to serve? *<select id="signup-team" name="team" required><option value="" ${preferred===''?'selected':''} disabled>Choose a team</option>${teams.map(t=>`<option value="${t.id}" ${preferred===t.id?'selected':''}>${escape(t.name)}</option>`).join('')}<option value="unsure" ${preferred==='unsure'?'selected':''}>I’m not sure — help me find my place</option></select></label>
+          <label class="form-field wide" for="signup-reason">Why would you like to join? *<textarea id="signup-reason" name="reason" required maxlength="1200" rows="3" placeholder="Tell us what inspires you to serve, or the gifts you’d like to share.">${field('reason')}</textarea></label>
+        </div>
+        <details class="optional-fields"><summary><span>Add church and availability <small>(optional)</small></span></summary><div class="form-grid">          <label class="form-field wide" for="signup-church">Church / location <small>(optional)</small><input id="signup-church" name="church" type="text" maxlength="160" value="${field('church')}" placeholder="Your local church or city"></label>          <label class="form-field wide" for="signup-availability">When are you available to serve? <small>(optional)</small><input id="signup-availability" name="availability" type="text" maxlength="200" value="${field('availability')}" placeholder="Days, times, or available throughout HFGC"></label></div></details>
+        <p class="form-notice">Your details will be saved on this kiosk for the Hospitality booth team to review. Submitting expresses your interest; the team will discuss the next steps with you.</p>
+        <p id="signup-error" class="form-error" role="alert" hidden></p>
+        <button type="submit" class="btn primary">Submit My Interest ${icon('next')}</button>
+      </form>
+      ${url ? `<aside class="external-signup">${qr ? `<img class="qr" src="${escape(qr)}" alt="QR code for the Hospitality online sign-up form">` : ''}<p>Prefer to sign up on your phone? Use our online form instead.</p><a class="btn secondary" href="${escape(url)}" target="_blank" rel="noopener noreferrer">Open Online Form</a></aside>` : ''}
+    </section>`;
   }
   function thanks() {
-    return `<section class="page thankyou-page">${tile('heart')}<p class="eyebrow gold-text">HFGC HOSPITALITY MINISTRY</p><h1>Thank you for visiting.</h1><p class="lead">${signupUrl() ? 'Complete the form on your phone to express your interest.' : 'Speak with our Hospitality booth team to express your interest.'}<br>We hope to serve with you soon.</p><p class="eyebrow" style="margin:30px 0">WELCOME · HONOR · SERVE · CARE</p><button class="btn primary" data-finish>Return to Home</button><p class="countdown">Returning home in <span id="thankyou-count">${Number(config.thankYouSeconds)||12}</span> seconds.</p></section>`;
+    if (!savedRegistration) return join();
+    return `<section class="page thankyou-page">${tile('check')}<p class="eyebrow gold-text">INTEREST SAVED ON THIS KIOSK</p><h1>Thank you for stepping forward.</h1><p class="lead">Your details have been saved for the Hospitality booth team to review.<br>We’re excited to meet you.</p><div class="saved-summary"><p>Your preferred team<br><strong>${escape(savedRegistration.team)}</strong></p></div><p class="receipt-note">Please speak with the booth team about training,<br>team placement, and the next steps.</p><p class="eyebrow" style="margin:30px 0">WELCOME · HONOR · SERVE · CARE</p><button class="btn primary" data-finish>Return to Home</button><p class="countdown">Returning home in <span id="thankyou-count">${Number(config.thankYouSeconds)||20}</span> seconds.</p></section>`;
   }
-  const screens={home,heart,pillars:pillarOverview,pillar:pillarDetail,general,vip,teams:directory,team:teamDetail,finder,why,join,instructions,thanks};
+  const screens={home,heart,pillars:pillarOverview,pillar:pillarDetail,general,vip,teams:directory,team:teamDetail,finder,why,join,thanks};
   function render(focus=true) {
     main.classList.toggle('greeters-background',state.page==='team' && state.team==='greeters');
     main.innerHTML=(screens[state.page] || home)();
-    const active = state.page==='team' ? teams.find(t=>t.id===state.team)?.category : ({pillars:'heart',pillar:'heart',finder:'teams',why:'join',instructions:'join',thanks:'join'})[state.page] || state.page;
+    const active = state.page==='team' ? teams.find(t=>t.id===state.team)?.category : ({pillars:'heart',pillar:'heart',finder:'teams',why:'join',thanks:'join'})[state.page] || state.page;
     document.querySelectorAll('#main-nav button').forEach(b=>{
       if (b.dataset.page===active) b.setAttribute('aria-current','page'); else b.removeAttribute('aria-current');
     });
@@ -140,7 +159,7 @@
     if (focus && !introActive) {main.focus({preventScroll:true});main.scrollTop=0;}
   }
   function navigate(page, changes={}, remember=true) {
-    if (!screens[page]) return;
+    if (!screens[page] || (page==='thanks' && !savedRegistration)) return;
     if (page==='home') { reset(true); return; }
     if (remember) history.push({...state,scroll:main.scrollTop});
     state={...state,page,...changes};
@@ -167,6 +186,9 @@
   }
   function reset(showIntro=true) {
     selectedTeam=null;
+    registrationDraft={};
+    savedRegistration=null;
+    submitting=false;
     history=[];
     thankYouStarted=0;
     idleStarted=0;
@@ -199,12 +221,58 @@
     else if (b.dataset.page) navigate(b.dataset.page);
     else if (b.dataset.team) navigate('team',{team:b.dataset.team});
     else if (b.dataset.pillar) navigate('pillar',{pillar:b.dataset.pillar});
-    else if (b.dataset.interest) { selectedTeam=teams.find(t=>t.id===b.dataset.interest);navigate('join'); }
+    else if (b.dataset.interest) { selectedTeam=teams.find(t=>t.id===b.dataset.interest);registrationDraft.team=selectedTeam?.id || '';navigate('join'); }
     else if (b.hasAttribute('data-back')) goBack();
     else if (b.dataset.filter) {state.filter=b.dataset.filter;render(false);main.querySelector(`[data-filter="${state.filter}"]`).focus({preventScroll:true});}
     else if (b.hasAttribute('data-unsure')) navigate('teams',{filter:'all',unsure:true});
-    else if (b.hasAttribute('data-clear-team')) {selectedTeam=null;render();}
+    else if (b.hasAttribute('data-clear-team')) {selectedTeam=null;registrationDraft.team='';render();}
     else if (b.hasAttribute('data-finish')) reset();
+  });
+  document.addEventListener('input',e=>{
+    if (!e.target.closest('#interest-form')) return;
+    registrationDraft[e.target.name]=e.target.value;
+    if (e.target.name==='phone' || e.target.name==='email') document.getElementById('signup-phone').setCustomValidity('');
+    if (e.target.name==='name' || e.target.name==='reason') e.target.setCustomValidity('');
+    if (!idleDialog.open) lastActivity=Date.now();
+  });
+  document.addEventListener('change',e=>{
+    if (!e.target.closest('#interest-form')) return;
+    registrationDraft[e.target.name]=e.target.value;
+    if (e.target.name==='team') selectedTeam=teams.find(t=>t.id===e.target.value) || null;
+    lastActivity=Date.now();
+  });
+  document.addEventListener('submit',e=>{
+    const form=e.target;
+    if (form.id!=='interest-form') return;
+    e.preventDefault();
+    if (submitting) return;
+    const details=Object.fromEntries([...new FormData(form)].map(([key,value])=>[key,String(value).trim()]));
+    registrationDraft={...details};
+    form.elements.name.setCustomValidity(details.name ? '' : 'Please enter your full name.');
+    form.elements.reason.setCustomValidity(details.reason ? '' : 'Please tell us why you would like to join.');
+    form.elements.phone.setCustomValidity(details.phone || details.email ? '' : 'Please provide a phone number or email address.');
+    if (!form.reportValidity()) return;
+    const team=teams.find(t=>t.id===details.team);
+    if (!team && details.team!=='unsure') return;
+    details.team=team?.name || 'Still exploring — help me find my place';
+    submitting=true;
+    const submit=form.querySelector('[type="submit"]');
+    submit.disabled=true;
+    try {
+      savedRegistration=window.HFGC_SIGNUPS.save(details);
+      registrationDraft={};
+      selectedTeam=null;
+      history=[];
+      navigate('thanks',{},false);
+    } catch {
+      const error=document.getElementById('signup-error');
+      error.textContent='Your details have not been saved. Please ask the booth team for help, or try again. Keep this form open until your entry is saved.';
+      error.hidden=false;
+      error.scrollIntoView({block:'center'});
+      submit.disabled=false;
+    } finally {
+      submitting=false;
+    }
   });
   ['pointerdown','keydown','wheel'].forEach(type=>document.addEventListener(type,()=>{if (!idleDialog.open) lastActivity=Date.now();},{passive:true}));
   document.addEventListener('scroll',()=>{if (!idleDialog.open) lastActivity=Date.now();},true);
@@ -232,7 +300,7 @@
     const now=Date.now();
     if (introActive) return;
     if (state.page==='thanks' && thankYouStarted && !idleDialog.open) {
-      const left=Math.max(0,Math.ceil((Number(config.thankYouSeconds)||12)-(now-thankYouStarted)/1000));
+      const left=Math.max(0,Math.ceil((Number(config.thankYouSeconds)||20)-(now-thankYouStarted)/1000));
       const counter=document.getElementById('thankyou-count');if(counter) counter.textContent=left;
       if (!left) reset();
       return;
