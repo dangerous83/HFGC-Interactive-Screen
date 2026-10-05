@@ -1,4 +1,4 @@
-.intro-tools{position:absolute;top:58px;right:58px;z-index:2;display:flex;margin:0}
+.intro-tools{position:absolute;top:58px;left:50%;right:auto;transform:translateX(-50%);z-index:2;display:flex;margin:0}
 .intro-tools button{display:flex;align-items:center;justify-content:center;gap:12px;min-height:64px;padding:12px 22px;border:1px solid #99b9d780;border-radius:18px;background:#062f55d9;color:#ecf6ff;font-size:21px;font-weight:600}
 .intro-tools svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .search-launcher{display:flex;align-items:center;gap:10px;min-height:64px;padding:12px 20px;border:1px solid #7193b3;border-radius:15px;background:#0a3b64;color:#fff;font-size:22px;font-weight:700}

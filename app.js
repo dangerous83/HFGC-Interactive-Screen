@@ -305,6 +305,11 @@
   let thankYouStarted = 0;
   let introActive = true;
   let discovery;
+  let pressedIntroButton=null;
+  const clearIntroPress=()=>{
+    pressedIntroButton?.classList.remove('is-pressed');
+    pressedIntroButton=null;
+  };
   function btn(label, page, variant='primary', name='') {
     return `<button class="btn ${variant}" data-page="${page}">${name ? icon(name) : ''}${label}</button>`;
   }
@@ -437,6 +442,7 @@
     render();
   }
   function reset(showIntro=true) {
+    clearIntroPress();
     discovery?.reset();
     selectedTeam=null;
     registrationDraft={};
@@ -457,9 +463,13 @@
       intro.inert=false;
       intro.removeAttribute('aria-hidden');
       intro.classList.remove('dismissed');
-      // Restart the opening screen's glow and menu animations for the next visitor.
+      // Replay the opening reveal and decorative loops for the next visitor.
+      // Edge lights remain controlled by hover/focus instead of this replay.
       const content=intro.querySelector('.intro-content');
-      content.getAnimations({subtree:true}).forEach(a=>{a.cancel();a.play();});
+      content.getAnimations({subtree:true}).forEach(a=>{
+        if(a.effect?.target?.closest?.('.intro-saber')) return;
+        a.cancel();a.play();
+      });
       document.getElementById('enter').focus({preventScroll:true});
     }
   }
@@ -468,6 +478,17 @@
     if (idleDialog.open) idleDialog.close();
     lastActivity=Date.now();
   }
+  document.addEventListener('pointerdown',e=>{
+    const button=e.target.closest('.intro-menu button');
+    if(!button) return;
+    clearIntroPress();
+    pressedIntroButton=button;
+    button.classList.add('is-pressed');
+  },{passive:true});
+  document.addEventListener('pointerup',clearIntroPress,true);
+  document.addEventListener('pointercancel',clearIntroPress,true);
+  window.addEventListener('blur',clearIntroPress);
+  document.querySelectorAll('.intro-menu button').forEach(button=>button.addEventListener('pointerleave',clearIntroPress));
   document.addEventListener('click',e=>{
     const b=e.target.closest('button');
     if (!b) return;
