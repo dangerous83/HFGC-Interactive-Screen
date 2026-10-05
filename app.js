@@ -493,6 +493,7 @@
     const b=e.target.closest('button');
     if (!b) return;
     if (b.dataset.introPage) { enter(); navigate(b.dataset.introPage); }
+    else if (b.dataset.introPillar) { enter(); navigate('pillar',{pillar:b.dataset.introPillar}); }
     else if (b.dataset.page) navigate(b.dataset.page);
     else if (b.dataset.team) navigate('team',{team:b.dataset.team});
     else if (b.dataset.pillar) navigate('pillar',{pillar:b.dataset.pillar});

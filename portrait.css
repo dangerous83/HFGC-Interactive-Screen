@@ -29,7 +29,7 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline-color:var(--g
 .intro-brand{flex-shrink:0;width:min(28%,180px)}
 .intro-brand img{display:block;width:100%;height:auto;filter:drop-shadow(0 4px 14px #000000a0)}
 .intro-tools{position:static;transform:none;display:flex;margin:0}
-.intro-content{position:relative;z-index:2;grid-row:2;width:min(100%,780px);justify-self:center;align-self:start;padding:34vh 28px 24px;display:flex;flex-direction:column;align-items:center;animation:none;max-height:100%;overflow:hidden}
+.intro-content{position:relative;z-index:2;grid-row:2;width:min(100%,780px);justify-self:center;align-self:start;padding:22vh 28px 20px;display:flex;flex-direction:column;align-items:center;animation:none;max-height:100%;overflow:hidden}
 .intro.dismissed .intro-video video{animation-play-state:paused}
 .intro .intro-subtitle{width:100%;color:#fff6dc;font-family:Georgia,'Times New Roman',serif;font-size:clamp(26px,5.4vw,58px);font-weight:400;letter-spacing:.01em;line-height:1.18;margin:0 0 22px;animation:none;text-align:center;font-style:italic;text-shadow:0 4px 22px #021b35e6,0 1px 3px #000000cc}
 .intro-title-line{display:block;overflow:hidden;padding:0 0 4px}
@@ -42,17 +42,24 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline-color:var(--g
 .intro-menu button{position:relative;isolation:isolate;display:flex;align-items:center;gap:22px;min-height:84px;padding:18px 25px;border:2px solid #f3d16fc0;border-radius:12px;background:linear-gradient(110deg,#07558a88,#042344);color:#fffaf0;text-align:left;font-size:clamp(18px,2.7vw,34px);font-weight:400;white-space:normal;animation:intro-button-reveal .75s cubic-bezier(.22,1,.36,1) backwards;transition:background .25s,border-color .25s,box-shadow .25s,transform .25s}
 .intro-menu button:nth-child(1){animation-delay:.65s}.intro-menu button:nth-child(2){animation-delay:.75s}.intro-menu button:nth-child(3){animation-delay:.85s}.intro-menu button:nth-child(4){animation-delay:.95s}
 @keyframes intro-button-reveal{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
-.intro-menu button:is(:hover,:focus-visible,:active,.is-pressed){background:#084a78;border-color:#ffe69c;box-shadow:0 0 0 1px #f3d16f80,0 0 24px #f3d16f55,inset 0 0 20px #f3d16f1a;transform:translateY(-3px);animation:intro-menu-pulse 1.6s ease-in-out infinite}
-.intro-menu button:is(:active,.is-pressed){transform:translateY(-1px)}
+.intro-menu button>*{position:relative;z-index:3}
+.intro-menu button:is(:hover,:focus-visible,:active,.is-pressed){background:linear-gradient(110deg,#0a5a94,#063058);border-color:#ffe69c;color:#fffefa;box-shadow:0 0 0 2px #ffe69c80,0 10px 28px #f3d16f44,0 2px 0 #00000030;transform:translateY(-2px);animation:intro-menu-pulse 1.8s ease-in-out infinite}
+.intro-menu button:is(:active,.is-pressed){transform:translateY(0)}
 .intro-menu button svg{width:34px;height:34px;color:var(--gold)}
-.intro-menu button .intro-saber{position:absolute;inset:-2px;width:calc(100% + 4px);height:calc(100% + 4px);z-index:2;overflow:visible;pointer-events:none;opacity:0;transition:opacity .25s}
-.intro-saber rect{fill:none;stroke:#ffe69c;stroke-width:5;stroke-linecap:round;stroke-dasharray:18 82;filter:blur(3px);animation:saber-edge-travel 2.8s linear infinite;animation-play-state:paused}
-.intro-saber .saber-core{stroke:#fff5d6;stroke-width:1.8;filter:none}
-@keyframes intro-menu-pulse{0%,100%{box-shadow:0 0 0 1px #f3d16f66,0 0 18px #f3d16f44,inset 0 0 16px #f3d16f14}50%{box-shadow:0 0 0 2px #ffe69c,0 0 36px #f3d16f80,inset 0 0 24px #f3d16f26}}
-.intro-menu button:is(:hover,:focus-visible,:active,.is-pressed) .intro-saber{opacity:1}
+.intro-menu button .intro-saber{position:absolute;inset:-2px;width:calc(100% + 4px);height:calc(100% + 4px);z-index:1;overflow:visible;pointer-events:none;opacity:0;transition:opacity .25s}
+.intro-saber rect{fill:none;stroke:#ffe69c;stroke-width:3;stroke-linecap:round;stroke-dasharray:18 82;filter:blur(2px);animation:saber-edge-travel 2.8s linear infinite;animation-play-state:paused}
+.intro-saber .saber-core{stroke:#fff5d6;stroke-width:1.4;filter:none}
+@keyframes intro-menu-pulse{0%,100%{box-shadow:0 0 0 2px #f3d16f80,0 8px 22px #f3d16f33,0 2px 0 #00000030}50%{box-shadow:0 0 0 3px #ffe69c,0 14px 40px #f3d16f80,0 2px 0 #00000030}}
+.intro-menu button:is(:hover,:focus-visible,:active,.is-pressed) .intro-saber{opacity:.85}
 .intro-menu button:is(:hover,:focus-visible,:active,.is-pressed) .intro-saber rect{animation-play-state:running}
 .intro.dismissed .intro-saber rect{animation-play-state:paused}
 @keyframes saber-edge-travel{to{stroke-dashoffset:-100}}
+.intro-pillars-row{display:flex;justify-content:center;align-items:flex-start;gap:clamp(18px,4.6vw,52px);margin:16px 0 6px;padding:0;border:0;width:100%;flex-wrap:nowrap}
+.intro-pillar{position:relative;display:flex;flex-direction:column;align-items:center;gap:10px;padding:6px 4px;background:transparent;border:0;color:#ffe69c;font-size:clamp(13px,1.6vw,18px);font-weight:700;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:transform .25s,color .25s;text-shadow:0 2px 10px #021b35cc;font-family:Arial,Helvetica,sans-serif}
+.intro-pillar .pillar-dot{display:block;width:clamp(42px,5.6vw,62px);height:clamp(42px,5.6vw,62px);border-radius:50%;background:radial-gradient(circle at 30% 30%,#ffe9a3,#e2b64c 60%,#8c6a1e 100%);box-shadow:0 0 0 2px #ffe69c90,0 6px 18px #f3d16f55,inset 0 0 14px #ffffff40;transition:transform .25s,box-shadow .25s}
+.intro-pillar:is(:hover,:focus-visible){transform:translateY(-3px);color:#fff6dc}
+.intro-pillar:is(:hover,:focus-visible) .pillar-dot{animation:pillar-dot-pulse 1.4s ease-in-out infinite}
+@keyframes pillar-dot-pulse{0%,100%{box-shadow:0 0 0 2px #ffe69c90,0 6px 18px #f3d16f55,inset 0 0 14px #ffffff40}50%{box-shadow:0 0 0 4px #ffe69c,0 0 32px #f3d16faa,0 10px 28px #f3d16f80,inset 0 0 20px #ffffff60}}
 .intro-menu .intro-emoji{display:block;flex:0 0 auto;width:34px;height:34px;object-fit:contain;transform-origin:center;will-change:transform}
 .intro-emoji[data-emoji="heart"]{animation:emoji-heartbeat 3.6s ease-in-out infinite}
 .intro-emoji[data-emoji="serve"]{animation:emoji-offer 3.8s ease-in-out infinite}
@@ -190,4 +197,4 @@ main.assistance-background{
 .assistance-background .fit-card,.assistance-background .responsibility-panel{background:#032747ed;border-color:#f3d16f70}
 .assistance-background .back-button,.assistance-background .detail-top .eyebrow{background:#021b35b8;border-radius:10px;padding:10px 16px;width:fit-content;text-shadow:0 2px 10px #021b35}
 @media(max-width:650px){.assistance-background .detail-layout{padding-top:250px}}
-@media(prefers-reduced-motion:reduce){.intro-menu button,.intro-menu .intro-emoji,.intro-video,.intro-title-line>span,.intro-saber rect,.intro-enter{animation:none!important}.intro-menu .intro-emoji{will-change:auto}.intro-menu button,.intro-menu button .intro-saber{transition:none}.intro-menu button:is(:hover,:focus-visible,:active,.is-pressed){transform:none;animation:none!important}.intro-saber rect{stroke-dasharray:none}}
+@media(prefers-reduced-motion:reduce){.intro-menu button,.intro-menu .intro-emoji,.intro-video,.intro-title-line>span,.intro-saber rect,.intro-enter,.intro-pillar .pillar-dot{animation:none!important}.intro-menu .intro-emoji{will-change:auto}.intro-menu button,.intro-menu button .intro-saber{transition:none}.intro-menu button:is(:hover,:focus-visible,:active,.is-pressed){transform:none;animation:none!important}.intro-saber rect{stroke-dasharray:none}.intro-pillar:is(:hover,:focus-visible){transform:none}}
