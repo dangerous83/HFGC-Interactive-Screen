@@ -8,6 +8,9 @@
   <title>HFGC EXPO 2026 · Hospitality Ministry</title>
   <link rel="icon" type="image/png" href="pmcc_logo_icon.png">
   <link rel="apple-touch-icon" href="pmcc_logo_icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap">
   <link rel="stylesheet" href="styles.css">
   <link rel="stylesheet" href="portrait.css?v=brosimon-20261005">
   <script defer src="config.js?v=signup-20261002"></script>
@@ -74,6 +77,28 @@
       <button type="button" class="assistant-launcher" data-discovery="assistant"><span class="assistant-hand"><img src="assets/emoji/serve.svg" width="42" height="42" alt=""></span><span>Bro. Simon<small>Ministry assistant</small></span></button>
     </footer>
   </div>
+  <dialog id="pillar-dialog" class="pillar-dialog" aria-labelledby="pillar-dialog-title">
+    <div class="pillar-dialog-shell">
+      <button type="button" class="pillar-dialog-close" aria-label="Close">×</button>
+      <div class="pillar-dialog-header">
+        <p class="eyebrow">THE HEART OF HOSPITALITY</p>
+        <div class="pillar-dialog-title-row">
+          <span class="pillar-dialog-icon" aria-hidden="true"></span>
+          <h2 id="pillar-dialog-title" class="pillar-dialog-name"></h2>
+        </div>
+        <p class="pillar-dialog-tagline"></p>
+      </div>
+      <div class="pillar-dialog-body">
+        <blockquote class="quote">
+          <span class="pillar-dialog-scripture"></span>
+          <cite class="pillar-dialog-reference"></cite>
+        </blockquote>
+        <div class="actions">
+          <button type="button" class="btn primary" data-pillar-dialog-teams>Explore Our Teams</button>
+        </div>
+      </div>
+    </div>
+  </dialog>
   <dialog id="idle-dialog" class="idle-dialog" aria-labelledby="idle-title">
     <div class="idle-icon" aria-hidden="true">✦</div>
     <p class="eyebrow">TAKE YOUR TIME</p>
