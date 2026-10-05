@@ -553,9 +553,35 @@
   try {
     if (window.frameElement?.id==='kiosk-frame') fullscreenDocument=window.parent.document;
   } catch { /* A separately embedded kiosk uses its own fullscreen control. */ }
-  const fullState=()=>{full.innerHTML=icon(fullscreenDocument.fullscreenElement?'collapse':'expand');full.setAttribute('aria-label',fullscreenDocument.fullscreenElement?'Exit full screen':'Enter full screen');};
+  let autoFullscreenComplete=Boolean(fullscreenDocument.fullscreenElement);
+  let autoFullscreenPending=false;
+  const fullState=()=>{
+    const active=Boolean(fullscreenDocument.fullscreenElement);
+    if(active) autoFullscreenComplete=true;
+    full.innerHTML=icon(active?'collapse':'expand');
+    full.setAttribute('aria-label',active?'Exit full screen':'Enter full screen');
+  };
   fullState();
   fullscreenDocument.addEventListener('fullscreenchange',fullState);
+  // Browsers require a trusted user gesture. Request the outer document's
+  // fullscreen on the first opening-screen interaction, without delaying it.
+  // After entry, respect a visitor's manual exit for the rest of this load.
+  const startFullscreen=event=>{
+    if(!event.isTrusted || !introActive || autoFullscreenComplete || autoFullscreenPending || fullscreenDocument.fullscreenElement || !fullscreenDocument.fullscreenEnabled) return;
+    if(!intro.contains(event.target)) return;
+    if(event.target.closest?.('#fullscreen')) return;
+    if(event.type==='keydown' && (!['Enter',' '].includes(event.key) || event.repeat || event.target.matches?.('input,textarea,select,[contenteditable="true"]'))) return;
+    const root=fullscreenDocument.documentElement;
+    if(typeof root.requestFullscreen!=='function') return;
+    autoFullscreenPending=true;
+    try {
+      Promise.resolve(root.requestFullscreen()).then(()=>{autoFullscreenComplete=true;}).catch(()=>{
+        // Unsupported/blocked devices keep normal navigation and manual control.
+      }).finally(()=>{autoFullscreenPending=false;});
+    } catch {autoFullscreenPending=false;}
+  };
+  document.addEventListener('click',startFullscreen,true);
+  document.addEventListener('keydown',startFullscreen,true);
   full.addEventListener('click',async()=>{
     try {
       if (fullscreenDocument.fullscreenElement) await fullscreenDocument.exitFullscreen();
