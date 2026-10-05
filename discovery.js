@@ -120,7 +120,7 @@
     dialog.innerHTML=`<div class="discovery-shell"><header class="discovery-header"><div><p class="discovery-kicker">HFGC HOSPITALITY MINISTRY</p><h2 id="discovery-title">Find your way</h2></div><button type="button" class="discovery-close" aria-label="Close search and assistant">×</button></header><div class="discovery-tabs" role="tablist" aria-label="Explore or ask"><button type="button" id="guide-search-tab" role="tab" aria-controls="guide-panel" data-guide-mode="search">Search ministry</button><button type="button" id="guide-assistant-tab" role="tab" aria-controls="guide-panel" data-guide-mode="assistant"><img src="assets/emoji/serve.svg" width="30" height="30" alt=""> Ask Bro. Simon</button></div><div id="guide-panel" class="discovery-panel" role="tabpanel"><div id="guide-body" class="discovery-body"></div><form id="guide-form" autocomplete="off"><label for="guide-query" id="guide-label">What would you like to find?</label><div class="guide-input-row"><input id="guide-query" type="text" inputmode="none" maxlength="240" autocomplete="off" spellcheck="false" aria-describedby="guide-hint"><button type="submit" id="guide-send">Search</button></div><p id="guide-hint">Use the touch keyboard below, or type on your keyboard.</p><div id="guide-suggestions" class="guide-suggestions" aria-label="Related suggestions"></div></form></div><div class="touch-keyboard" role="group" aria-label="Touch keyboard"></div></div>`;
     document.body.append(dialog);
     const input=dialog.querySelector('#guide-query'),body=dialog.querySelector('#guide-body'),suggestions=dialog.querySelector('#guide-suggestions'),keyboard=dialog.querySelector('.touch-keyboard');
-    let mode='search',shift=false,context=null,opener=null,messages=[],queries={search:'',assistant:''};
+    let mode='search',shift=false,context=null,opener=null,messages=[],queries={search:'',assistant:''},speaking=false;
     const defaults=['Greeters','Ushers','VIP Transportation','How can I join?'];
     const askDefaults=['What is Hospitality Ministry?','Which team suits me?','How can I join?'];
     const actionLink=(target,label)=>`<button type="button" class="guide-source" data-guide-target="${escape(JSON.stringify(target))}">Open ${escape(label)} <span aria-hidden="true">›</span></button>`;
@@ -135,10 +135,12 @@
       body.innerHTML=`<p class="guide-result-count" role="status">${query?(results.length?`${ranked.length} matching ${ranked.length===1?'topic':'topics'}`:'No matching topics'):'Popular topics · Tap to explore'}</p><div class="guide-results">${results.map(({entry:e})=>`<button type="button" class="guide-result" data-guide-target="${escape(JSON.stringify(e.target))}"><span class="guide-category">${escape(e.category)}</span><strong>${escape(e.title)} <span aria-hidden="true">›</span></strong><span>${escape(e.kind==='team'?e.team.short:e.text)}</span></button>`).join('')}</div>${query&&!results.length?`<div class="guide-empty"><h3>Let’s try another word</h3><p>Try “welcome,” “transportation,” or “join.” You can also ask a question in Ask Hospitality.</p><button type="button" data-guide-mode="assistant" class="guide-source">Ask Hospitality</button></div>`:''}`;
     }
     function drawChat() {
-      const greet=`Hello, I’m Bro. Simon, your Hospitality guide. Ask me about our teams, find a place to serve, or get help joining the ministry.`;
-      body.innerHTML=`<div class="guide-chat" role="log" aria-label="Hospitality conversation" aria-live="polite" aria-relevant="additions"><div class="guide-answer"><div class="guide-answer-heading"><img src="assets/emoji/serve.svg" alt="" width="32" height="32"><strong>Bro. Simon</strong><button type="button" class="guide-voice" data-guide-speak="${escape(greet)}" aria-label="Hear Bro. Simon">🔊</button></div><p>${escape(greet)}</p><small>Natural voice · Answers from the ministry guide</small><div class="guide-question-chips">${questionChips(askDefaults)}</div></div>${messages.map(m=>m.role==='user'?`<div class="guide-user"><p>${escape(m.text)}</p></div>`:`<div class="guide-answer"><div class="guide-answer-heading"><img src="assets/emoji/serve.svg" alt="" width="28" height="28"><strong>Bro. Simon</strong><button type="button" class="guide-voice" data-guide-speak="${escape(spokenText(m))}" aria-label="Hear this answer">🔊</button></div><p>${escape(m.text)}</p>${m.bullets?.length?`<ul>${m.bullets.map(b=>`<li>${escape(b)}</li>`).join('')}</ul>`:''}${m.detail?`<p>${escape(m.detail)}</p>`:''}${m.target?`<small>From the ministry guide</small>${actionLink(m.target,m.source)}`:''}${m.choices?`<div class="guide-question-chips">${m.choices.map(e=>`<button type="button" data-guide-question="${escape('Tell me about '+e.title)}">${escape(e.title)}</button>`).join('')}</div>`:''}${m.unresolved?`<div class="guide-fallback"><p>Can’t find what you need? Our hospitality team is ready to help.</p><button type="button" class="btn primary guide-fast-help" data-guide-fast-help>${escape('Ask our Hospitality team')} <span aria-hidden="true">›</span></button></div>`:''}${m.followups?.length?`<div class="guide-question-chips">${questionChips(m.followups)}</div>`:''}</div>`).join('')}</div>`;
-      const latest=body.querySelector('.guide-chat')?.lastElementChild;
-      if(latest) body.scrollTop+=latest.getBoundingClientRect().top-body.getBoundingClientRect().top-14;
+      // The assistant speaks aloud; no transcript or captions are shown, so the stage stays uncluttered.
+      const last=[...messages].reverse().find(m=>m.role==='assistant');
+      const state=speaking?'speaking':(last?'ready':'idle');
+      const label=state==='speaking'?'Bro. Simon is speaking…':state==='ready'?'Tap a suggestion or ask your own question.':'Hi, I’m Bro. Simon. Ask me anything about our ministry.';
+      const chips=last?.followups?.length?last.followups:askDefaults;
+      body.innerHTML=`<div class="guide-stage" data-voice-state="${state}" role="status" aria-live="polite"><div class="voice-orb" aria-hidden="true"><span class="voice-ring"></span><span class="voice-ring"></span><span class="voice-ring"></span><span class="voice-core"><img src="assets/emoji/serve.svg" alt="" width="56" height="56"></span></div><p class="voice-name">Bro. Simon</p><p class="voice-status">${escape(label)}</p>${last?.unresolved?`<div class="guide-fallback"><p>I can’t find that in the ministry guide. Our hospitality team is ready to help.</p><button type="button" class="btn primary guide-fast-help" data-guide-fast-help>Ask our Hospitality team <span aria-hidden="true">›</span></button></div>`:''}${last?.target&&!last.unresolved?`<button type="button" class="guide-source voice-source" data-guide-target="${escape(JSON.stringify(last.target))}">Open ${escape(last.source)} <span aria-hidden="true">›</span></button>`:''}<div class="guide-question-chips voice-chips">${questionChips(chips)}</div></div>`;
     }
     function spokenText(m) {
       const parts=[m.text];
@@ -171,6 +173,16 @@
       ensureVoice();
       window.speechSynthesis.addEventListener?.('voiceschanged',ensureVoice);
     }
+    function setSpeaking(next){
+      if(speaking===next) return;
+      speaking=next;
+      if(mode==='assistant' && dialog.open){
+        const stage=body.querySelector('.guide-stage');
+        if(stage) stage.dataset.voiceState=speaking?'speaking':(messages.some(m=>m.role==='assistant')?'ready':'idle');
+        const label=body.querySelector('.voice-status');
+        if(label) label.textContent=speaking?'Bro. Simon is speaking…':(messages.some(m=>m.role==='assistant')?'Tap a suggestion or ask your own question.':'Hi, I’m Bro. Simon. Ask me anything about our ministry.');
+      }
+    }
     function speak(text) {
       if(!text || !('speechSynthesis' in window)) return;
       try {
@@ -180,10 +192,15 @@
         if(voiceState.voice){utter.voice=voiceState.voice;utter.lang=voiceState.voice.lang;}
         // Tuned for a polite, calm, natural delivery.
         utter.rate=0.96; utter.pitch=0.92; utter.volume=1;
+        utter.onstart=()=>setSpeaking(true);
+        utter.onend=()=>setSpeaking(false);
+        utter.onerror=()=>setSpeaking(false);
         window.speechSynthesis.speak(utter);
-      } catch { /* speechSynthesis may be blocked; the printed answer still appears. */ }
+        // Some browsers delay onstart; nudge the state so the orb animates immediately.
+        setSpeaking(true);
+      } catch { setSpeaking(false); }
     }
-    function stopSpeaking(){try{window.speechSynthesis?.cancel();}catch{}}
+    function stopSpeaking(){try{window.speechSynthesis?.cancel();}catch{} setSpeaking(false);}
     function drawSuggestions() {
       const q=input.value.trim(),related=q?guide.search(q).slice(0,4).map(r=>r.entry.title):(mode==='search'?defaults:askDefaults);
       suggestions.innerHTML=related.length?`<span>${q?'Related topics':'Try'}</span>${related.map(s=>`<button type="button" data-guide-suggest="${escape(s)}">${escape(s)}</button>`).join('')}`:'<span>Try a team name, a role, or “join.”</span>';
