@@ -293,6 +293,7 @@
   const intro = document.getElementById('intro');
   const experience = document.getElementById('experience');
   const idleDialog = document.getElementById('idle-dialog');
+  const pillarDialog = document.getElementById('pillar-dialog');
   let state = {page:'home', filter:'all', team:null, pillar:null, unsure:false};
   let selectedTeam = null;
   let registrationDraft = {};
@@ -441,9 +442,25 @@
     lastActivity=Date.now();
     render();
   }
+  function openPillarDialog(id) {
+    const p = pillars.find(x=>x.id===id) || pillars[0];
+    pillarDialog.querySelector('.pillar-dialog-icon').innerHTML = icon(p.id);
+    pillarDialog.querySelector('.pillar-dialog-name').textContent = p.name;
+    pillarDialog.querySelector('.pillar-dialog-tagline').textContent = p.tagline;
+    pillarDialog.querySelector('.pillar-dialog-scripture').textContent = p.scripture;
+    pillarDialog.querySelector('.pillar-dialog-reference').textContent = p.reference;
+    pillarDialog.dataset.pillar = p.id;
+    if (!pillarDialog.open) pillarDialog.showModal();
+    lastActivity = Date.now();
+  }
+  function closePillarDialog() {
+    if (pillarDialog.open) pillarDialog.close();
+    lastActivity = Date.now();
+  }
   function reset(showIntro=true) {
     clearIntroPress();
     discovery?.reset();
+    if (pillarDialog.open) pillarDialog.close();
     selectedTeam=null;
     registrationDraft={};
     churchFieldsOpen=false;
@@ -493,10 +510,12 @@
     const b=e.target.closest('button');
     if (!b) return;
     if (b.dataset.introPage) { enter(); navigate(b.dataset.introPage); }
-    else if (b.dataset.introPillar) { enter(); navigate('pillar',{pillar:b.dataset.introPillar}); }
+    else if (b.dataset.introPillar) { enter(); openPillarDialog(b.dataset.introPillar); }
     else if (b.dataset.page) navigate(b.dataset.page);
     else if (b.dataset.team) navigate('team',{team:b.dataset.team});
-    else if (b.dataset.pillar) navigate('pillar',{pillar:b.dataset.pillar});
+    else if (b.dataset.pillar) openPillarDialog(b.dataset.pillar);
+    else if (b.hasAttribute('data-pillar-dialog-teams')) { closePillarDialog(); navigate('teams'); }
+    else if (b.classList.contains('pillar-dialog-close')) closePillarDialog();
     else if (b.dataset.interest) { selectedTeam=teams.find(t=>t.id===b.dataset.interest);registrationDraft.team=selectedTeam?.id || '';navigate('join'); }
     else if (b.hasAttribute('data-back')) goBack();
     else if (b.dataset.filter) {state.filter=b.dataset.filter;render(false);main.querySelector(`[data-filter="${state.filter}"]`).focus({preventScroll:true});}
@@ -570,6 +589,12 @@
   document.getElementById('continue').addEventListener('click',continueExploring);
   document.getElementById('idle-home').addEventListener('click',()=>reset());
   idleDialog.addEventListener('cancel',e=>{e.preventDefault();continueExploring();});
+  pillarDialog.addEventListener('cancel',e=>{e.preventDefault();closePillarDialog();});
+  pillarDialog.addEventListener('click',e=>{
+    // Clicking the dim backdrop outside the shell closes the pop-up.
+    const shell=pillarDialog.querySelector('.pillar-dialog-shell');
+    if (shell && !shell.contains(e.target) && e.target===pillarDialog) closePillarDialog();
+  });
   const full=document.getElementById('fullscreen');
   let fullscreenDocument=document;
   try {
