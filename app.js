@@ -534,7 +534,6 @@
   });
   ['pointerdown','keydown','wheel'].forEach(type=>document.addEventListener(type,()=>{if (!idleDialog.open) lastActivity=Date.now();},{passive:true}));
   document.addEventListener('scroll',()=>{if (!idleDialog.open) lastActivity=Date.now();},true);
-  document.querySelectorAll('[data-intro-icon]').forEach(el=>{el.innerHTML=icon(el.dataset.introIcon);});
   document.getElementById('enter').addEventListener('click',enter);
   document.getElementById('restart').addEventListener('click',()=>reset(true));
   document.getElementById('continue').addEventListener('click',continueExploring);
