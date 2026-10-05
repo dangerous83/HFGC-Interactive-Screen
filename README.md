@@ -14,11 +14,11 @@ Use the top-right full-screen control or the browser's kiosk mode on the install
 
 ## Registration setup
 
-**Join Us opens a working interest form.** Visitors provide their full name, a phone number or email, a preferred team (including “I’m not sure”), and their reason for joining. Church/location and availability are optional. Choosing “I’m Interested” on a team page prefills that team. The form keeps its draft while the visitor explores, and clears it on Home, Start Over, inactivity reset, or successful submission.
+**Join Us opens a working interest form.** Visitors provide their full name, a phone number or email, and a preferred team (including “I’m not sure”). A **Locale Church & District** button below the team selection opens two optional fields. The reason-for-joining and availability fields have been removed. Choosing “I’m Interested” on a team page prefills that team. The form keeps its draft while the visitor explores, and clears it on Home, Start Over, inactivity reset, or successful submission. The starting menu has four options: Our Heart, What We Do, VIP Hospitality, and Get Involved.
 
 Entries are saved in **localStorage in the kiosk’s browser**, not a server or GitHub. A confirmation appears only after saving and verifying the record. If storage fails, the form stays open and displays an error; it never reports a successful submission. Private browsing, clearing browser data, or changing browser profiles can remove or hide the records. Use the normal kiosk browser profile and export records regularly.
 
-Open **[organizer.html](https://dangerous83.github.io/HFGC-Interactive-Screen/organizer.html)** on the same kiosk, in the same browser/profile, to review names, contact details, preferred teams, reasons for joining, and availability. Download Sign-Ups (CSV) exports the records for follow-up. The organizer page is separate from the visitor navigation; it has no account authentication and displays only that browser’s local records. Control access to the kiosk itself. No personal details are embedded in the repository.
+Open **[organizer.html](https://dangerous83.github.io/HFGC-Interactive-Screen/organizer.html)** on the same kiosk, in the same browser/profile, to review names, contact details, preferred teams, locale churches, and districts. Download Sign-Ups (CSV) exports the records for follow-up. Previously saved reasons for joining and availability remain available in older records and CSV exports. The organizer page is separate from the visitor navigation; it has no account authentication and displays only that browser’s local records. Control access to the kiosk itself. No personal details are embedded in the repository.
 
 For an optional online form, edit `config.js`:
 

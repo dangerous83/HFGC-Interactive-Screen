@@ -55,6 +55,7 @@
   let state = {page:'home', filter:'all', team:null, pillar:null, unsure:false};
   let selectedTeam = null;
   let registrationDraft = {};
+  let churchFieldsOpen = false;
   let savedRegistration = null;
   let submitting = false;
   let history = [];
@@ -133,9 +134,14 @@
           <label class="form-field" for="signup-email">Email address<input id="signup-email" name="email" type="email" inputmode="email" maxlength="254" aria-describedby="contact-hint" value="${field('email')}" placeholder="Your email address"></label>
           <p class="contact-hint" id="contact-hint">* Provide a phone number or email so the team can contact you.</p>
           <label class="form-field wide" for="signup-team">Where would you like to serve? *<select id="signup-team" name="team" required><option value="" ${preferred===''?'selected':''} disabled>Choose a team</option>${teams.map(t=>`<option value="${t.id}" ${preferred===t.id?'selected':''}>${escape(t.name)}</option>`).join('')}<option value="unsure" ${preferred==='unsure'?'selected':''}>I’m not sure — help me find my place</option></select></label>
-          <label class="form-field wide" for="signup-reason">Why would you like to join? *<textarea id="signup-reason" name="reason" required maxlength="1200" rows="3" placeholder="Tell us what inspires you to serve, or the gifts you’d like to share.">${field('reason')}</textarea></label>
         </div>
-        <details class="optional-fields"><summary><span>Add church and availability <small>(optional)</small></span></summary><div class="form-grid">          <label class="form-field wide" for="signup-church">Church / location <small>(optional)</small><input id="signup-church" name="church" type="text" maxlength="160" value="${field('church')}" placeholder="Your local church or city"></label>          <label class="form-field wide" for="signup-availability">When are you available to serve? <small>(optional)</small><input id="signup-availability" name="availability" type="text" maxlength="200" value="${field('availability')}" placeholder="Days, times, or available throughout HFGC"></label></div></details>
+        <div class="optional-fields">
+          <button type="button" id="church-fields-toggle" class="church-fields-toggle" aria-expanded="${churchFieldsOpen}" aria-controls="church-fields"><span>Locale Church &amp; District <small>(optional)</small></span><span class="church-fields-indicator" aria-hidden="true">${churchFieldsOpen?'−':'+'}</span></button>
+          <div id="church-fields" class="form-grid" ${churchFieldsOpen?'':'hidden'}>
+            <label class="form-field" for="signup-church">Locale Church<input id="signup-church" name="church" type="text" maxlength="160" value="${field('church')}" placeholder="Your locale church"></label>
+            <label class="form-field" for="signup-district">District<input id="signup-district" name="district" type="text" maxlength="160" value="${field('district')}" placeholder="Your district"></label>
+          </div>
+        </div>
         <p class="form-notice">Your details will be saved on this kiosk for the Hospitality booth team to review. Submitting expresses your interest; the team will discuss the next steps with you.</p>
         <p id="signup-error" class="form-error" role="alert" hidden></p>
         <button type="submit" class="btn primary">Submit My Interest ${icon('next')}</button>
@@ -191,6 +197,7 @@
   function reset(showIntro=true) {
     selectedTeam=null;
     registrationDraft={};
+    churchFieldsOpen=false;
     savedRegistration=null;
     submitting=false;
     history=[];
@@ -230,13 +237,19 @@
     else if (b.dataset.filter) {state.filter=b.dataset.filter;render(false);main.querySelector(`[data-filter="${state.filter}"]`).focus({preventScroll:true});}
     else if (b.hasAttribute('data-unsure')) navigate('teams',{filter:'all',unsure:true});
     else if (b.hasAttribute('data-clear-team')) {selectedTeam=null;registrationDraft.team='';render();}
+    else if (b.id==='church-fields-toggle') {
+      churchFieldsOpen=!churchFieldsOpen;
+      b.setAttribute('aria-expanded',String(churchFieldsOpen));
+      b.querySelector('.church-fields-indicator').textContent=churchFieldsOpen?'−':'+';
+      document.getElementById('church-fields').hidden=!churchFieldsOpen;
+    }
     else if (b.hasAttribute('data-finish')) reset();
   });
   document.addEventListener('input',e=>{
     if (!e.target.closest('#interest-form')) return;
     registrationDraft[e.target.name]=e.target.value;
     if (e.target.name==='phone' || e.target.name==='email') document.getElementById('signup-phone').setCustomValidity('');
-    if (e.target.name==='name' || e.target.name==='reason') e.target.setCustomValidity('');
+    if (e.target.name==='name') e.target.setCustomValidity('');
     if (!idleDialog.open) lastActivity=Date.now();
   });
   document.addEventListener('change',e=>{
@@ -253,7 +266,6 @@
     const details=Object.fromEntries([...new FormData(form)].map(([key,value])=>[key,String(value).trim()]));
     registrationDraft={...details};
     form.elements.name.setCustomValidity(details.name ? '' : 'Please enter your full name.');
-    form.elements.reason.setCustomValidity(details.reason ? '' : 'Please tell us why you would like to join.');
     form.elements.phone.setCustomValidity(details.phone || details.email ? '' : 'Please provide a phone number or email address.');
     if (!form.reportValidity()) return;
     const team=teams.find(t=>t.id===details.team);
@@ -265,6 +277,7 @@
     try {
       savedRegistration=window.HFGC_SIGNUPS.save(details);
       registrationDraft={};
+      churchFieldsOpen=false;
       selectedTeam=null;
       history=[];
       navigate('thanks',{},false);
