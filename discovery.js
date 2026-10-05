@@ -95,7 +95,7 @@
         return teamAnswer(prior);
       }
       const ranked=search(question), top=ranked[0];
-      if (!top || top.score<3.5) return {text:'I can help with questions about HFGC Hospitality, our teams, the four pillars, and joining the ministry. I don’t have an answer to that question in this guide. Try one of these topics, or ask the Hospitality booth team for help.',followups:['What is Hospitality Ministry?','Which team suits me?','How can I join?']};
+      if (!top || top.score<3.5) return {text:'I can help with questions about HFGC Hospitality, our teams, the four pillars, and joining the ministry. I don’t have a direct answer for that in the ministry guide. You can try one of these topics, or tap the button below to reach our Hospitality booth team.',unresolved:true,followups:['What is Hospitality Ministry?','Which team suits me?','How can I join?']};
       const e=top.entry;
       if (e.kind==='team') {
         const other=ranked.find(r=>r.entry.kind==='team'&&r.entry.id!==e.id&&r.score>=top.score*.85);
@@ -117,7 +117,7 @@
     const guide=buildGuide(teams,pillars);
     const dialog=document.createElement('dialog');
     dialog.id='discovery-dialog'; dialog.className='discovery-dialog'; dialog.setAttribute('aria-labelledby','discovery-title');
-    dialog.innerHTML=`<div class="discovery-shell"><header class="discovery-header"><div><p class="discovery-kicker">HFGC HOSPITALITY MINISTRY</p><h2 id="discovery-title">Find your way</h2></div><button type="button" class="discovery-close" aria-label="Close search and assistant">×</button></header><div class="discovery-tabs" role="tablist" aria-label="Explore or ask"><button type="button" id="guide-search-tab" role="tab" aria-controls="guide-panel" data-guide-mode="search">Search ministry</button><button type="button" id="guide-assistant-tab" role="tab" aria-controls="guide-panel" data-guide-mode="assistant"><img src="assets/emoji/serve.svg" width="30" height="30" alt=""> Ask Hospitality</button></div><div id="guide-panel" class="discovery-panel" role="tabpanel"><div id="guide-body" class="discovery-body"></div><form id="guide-form" autocomplete="off"><label for="guide-query" id="guide-label">What would you like to find?</label><div class="guide-input-row"><input id="guide-query" type="text" inputmode="none" maxlength="240" autocomplete="off" spellcheck="false" aria-describedby="guide-hint"><button type="submit" id="guide-send">Search</button></div><p id="guide-hint">Use the touch keyboard below, or type on your keyboard.</p><div id="guide-suggestions" class="guide-suggestions" aria-label="Related suggestions"></div></form></div><div class="touch-keyboard" role="group" aria-label="Touch keyboard"></div></div>`;
+    dialog.innerHTML=`<div class="discovery-shell"><header class="discovery-header"><div><p class="discovery-kicker">HFGC HOSPITALITY MINISTRY</p><h2 id="discovery-title">Find your way</h2></div><button type="button" class="discovery-close" aria-label="Close search and assistant">×</button></header><div class="discovery-tabs" role="tablist" aria-label="Explore or ask"><button type="button" id="guide-search-tab" role="tab" aria-controls="guide-panel" data-guide-mode="search">Search ministry</button><button type="button" id="guide-assistant-tab" role="tab" aria-controls="guide-panel" data-guide-mode="assistant"><img src="assets/emoji/serve.svg" width="30" height="30" alt=""> Ask Bro. Simon</button></div><div id="guide-panel" class="discovery-panel" role="tabpanel"><div id="guide-body" class="discovery-body"></div><form id="guide-form" autocomplete="off"><label for="guide-query" id="guide-label">What would you like to find?</label><div class="guide-input-row"><input id="guide-query" type="text" inputmode="none" maxlength="240" autocomplete="off" spellcheck="false" aria-describedby="guide-hint"><button type="submit" id="guide-send">Search</button></div><p id="guide-hint">Use the touch keyboard below, or type on your keyboard.</p><div id="guide-suggestions" class="guide-suggestions" aria-label="Related suggestions"></div></form></div><div class="touch-keyboard" role="group" aria-label="Touch keyboard"></div></div>`;
     document.body.append(dialog);
     const input=dialog.querySelector('#guide-query'),body=dialog.querySelector('#guide-body'),suggestions=dialog.querySelector('#guide-suggestions'),keyboard=dialog.querySelector('.touch-keyboard');
     let mode='search',shift=false,context=null,opener=null,messages=[],queries={search:'',assistant:''};
@@ -135,20 +135,66 @@
       body.innerHTML=`<p class="guide-result-count" role="status">${query?(results.length?`${ranked.length} matching ${ranked.length===1?'topic':'topics'}`:'No matching topics'):'Popular topics · Tap to explore'}</p><div class="guide-results">${results.map(({entry:e})=>`<button type="button" class="guide-result" data-guide-target="${escape(JSON.stringify(e.target))}"><span class="guide-category">${escape(e.category)}</span><strong>${escape(e.title)} <span aria-hidden="true">›</span></strong><span>${escape(e.kind==='team'?e.team.short:e.text)}</span></button>`).join('')}</div>${query&&!results.length?`<div class="guide-empty"><h3>Let’s try another word</h3><p>Try “welcome,” “transportation,” or “join.” You can also ask a question in Ask Hospitality.</p><button type="button" data-guide-mode="assistant" class="guide-source">Ask Hospitality</button></div>`:''}`;
     }
     function drawChat() {
-      body.innerHTML=`<div class="guide-chat" role="log" aria-label="Hospitality conversation" aria-live="polite" aria-relevant="additions"><div class="guide-answer"><div class="guide-answer-heading"><img src="assets/emoji/serve.svg" alt="" width="32" height="32"><strong>Hospitality Assistant</strong></div><p>Welcome! Ask about our teams, find a place to serve, or get help joining.</p><small>Answers from the ministry guide</small><div class="guide-question-chips">${questionChips(askDefaults)}</div></div>${messages.map(m=>m.role==='user'?`<div class="guide-user"><p>${escape(m.text)}</p></div>`:`<div class="guide-answer"><p>${escape(m.text)}</p>${m.bullets?.length?`<ul>${m.bullets.map(b=>`<li>${escape(b)}</li>`).join('')}</ul>`:''}${m.detail?`<p>${escape(m.detail)}</p>`:''}${m.target?`<small>From the ministry guide</small>${actionLink(m.target,m.source)}`:''}${m.choices?`<div class="guide-question-chips">${m.choices.map(e=>`<button type="button" data-guide-question="${escape('Tell me about '+e.title)}">${escape(e.title)}</button>`).join('')}</div>`:''}${m.followups?.length?`<div class="guide-question-chips">${questionChips(m.followups)}</div>`:''}</div>`).join('')}</div>`;
+      const greet=`Hello, I’m Bro. Simon, your Hospitality guide. Ask me about our teams, find a place to serve, or get help joining the ministry.`;
+      body.innerHTML=`<div class="guide-chat" role="log" aria-label="Hospitality conversation" aria-live="polite" aria-relevant="additions"><div class="guide-answer"><div class="guide-answer-heading"><img src="assets/emoji/serve.svg" alt="" width="32" height="32"><strong>Bro. Simon</strong><button type="button" class="guide-voice" data-guide-speak="${escape(greet)}" aria-label="Hear Bro. Simon">🔊</button></div><p>${escape(greet)}</p><small>Natural voice · Answers from the ministry guide</small><div class="guide-question-chips">${questionChips(askDefaults)}</div></div>${messages.map(m=>m.role==='user'?`<div class="guide-user"><p>${escape(m.text)}</p></div>`:`<div class="guide-answer"><div class="guide-answer-heading"><img src="assets/emoji/serve.svg" alt="" width="28" height="28"><strong>Bro. Simon</strong><button type="button" class="guide-voice" data-guide-speak="${escape(spokenText(m))}" aria-label="Hear this answer">🔊</button></div><p>${escape(m.text)}</p>${m.bullets?.length?`<ul>${m.bullets.map(b=>`<li>${escape(b)}</li>`).join('')}</ul>`:''}${m.detail?`<p>${escape(m.detail)}</p>`:''}${m.target?`<small>From the ministry guide</small>${actionLink(m.target,m.source)}`:''}${m.choices?`<div class="guide-question-chips">${m.choices.map(e=>`<button type="button" data-guide-question="${escape('Tell me about '+e.title)}">${escape(e.title)}</button>`).join('')}</div>`:''}${m.unresolved?`<div class="guide-fallback"><p>Can’t find what you need? Our hospitality team is ready to help.</p><button type="button" class="btn primary guide-fast-help" data-guide-fast-help>${escape('Ask our Hospitality team')} <span aria-hidden="true">›</span></button></div>`:''}${m.followups?.length?`<div class="guide-question-chips">${questionChips(m.followups)}</div>`:''}</div>`).join('')}</div>`;
       const latest=body.querySelector('.guide-chat')?.lastElementChild;
       if(latest) body.scrollTop+=latest.getBoundingClientRect().top-body.getBoundingClientRect().top-14;
     }
+    function spokenText(m) {
+      const parts=[m.text];
+      if(m.bullets?.length) parts.push(m.bullets.join('. '));
+      if(m.detail) parts.push(m.detail);
+      return parts.filter(Boolean).join(' ');
+    }
+    const voiceState={voice:null,ready:false};
+    function pickVoice() {
+      if(!('speechSynthesis' in window)) return null;
+      const voices=window.speechSynthesis.getVoices();
+      if(!voices.length) return null;
+      // Prefer a natural-sounding male English voice. Google / Microsoft Natural voices sound closest to a real person.
+      const preferences=[
+        v=>/en[-_](US|GB|AU|CA)/i.test(v.lang) && /natural|neural|wavenet|studio/i.test(v.name) && /male|guy|brandon|ryan|guy|davis|tony|aaron|liam|andrew/i.test(v.name),
+        v=>/en[-_](US|GB|AU|CA)/i.test(v.lang) && /google/i.test(v.name) && /male|uk english male|us english male/i.test(v.name),
+        v=>/en[-_](US|GB|AU|CA)/i.test(v.lang) && /daniel|alex|fred|aaron|arthur|rishi|oliver|tom|bruce|guy|ryan|andrew|liam|brian|james|mark/i.test(v.name),
+        v=>/en[-_](US|GB|AU|CA|PH|IN)/i.test(v.lang) && !/female|zira|samantha|victoria|karen|moira|tessa|fiona|susan|allison|ava|serena/i.test(v.name),
+        v=>/^en/i.test(v.lang)
+      ];
+      for(const match of preferences){const found=voices.find(match);if(found) return found;}
+      return voices[0];
+    }
+    function ensureVoice() {
+      if(!('speechSynthesis' in window)) return;
+      voiceState.voice=pickVoice();
+      voiceState.ready=Boolean(voiceState.voice);
+    }
+    if('speechSynthesis' in window){
+      ensureVoice();
+      window.speechSynthesis.addEventListener?.('voiceschanged',ensureVoice);
+    }
+    function speak(text) {
+      if(!text || !('speechSynthesis' in window)) return;
+      try {
+        window.speechSynthesis.cancel();
+        if(!voiceState.ready) ensureVoice();
+        const utter=new SpeechSynthesisUtterance(text);
+        if(voiceState.voice){utter.voice=voiceState.voice;utter.lang=voiceState.voice.lang;}
+        // Tuned for a polite, calm, natural delivery.
+        utter.rate=0.96; utter.pitch=0.92; utter.volume=1;
+        window.speechSynthesis.speak(utter);
+      } catch { /* speechSynthesis may be blocked; the printed answer still appears. */ }
+    }
+    function stopSpeaking(){try{window.speechSynthesis?.cancel();}catch{}}
     function drawSuggestions() {
       const q=input.value.trim(),related=q?guide.search(q).slice(0,4).map(r=>r.entry.title):(mode==='search'?defaults:askDefaults);
       suggestions.innerHTML=related.length?`<span>${q?'Related topics':'Try'}</span>${related.map(s=>`<button type="button" data-guide-suggest="${escape(s)}">${escape(s)}</button>`).join('')}`:'<span>Try a team name, a role, or “join.”</span>';
     }
     function changeMode(next) {
       queries[mode]=input.value; mode=next; input.value=queries[mode];
-      dialog.querySelector('#discovery-title').textContent=mode==='search'?'Find your way':'How can we help?';
-      dialog.querySelector('#guide-label').textContent=mode==='search'?'What would you like to find?':'Ask about the Hospitality Ministry';
+      stopSpeaking();
+      dialog.querySelector('#discovery-title').textContent=mode==='search'?'Find your way':'Ask Bro. Simon';
+      dialog.querySelector('#guide-label').textContent=mode==='search'?'What would you like to find?':'Ask Bro. Simon about the Hospitality Ministry';
       dialog.querySelector('#guide-send').textContent=mode==='search'?'Search':'Ask';
-      input.placeholder=mode==='search'?'Search teams, roles, or joining…':'Type your question…';
+      input.placeholder=mode==='search'?'Search teams, roles, or joining…':'Type your question for Bro. Simon…';
       dialog.querySelectorAll('[role="tab"]').forEach(tab=>{const active=tab.dataset.guideMode===mode;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;});
       dialog.querySelector('#guide-panel').setAttribute('aria-labelledby',mode==='search'?'guide-search-tab':'guide-assistant-tab');
       mode==='search'?drawResults():drawChat();drawSuggestions();drawKeyboard();
@@ -160,12 +206,14 @@
       const question=input.value.trim(); if(!question)return;
       const response=guide.answer(question,context); if(!response)return;
       context=response.entryId||null;
-      messages.push({role:'user',text:question},{role:'assistant',...response});
+      const assistant={role:'assistant',...response};
+      messages.push({role:'user',text:question},assistant);
       messages=messages.slice(-24);input.value='';queries.assistant='';drawChat();drawSuggestions();
+      speak(spokenText(assistant));
       input.focus();
     }
     function close(reason) {
-      if(!dialog.open)return;dialog.close();
+      if(!dialog.open)return;dialog.close();stopSpeaking();
       if(!['navigate','reset','idle'].includes(reason)&&opener?.isConnected)opener.focus();
     }
     function editKey(key) {
@@ -192,12 +240,14 @@
       else if(button.dataset.guideKey)editKey(button.dataset.guideKey);
       else if(button.dataset.guideSuggest){input.value=button.dataset.guideSuggest;queries[mode]=input.value;input.focus();input.setSelectionRange(input.value.length,input.value.length);mode==='search'?drawResults():null;drawSuggestions();}
       else if(button.dataset.guideQuestion){input.value=button.dataset.guideQuestion;queries[mode]=input.value;submit();}
+      else if(button.dataset.guideSpeak){speak(button.dataset.guideSpeak);}
+      else if(button.hasAttribute('data-guide-fast-help')){close('navigate');openDestination({page:'join'});}
     });
     dialog.querySelector('#guide-form').addEventListener('submit',e=>{e.preventDefault();submit();});
     input.addEventListener('input',()=>{queries[mode]=input.value;activity();if(mode==='search')drawResults();drawSuggestions();});
     dialog.addEventListener('cancel',e=>{e.preventDefault();close();});
     dialog.querySelector('.discovery-tabs').addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();changeMode(e.key==='Home'?'search':e.key==='End'?'assistant':mode==='search'?'assistant':'search');dialog.querySelector('[aria-selected="true"]').focus();}});
-    return {isOpen:()=>dialog.open,close,reset:()=>{close('reset');messages=[];context=null;queries={search:'',assistant:''};input.value='';shift=false;}};
+    return {isOpen:()=>dialog.open,close,reset:()=>{stopSpeaking();close('reset');messages=[];context=null;queries={search:'',assistant:''};input.value='';shift=false;}};
   }
   window.HFGC_DISCOVERY={create,buildGuide};
 })();
