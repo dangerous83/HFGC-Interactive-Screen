@@ -1,6 +1,8 @@
 # HFGC EXPO 2026 — Hospitality Ministry
 
-A blue and gold, touch-first booth experience designed for a **1080 × 1920 portrait display**. The reference-style opening includes the animated HFGC logo and five large outlined navigation buttons. It includes four pillars, all nine ministry teams, a team finder, expandable responsibilities, and session reset. It uses the approved repository logo and has no external font, image, or JavaScript dependencies.
+A blue and gold, touch-first booth experience designed for a **1080 × 1920 portrait display**. The reference-style opening includes the animated HFGC logo and four large outlined navigation buttons. It includes four pillars, all nine ministry teams, a team finder, expandable responsibilities, and session reset. It uses the approved repository logo and has no external font, image, or JavaScript dependencies.
+
+The ministry copy follows the revised opening section of the October 5 document, **WHO WE ARE - HOSPITALITY INTERACTIVE**. That section takes precedence over the original creative brief retained later in the same document. It includes the complete pillar verses, the Greeters and VIP Reception locations, People with Determination terminology, the HFGC Altar Call Team, the coordinator/driver distinction, the Lounge/Host coordination note, and the Protocol leadership boundary. Longer responsibilities remain expandable. The approved opening design and the simplified locale church/district sign-up form are preserved.
 
 ## Open the experience
 
@@ -30,7 +32,7 @@ The optional online form appears as a second sign-up choice. Its entries are man
 
 ## Kiosk behavior
 
-The initial screen shows the logo with a soft looping gold glow and direct navigation to **Our Heart**, **What We Do**, **VIP Hospitality**, **Our Teams**, and **Get Involved**. The logo has no moving light sweep or scale animation. **Touch to Explore** opens the welcome menu. **Home**, the header logo, and **Start Over** clear the selected team, filters, and navigation history and return to the opening screen. Finishing a visit and an inactivity reset also return to that screen. Team selection stays in memory only until a session reset or page reload. Motion is disabled when the device requests reduced motion.
+The initial screen shows the logo with a soft looping gold glow and direct navigation to **Our Heart**, **What We Do**, **VIP Hospitality**, and **Get Involved**. The logo has no moving light sweep or scale animation. **Touch to Explore** opens the welcome menu. **Home**, the header logo, and **Start Over** clear the selected team, filters, and navigation history and return to the opening screen. Finishing a visit and an inactivity reset also return to that screen. Team selection stays in memory only until a session reset or page reload. Motion is disabled when the device requests reduced motion.
 
 After 90 seconds without interaction, **Still exploring?** offers Continue or Return to Home. Typing, selecting fields, and scrolling count as activity. After a further 15 seconds without a response, the session resets to the logo attract screen. The confirmation screen appears after a saved submission and returns home after 20 seconds. These durations can be changed in `config.js`.
 

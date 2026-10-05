@@ -89,6 +89,8 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline-color:var(--g
  .intro-content{max-width:420px;padding:5px 10px}.intro .intro-heading{font-size:24px;margin-bottom:10px}.intro .logo-reveal{width:45%;max-width:185px}.intro-subtitle{font-size:10px;margin:10px 0 15px}
  .intro-menu{gap:7px}.intro-menu button{min-height:47px;font-size:16px;padding:9px 15px}.intro-menu button svg{width:23px;height:23px}.intro-enter{font-size:11px;margin-top:10px;min-height:48px}
 }
+.team-location{font-size:20px;line-height:1.5;color:var(--muted);margin:20px 0 0}
+@media(orientation:portrait) and (min-width:700px){.team-location{font-size:24px}}
 /* The approved photo belongs only to the HFGC Greeters detail screen. */
 main.greeters-background{
  background-image:linear-gradient(180deg,#021b3520 0%,#021b3510 22%,#021b3570 48%,#021b35e8 100%),url('Greeters.png');

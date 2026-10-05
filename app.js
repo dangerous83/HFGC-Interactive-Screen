@@ -32,22 +32,263 @@
   const tile = name => `<span class="icon-tile">${icon(name)}</span>`;
   const escape = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const pillars = [
-    {id:'welcome', name:'Welcome', tagline:'Make people feel expected.', text:'We welcome people with warmth and help them feel that they belong.', scripture:'“Do not forget to show hospitality to strangers…”', reference:'Hebrews 13:2'},
-    {id:'honor', name:'Honor', tagline:'Make people feel valued.', text:'We treat every person with dignity and respect.', scripture:'“Honor one another above yourselves.”', reference:'Romans 12:10'},
-    {id:'serve', name:'Serve', tagline:'Make their experience easier.', text:'We remove barriers and put the needs of others ahead of our own convenience.', scripture:'“Use whatever gift you have received to serve others…”', reference:'1 Peter 4:10'},
-    {id:'care', name:'Care', tagline:'Make people feel remembered.', text:'We notice people’s needs and respond with thoughtful, practical care.', scripture:'“God is not unjust; he will not forget your work and the love you have shown him…”', reference:'Hebrews 6:10'}
-  ];
+  {
+    "id": "welcome",
+    "name": "Welcome",
+    "tagline": "We make all people feel expected.",
+    "text": "We make all people feel expected.",
+    "scripture": "“Do not forget to show hospitality to strangers, for by so doing some people have shown hospitality to angels without knowing it.”",
+    "reference": "Hebrews 13:2"
+  },
+  {
+    "id": "honor",
+    "name": "Honor",
+    "tagline": "We make people feel valued.",
+    "text": "We make people feel valued.",
+    "scripture": "“Be devoted to one another in love. Honor one another above yourselves.”",
+    "reference": "Romans 12:10"
+  },
+  {
+    "id": "serve",
+    "name": "Serve",
+    "tagline": "We make their experience easier.",
+    "text": "We make their experience easier.",
+    "scripture": "“Each of you should use whatever gift you have received to serve others, as faithful stewards of God’s grace in its various forms.”",
+    "reference": "1 Peter 4:10"
+  },
+  {
+    "id": "care",
+    "name": "Care",
+    "tagline": "We make people feel remembered.",
+    "text": "We make people feel remembered.",
+    "scripture": "“God is not unjust; he will not forget your work and the love you have shown him as you have helped his people and continue to help them.”",
+    "reference": "Hebrews 6:10"
+  }
+];
   const teams = [
-    {id:'greeters', category:'general', name:'HFGC Greeters', icon:'users', short:'Create a warm and joyful first impression.', tagline:'A warm welcome starts with you.', purpose:'Create a joyful first impression and welcome every guest with warmth and the love of Christ.', fit:'You enjoy meeting people and helping them feel welcome.', interest:'I’m Interested in Greeters', finder:'I love welcoming people.', responsibilities:['Welcome arriving guests.','Greet with warmth and enthusiasm.','Direct guests to registration and venue areas.','Identify guests who may need assistance.','Create a joyful atmosphere.','Coordinate with other Hospitality teams.'], extraTitle:'Welcome & Atmosphere', extraList:['Mascots','Air Dancers','HFGC Welcome Presentations','Special Welcome Activities']},
-    {id:'ushers', category:'general', name:'HFGC Ushers', icon:'guide', short:'Help guests move safely and confidently.', tagline:'We guide. We assist. We care.', purpose:'Help guests move through the venue safely, smoothly, and confidently.', fit:'You enjoy guiding people, staying attentive, and helping activities run smoothly.', interest:'I’m Interested in Ushers', finder:'I love helping people find their way.', responsibilities:['Guide guests to seating areas.','Assist with crowd flow.','Help maintain orderly movement.','Assist elderly guests, persons with disabilities, and families.','Direct guests to facilities.','Coordinate with Security.','Assist with altar-call movement.','Assist with baptism movement.'], extraTitle:'HFGC Altar Response Team', extraText:'Ushers may also help guide those responding to the altar call toward the appropriate ministry and baptism areas.'},
-    {id:'assistance', category:'general', name:'“May I Help You?” Team', icon:'help', short:'Provide assistance wherever guests need it.', tagline:'Help wherever it is needed.', purpose:'Move throughout the venue, looking for opportunities to assist guests.', fit:'You enjoy answering questions, solving practical problems, and connecting people with the right help.', interest:'I’m Interested in Guest Assistance', finder:'I love helping people with their needs.', responsibilityLabel:'View Assistance Areas', responsibilities:['Directions','Program information','Venue facilities','Registration questions','Lost & Found','Transportation information','Food areas','Medical locations','Children’s areas','Accessibility','General concerns'], note:'Our key question: “May I help you?”', extraTitle:'When We Don’t Know the Answer', extraText:'“Let me find someone who can help you.”'},
-    {id:'reception', category:'vip', name:'VIP Reception', icon:'reception', short:'Welcome guests and connect them with their Hosts.', tagline:'We receive. We welcome. We connect.', purpose:'Receive and welcome VIP guests at airport, hotel, and venue arrival points.', fit:'You enjoy welcoming guests and coordinating arrival arrangements.', interest:'I’m Interested in VIP Reception', finder:'I enjoy welcoming guests and organizing arrivals.', responsibilities:['Welcome VIP guests.','Verify arrival.','Coordinate VIP identification and access credentials with the appropriate team.','Receive luggage when appropriate.','Connect VIPs with their assigned Host.','Coordinate vehicles.','Direct VIPs to the appropriate venue, hotel, or lounge.']},
-    {id:'hosts', category:'vip', name:'VIP Hosts / Handlers', icon:'host', short:'Accompany assigned guests throughout their visit.', tagline:'One guest. One Host. One commitment to care.', purpose:'Personally accompany assigned VIP guests throughout their HFGC experience.', fit:'You enjoy attentive guest care, communication, and keeping track of schedules.', interest:'I’m Interested in VIP Hosting', finder:'I love personalized guest care.', responsibilities:['Accompany assigned VIPs.','Know their itinerary.','Coordinate movements.','Escort them to meetings and meals.','Coordinate stage calls.','Monitor schedules.','Anticipate needs.','Coordinate with Protocol.','Remain available throughout the assignment.']},
-    {id:'transportation', category:'vip', name:'VIP Transportation', icon:'car', short:'Coordinate safe, timely transportation.', tagline:'Safe journeys. Coordinated movements.', purpose:'Coordinate and provide transportation according to approved itineraries and transportation plans.', fit:'You enjoy logistics and scheduling, or would like to express interest in serving as a driver.', interest:'I’m Interested in VIP Transportation', finder:'I love logistics and transportation.', responsibilityLabel:'Coordinator Responsibilities', responsibilities:['Coordinate airport transfers.','Coordinate hotel transfers.','Coordinate venue transfers.','Manage vehicle assignments.','Manage driver assignments.','Arrange pickup and drop-off schedules.','Coordinate contingency transportation.'], extraTitle:'Driver Responsibilities', extraList:['Professionally and safely transport assigned VIP guests.','Follow the approved itinerary and transportation plan.'], note:'The Coordinator manages the movement. The Driver operates the vehicle.'},
-    {id:'runners', category:'vip', name:'VIP Support Runners', icon:'runner', short:'Respond quickly to practical and logistical needs.', tagline:'Ready. Responsive. Reliable.', purpose:'Provide rapid logistical assistance to the VIP Hospitality team.', fit:'You enjoy practical tasks, quick responses, and supporting others.', interest:'I’m Interested in Support Runners', finder:'I enjoy providing quick, practical support.', responsibilities:['Deliver documents.','Retrieve items.','Bring water and materials.','Coordinate last-minute supplies.','Relay information.','Assist with room preparation.','Support VIP Hosts.'], note:'When a need arises, we respond.'},
-    {id:'lounge', category:'vip', name:'VIP Lounge', icon:'lounge', short:'Prepare a comfortable, welcoming guest environment.', tagline:'Prepare. Serve. Care.', purpose:'Create a comfortable and welcoming environment where VIP guests feel prepared and cared for.', fit:'You enjoy preparing spaces, serving refreshments, and noticing details that improve guest comfort.', interest:'I’m Interested in the VIP Lounge', finder:'I love preparing spaces and serving guests.', responsibilities:['Prepare the VIP reception area.','Arrange seating.','Oversee refreshments and meals.','Attend to guest comfort.','Provide guest information.','Maintain lounge readiness.','Assist with special requests.','Support the transition from the lounge to the program.'], note:'Every VIP should feel welcomed, prepared, and cared for before entering the program.'},
-    {id:'protocol', category:'vip', name:'VIP Protocol Liaison', icon:'protocol', short:'Coordinate approved arrangements with Protocol leadership.', tagline:'We coordinate. We implement. We honor.', purpose:'Work closely with official Protocol leadership to carry out approved VIP arrangements with care.', fit:'You enjoy organization, clear communication, and following approved arrangements.', interest:'I’m Interested in Protocol Liaison', finder:'I love organization and protocol.', responsibilityLabel:'View Coordination Areas', responsibilities:['Order of arrival','Approved VIP precedence','Seating','Stage access','Meeting arrangements','Official introductions','Special protocol requirements'], note:'Protocol sets the order. Hospitality carries it out with care.'}
-  ];
+  {
+    "id": "greeters",
+    "category": "general",
+    "name": "HFGC Greeters",
+    "icon": "users",
+    "short": "Create the first impression with warmth, joy, and the love of Christ.",
+    "tagline": "A warm welcome starts with you.",
+    "purpose": "They create the first impression of HFGC by welcoming every guest with warmth, joy, and the love of Christ.",
+    "fit": "You enjoy meeting people and helping them feel welcome.",
+    "interest": "I’m Interested in Greeters",
+    "finder": "I love welcoming people.",
+    "responsibilities": [
+      "Welcome arriving guests",
+      "Smile and greet",
+      "Direct guests toward registration/venue",
+      "Identify guests needing assistance (PWD - People with Determination)",
+      "Create a joyful atmosphere",
+      "Coordinate with Information/May I Help You teams"
+    ],
+    "extraTitle": "Atmosphere & Welcome Elements",
+    "extraList": [
+      "Mascots",
+      "Air Dancers",
+      "Mascots from HFGC locations, if possible: Japan, UAE, Cavite, Laguna, Pampanga",
+      "HFGC Welcome Presentations"
+    ],
+    "location": "Entrances, arrival points, key access areas"
+  },
+  {
+    "id": "ushers",
+    "category": "general",
+    "name": "HFGC Ushers",
+    "icon": "guide",
+    "short": "Guide guests safely throughout the venue and program.",
+    "tagline": "We guide. We assist. We care.",
+    "purpose": "They guide guests safely and efficiently throughout the venue, helping them find their designated areas and participate smoothly in the program.",
+    "fit": "You enjoy guiding people, staying attentive, and helping activities run smoothly.",
+    "interest": "I’m Interested in Ushers",
+    "finder": "I love helping people find their way.",
+    "responsibilities": [
+      "Guide guests to seating areas",
+      "Assist with crowd flow",
+      "Help maintain orderly movement",
+      "Assist elderly guests, PWDs (People with Determination), and families when needed",
+      "Direct guests to facilities",
+      "Coordinate with Security",
+      "Assist with altar-call movement",
+      "Assist with baptism movement"
+    ],
+    "extraTitle": "HFGC Altar Call Team",
+    "extraText": "They can also serve as the HFGC Altar Call Team. They guide people who respond to the altar call."
+  },
+  {
+    "id": "assistance",
+    "category": "general",
+    "name": "HFGC “May I Help You?” Team",
+    "icon": "help",
+    "short": "Provide mobile information and proactive guest care.",
+    "tagline": "Help wherever it is needed.",
+    "purpose": "They are the mobile information and guest-care team, proactively assisting guests with questions, directions, and practical needs throughout the venue.",
+    "fit": "You enjoy answering questions, solving practical problems, and connecting people with the right help.",
+    "interest": "I’m Interested in Guest Assistance",
+    "finder": "I love helping people with their needs.",
+    "responsibilityLabel": "View Assistance Areas",
+    "responsibilities": [
+      "Directions",
+      "Program information",
+      "Venue facilities",
+      "Registration questions",
+      "Lost & found",
+      "Transportation information",
+      "Food areas",
+      "Medical locations",
+      "Children’s areas",
+      "Accessibility",
+      "General concerns"
+    ],
+    "note": "Our key question: “May I help you?”",
+    "extraTitle": "When We Don’t Know the Answer",
+    "extraText": "When they don’t know the answer: “Let me find someone who can help you.” That is hospitality."
+  },
+  {
+    "id": "reception",
+    "category": "vip",
+    "name": "HFGC VIP Reception Team",
+    "icon": "reception",
+    "short": "Receive, welcome, verify, and introduce VIPs to their Hosts.",
+    "tagline": "We receive. We welcome. We connect.",
+    "purpose": "They receive, welcome, verify, and introduce VIP guests to their assigned HFGC host.",
+    "fit": "You enjoy welcoming guests and coordinating arrival arrangements.",
+    "interest": "I’m Interested in VIP Reception",
+    "finder": "I enjoy welcoming guests and organizing arrivals.",
+    "responsibilities": [
+      "Welcome VIP",
+      "Verify arrival",
+      "Coordinate credentials",
+      "Receive luggage when appropriate",
+      "Connect VIP to assigned Host",
+      "Coordinate vehicle",
+      "Direct VIP to lounge/hotel/venue"
+    ],
+    "location": "Airport, hotel, and venue arrival points"
+  },
+  {
+    "id": "hosts",
+    "category": "vip",
+    "name": "HFGC VIP Hosts / Handlers",
+    "icon": "host",
+    "short": "Provide personalized care throughout each VIP’s HFGC experience.",
+    "tagline": "One guest. One Host. One commitment to care.",
+    "purpose": "They provide personalized care and assistance to assigned VIP guests throughout their HFGC experience.",
+    "fit": "You enjoy attentive guest care, communication, and keeping track of schedules.",
+    "interest": "I’m Interested in VIP Hosting",
+    "finder": "I love personalized guest care.",
+    "responsibilities": [
+      "Accompany assigned VIP",
+      "Know the VIP’s itinerary",
+      "Coordinate movements",
+      "Escort to meetings",
+      "Escort to meals",
+      "Coordinate stage call",
+      "Monitor schedule",
+      "Anticipate needs",
+      "Coordinate with Protocol",
+      "Remain available throughout the assignment"
+    ]
+  },
+  {
+    "id": "transportation",
+    "category": "vip",
+    "name": "HFGC VIP Transportation Team",
+    "icon": "car",
+    "short": "Manage VIP vehicle movement and safe transportation.",
+    "tagline": "Safe journeys. Coordinated movements.",
+    "purpose": "Manage the movement and scheduling of VIP vehicles.",
+    "fit": "You enjoy logistics and scheduling, or would like to express interest in serving as a driver.",
+    "interest": "I’m Interested in VIP Transportation",
+    "finder": "I love logistics and transportation.",
+    "responsibilityLabel": "VIP Transportation Coordinators",
+    "responsibilities": [
+      "Airport transfers",
+      "Hotel transfers",
+      "Venue transfers",
+      "Vehicle assignments",
+      "Driver assignments",
+      "Pickup/drop-off schedules",
+      "Contingency transportation"
+    ],
+    "extraTitle": "VIP Drivers",
+    "extraList": null,
+    "note": "Transportation Coordinator = manages the movement. Driver = operates the vehicle.",
+    "extraText": "Professionally and safely transport assigned VIP guests according to the approved itinerary."
+  },
+  {
+    "id": "runners",
+    "category": "vip",
+    "name": "HFGC VIP Support Runners",
+    "icon": "runner",
+    "short": "Provide rapid logistical support for time-sensitive needs.",
+    "tagline": "Ready. Responsive. Reliable.",
+    "purpose": "They provide rapid logistical support to VIP Hospitality operations and respond to time-sensitive needs.",
+    "fit": "You enjoy practical tasks, quick responses, and supporting others.",
+    "interest": "I’m Interested in Support Runners",
+    "finder": "I enjoy providing quick, practical support.",
+    "responsibilities": [
+      "Deliver documents",
+      "Retrieve items",
+      "Bring water/materials",
+      "Coordinate last-minute supplies",
+      "Relay information",
+      "Assist with room preparation",
+      "Support VIP Hosts"
+    ],
+    "note": "They serve as a rapid-response support team."
+  },
+  {
+    "id": "lounge",
+    "category": "vip",
+    "name": "HFGC VIP Lounge Team",
+    "icon": "lounge",
+    "short": "Manage the VIP lounge and work closely with VIP Hosts.",
+    "tagline": "Prepare. Serve. Care.",
+    "purpose": "They manage the VIP reception area, guest comfort, and lounge readiness.",
+    "fit": "You enjoy preparing spaces, serving refreshments, and noticing details that improve guest comfort.",
+    "interest": "I’m Interested in the VIP Lounge",
+    "finder": "I love preparing spaces and serving guests.",
+    "responsibilities": [
+      "VIP reception area",
+      "Seating",
+      "Refreshments",
+      "Meals",
+      "Comfort",
+      "Guest information",
+      "Lounge readiness",
+      "Special requests",
+      "Transition from lounge → program"
+    ],
+    "note": "They should work closely with the VIP Hosts."
+  },
+  {
+    "id": "protocol",
+    "category": "vip",
+    "name": "HFGC VIP Protocol Liaison Team",
+    "icon": "protocol",
+    "short": "Coordinate with official Protocol leadership.",
+    "tagline": "We coordinate. We implement. We honor.",
+    "purpose": "This person/team coordinates with the official Protocol leadership.",
+    "fit": "You enjoy organization, clear communication, and following approved arrangements.",
+    "interest": "I’m Interested in Protocol Liaison",
+    "finder": "I love organization and protocol.",
+    "responsibilityLabel": "View Coordination Areas",
+    "responsibilities": [
+      "Order of arrival",
+      "VIP precedence",
+      "Seating",
+      "Stage access",
+      "Meeting arrangements",
+      "Official introductions",
+      "Special protocol requirements"
+    ],
+    "note": "This prevents Hospitality from accidentally making protocol decisions that belong to leadership."
+  }
+];
   const main = document.getElementById('main');
   const intro = document.getElementById('intro');
   const experience = document.getElementById('experience');
@@ -78,20 +319,20 @@
     return `<section class="page home-page portrait-home"><div class="portrait-welcome"><p class="eyebrow gold-text">WELCOME TO HOSPITALITY</p><h1>There’s a place<br><em>for you.</em></h1><p class="lead">Every guest matters.<br>Every person matters to Christ.</p></div><div class="welcome-menu">${destinations.map(([page,name,label,description])=>`<button type="button" data-page="${page}">${tile(name)}<span><strong>${label}</strong><small>${description}</small></span><span class="welcome-arrow" aria-hidden="true">›</span></button>`).join('')}</div><div class="scripture-strip">${icon('book')}<p>“Accept one another, then, just as Christ accepted you, in order to bring praise to God.” <cite>Romans 15:7</cite></p></div></section>`;
   }
   function heart() {
-    return `<section class="page">${title('OUR HEART','Hospitality is a ministry of love.','We reflect Christ through the way we welcome, honor, serve, and care for people.')}<div class="split-cards"><button class="feature-card" data-page="general">${tile('users')}<h2>General Hospitality</h2><p>Intentional care for every guest. A warm welcome, a guiding hand, and practical help.</p><span class="card-link">Explore General Hospitality</span></button><button class="feature-card dark" data-page="vip">${tile('honor')}<h2>VIP Hospitality</h2><p>Personalized care for guests with special roles and responsibilities, from arrival to departure.</p><span class="card-link">Explore VIP Hospitality</span></button></div><div class="heart-bottom"><div><h3>Everyone receives Christ-centered care.</h3><p>Welcome. Honor. Serve. Care. Four pillars. One heart.</p></div>${btn('Explore Our Four Pillars','pillars','primary')}</div></section>`;
+    return `<section class="page">${title('WHO ARE WE?','HFGC Hospitality Ministry','We are a ministry of welcome, honor, service, and care—committed to making every guest experience the love of Christ through intentional hospitality.')}<div class="split-cards"><button class="feature-card" data-page="general">${tile('users')}<h2>General Hospitality</h2><p>In General hospitality, we give intentional care.</p><span class="card-link">Explore General Hospitality</span></button><button class="feature-card dark" data-page="vip">${tile('honor')}<h2>VIP Hospitality</h2><p>While in VIP hospitality, we give personalized care.</p><span class="card-link">Explore VIP Hospitality</span></button></div><div class="heart-bottom"><div><h3>Everyone receives Christ-centered care.</h3><p>Welcome. Honor. Serve. Care.</p></div>${btn('Explore Our Four Pillars','pillars','primary')}</div><div class="scripture-strip">${icon('book')}<p>“Accept one another, then, just as Christ accepted you, in order to bring praise to God.” <cite>Romans 15:7</cite></p></div></section>`;
   }
   function pillarOverview() {
-    return `<section class="page">${back('Back to Our Heart')}${title('OUR FOUR PILLARS','The heart behind every welcome.','Touch a pillar to discover the heart and Scripture behind it.')}<div class="pillar-grid">${pillars.map((p,i)=>`<button class="pillar-card" data-pillar="${p.id}"><span class="pillar-number">0${i+1} / OUR HEART</span>${tile(p.id)}<h2>${p.name}</h2><p>${p.tagline}</p><span class="card-link">Discover ${p.name}</span></button>`).join('')}</div><div class="section-note"><p>Hospitality is a ministry of welcome, honor, service, and care.</p><div class="actions">${btn('Explore Our Teams','teams','secondary')}${btn('Join Us','join')}</div></div></section>`;
+    return `<section class="page">${back('Back to Our Heart')}${title('OUR FOUR PILLARS','Welcome. Honor. Serve. Care.','Touch a pillar to discover the heart and Scripture behind it.')}<div class="pillar-grid">${pillars.map((p,i)=>`<button class="pillar-card" data-pillar="${p.id}"><span class="pillar-number">0${i+1} / OUR HEART</span>${tile(p.id)}<h2>${p.name}</h2><p>${p.tagline}</p><span class="card-link">Discover ${p.name}</span></button>`).join('')}</div><div class="section-note"><p>VIP hospitality gives personalized care. General hospitality gives intentional care. But everyone receives Christ-centered care.</p><div class="actions">${btn('Explore Our Teams','teams','secondary')}${btn('Join Us','join')}</div></div></section>`;
   }
   function pillarDetail() {
     const p = pillars.find(p=>p.id===state.pillar) || pillars[0];
-    return `<section class="page">${back('Back to Our Four Pillars')}<div class="pillar-detail"><div class="pillar-intro"><p class="eyebrow">THE HEART OF HOSPITALITY</p>${tile(p.id)}<h2>${p.name}</h2><p>${p.tagline}</p></div><div class="pillar-body"><p>${p.text}</p><blockquote class="quote">${p.scripture}<cite>${p.reference}</cite></blockquote><div class="actions">${btn('Explore Our Teams','teams')}${btn('Join Us','join','secondary')}</div></div></div></section>`;
+    return `<section class="page">${back('Back to Our Four Pillars')}<div class="pillar-detail"><div class="pillar-intro"><p class="eyebrow">THE HEART OF HOSPITALITY</p>${tile(p.id)}<h2>${p.name}</h2><p>${p.tagline}</p></div><div class="pillar-body">${p.text!==p.tagline ? `<p>${p.text}</p>` : ''}<blockquote class="quote">${p.scripture}<cite>${p.reference}</cite></blockquote><div class="actions">${btn('Explore Our Teams','teams')}${btn('Join Us','join','secondary')}</div></div></div></section>`;
   }
   function general() {
-    return `<section class="page">${title('WHAT WE DO · GENERAL HOSPITALITY','Intentional care for every guest.','From the first welcome to finding a seat or getting assistance, we help guests feel comfortable and supported.')} ${teamCards(teams.filter(t=>t.category==='general'),true)}<div class="section-note"><p>One ministry. Many ways to welcome, honor, serve, and care.</p>${btn('Explore VIP Hospitality','vip','secondary')}</div></section>`;
+    return `<section class="page">${title('WHAT WE DO · GENERAL HOSPITALITY','Hospitality for General Guests','In General hospitality, we give intentional care.')} ${teamCards(teams.filter(t=>t.category==='general'),true)}<div class="section-note"><p>Everyone receives Christ-centered care.</p>${btn('Explore VIP Hospitality','vip','secondary')}</div></section>`;
   }
   function vip() {
-    return `<section class="page">${title('VIP HOSPITALITY','Personalized care, every step of the way.','Thoughtful assistance for guests with special roles and responsibilities at HFGC.')} ${teamCards(teams.filter(t=>t.category==='vip'))}<div class="section-note"><p>From arrival to departure, we help each guest feel welcomed, prepared, and cared for.</p>${btn('Find Your Team','finder','secondary','compass')}</div></section>`;
+    return `<section class="page">${title('VIP HOSPITALITY','Hospitality for VIP Guests','While in VIP hospitality, we give personalized care.')} ${teamCards(teams.filter(t=>t.category==='vip'))}<div class="section-note"><p>Everyone receives Christ-centered care.</p>${btn('Find Your Team','finder','secondary','compass')}</div></section>`;
   }
   function directory() {
     const list = teams.filter(t=>state.filter==='all' || t.category===state.filter);
@@ -102,7 +343,7 @@
   }
   function teamDetail() {
     const t=teams.find(t=>t.id===state.team) || teams[0];
-    return `<section class="page detail-page">${back('Back to Teams')}<div class="detail-top"><p class="eyebrow">${t.category==='general'?'GENERAL HOSPITALITY':'VIP HOSPITALITY'}</p></div><div class="detail-layout"><div class="detail-summary">${tile(t.icon)}<h1>${t.name}</h1><p class="tagline">${t.tagline}</p><p class="purpose">${t.purpose}</p>${t.note ? `<p class="aside-message">${t.note}</p>` : ''}</div><div class="detail-right"><div class="fit-card"><p class="eyebrow">THIS TEAM MAY SUIT YOU IF…</p><p>${t.fit}</p></div><div class="responsibility-panel">${responsibilities(t.responsibilityLabel || 'View Responsibilities',t.responsibilities)}${t.extraTitle ? responsibilities(t.extraTitle,t.extraList,t.extraText) : ''}</div><button class="btn primary" data-interest="${t.id}">${icon('heart')}${t.interest}</button></div></div></section>`;
+    return `<section class="page detail-page">${back('Back to Teams')}<div class="detail-top"><p class="eyebrow">${t.category==='general'?'GENERAL HOSPITALITY':'VIP HOSPITALITY'}</p></div><div class="detail-layout"><div class="detail-summary">${tile(t.icon)}<h1>${t.name}</h1><p class="tagline">${t.tagline}</p><p class="purpose">${t.purpose}</p>${t.location ? `<p class="team-location"><strong>Location:</strong> ${escape(t.location)}</p>` : ''}${t.note ? `<p class="aside-message">${t.note}</p>` : ''}</div><div class="detail-right"><div class="fit-card"><p class="eyebrow">THIS TEAM MAY SUIT YOU IF…</p><p>${t.fit}</p></div><div class="responsibility-panel">${responsibilities(t.responsibilityLabel || 'View Responsibilities',t.responsibilities)}${t.extraTitle ? responsibilities(t.extraTitle,t.extraList,t.extraText) : ''}</div><button class="btn primary" data-interest="${t.id}">${icon('heart')}${t.interest}</button></div></div></section>`;
   }
   function finder() {
     return `<section class="page">${title('FIND YOUR TEAM','What do you enjoy?','Choose an interest to explore a team that may suit you.')}<div class="finder-grid">${teams.map(t=>`<button class="interest-card" data-team="${t.id}">${tile(t.icon)}<span>${t.finder}</span></button>`).join('')}</div><div class="finder-foot"><p>A starting point to explore your interests. Team assignments are confirmed by ministry leadership.</p><button class="btn secondary" data-unsure>I’m Not Sure Yet</button></div></section>`;
