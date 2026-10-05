@@ -10,8 +10,9 @@
       records = window.HFGC_SIGNUPS.list();
       exportButton.disabled = !records.length;
       status.textContent = records.length ? `${records.length} saved ${records.length===1?'interest form':'interest forms'} on this kiosk.` : 'No interest forms have been saved in this browser yet.';
-      const fields = [['team','Preferred team'],['phone','Phone'],['email','Email'],['church','Church / location'],['reason','Why they’d like to join'],['availability','Availability']];
-      list.innerHTML = [...records].reverse().map(r => `<article class="signup-record"><h2>${escape(r.name)}</h2><p class="record-time">${escape(new Date(r.createdAt).toLocaleString())}</p><dl>${fields.map(([key,label])=>`<dt>${label}</dt><dd>${escape(r[key] || '—')}</dd>`).join('')}</dl></article>`).join('');
+      const fields = [['team','Preferred team'],['phone','Phone'],['email','Email'],['church','Locale Church'],['district','District']];
+      const previousFields = [['reason','Why they’d like to join (previous form)'],['availability','Availability (previous form)']];
+      list.innerHTML = [...records].reverse().map(r => `<article class="signup-record"><h2>${escape(r.name)}</h2><p class="record-time">${escape(new Date(r.createdAt).toLocaleString())}</p><dl>${[...fields,...previousFields.filter(([key])=>r[key])].map(([key,label])=>`<dt>${label}</dt><dd>${escape(r[key] || '—')}</dd>`).join('')}</dl></article>`).join('');
     } catch {
       records = [];
       exportButton.disabled = true;

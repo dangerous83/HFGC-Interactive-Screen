@@ -26,8 +26,8 @@
       if (/^[\s\uFEFF]*[=+@-]/.test(text) || /^[\t\r\n]/.test(text)) text = "'" + text;
       return '"' + text.replace(/"/g, '""') + '"';
     };
-    const columns = ['createdAt','name','phone','email','church','team','reason','availability','id'];
-    const labels = ['Saved at (UTC)','Full name','Phone','Email','Church / location','Preferred team','Reason for joining','Availability','Reference'];
+    const columns = ['createdAt','name','phone','email','church','district','team','reason','availability','id'];
+    const labels = ['Saved at (UTC)','Full name','Phone','Email','Locale Church','District','Preferred team','Reason for joining (previous forms)','Availability (previous forms)','Reference'];
     return '\uFEFF' + [labels, ...records.map(r => columns.map(c => r[c]))].map(row => row.map(cell).join(',')).join('\r\n');
   }
   window.HFGC_SIGNUPS = Object.freeze({list, save, csv});
