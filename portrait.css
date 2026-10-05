@@ -25,8 +25,11 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline-color:var(--g
 .intro-content{width:min(100%,720px);padding:20px 24px;display:flex;flex-direction:column;align-items:center;animation:none}
 .intro .intro-heading{font-size:clamp(26px,4vw,64px);color:var(--gold);letter-spacing:.07em;margin:0 0 24px;animation:fade-up .9s both}
 .intro .logo-reveal{width:min(78%,510px);max-width:none;margin:0 auto;overflow:visible}
-.intro .logo-reveal img{animation:logo-glow 4s ease-in-out infinite;transform:none;opacity:1;filter:drop-shadow(0 0 7px #f3d16f35)}
-@keyframes logo-glow{0%,100%{filter:drop-shadow(0 0 7px #f3d16f35)}50%{filter:drop-shadow(0 0 15px #f3d16f80) drop-shadow(0 0 30px #f3d16f30)}}
+.intro .logo-reveal img{position:relative;z-index:1;animation:none;transform:none;opacity:1;filter:none}
+.logo-dust{position:absolute;inset:-12%;z-index:0;pointer-events:none}
+.logo-dust span{position:absolute;left:var(--x);top:var(--y);width:var(--size);height:var(--size);border-radius:50%;background:#ffdc91;opacity:0;animation:logo-dust-drift var(--duration) var(--delay) linear infinite;pointer-events:none}
+.intro.dismissed .logo-dust span{animation-play-state:paused}
+@keyframes logo-dust-drift{0%{opacity:0;transform:translate(0,0) scale(.65)}25%{opacity:.55;transform:translate(calc(var(--dx) * .3),calc(var(--dy) * .25)) scale(1)}65%{opacity:.3;transform:translate(calc(var(--dx) * .75),calc(var(--dy) * .65)) scale(.85)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(.6)}}
 .intro-subtitle{color:var(--gold);font-size:clamp(12px,1.8vw,23px);letter-spacing:.2em;margin:26px 0 32px;animation:fade-up .8s .2s both}
 .intro-menu{display:grid;grid-template-columns:1fr;gap:14px;width:100%;margin:0;padding:0;border:0;order:initial}
 .intro-menu button{display:flex;align-items:center;gap:22px;min-height:84px;padding:18px 25px;border:2px solid #f3d16fc0;border-radius:12px;background:linear-gradient(110deg,#07558a88,#042344);color:#fffaf0;text-align:left;font-size:clamp(18px,2.7vw,34px);font-weight:400;white-space:normal;animation:fade-up .55s both}
@@ -169,4 +172,4 @@ main.assistance-background{
 .assistance-background .fit-card,.assistance-background .responsibility-panel{background:#032747ed;border-color:#f3d16f70}
 .assistance-background .back-button,.assistance-background .detail-top .eyebrow{background:#021b35b8;border-radius:10px;padding:10px 16px;width:fit-content;text-shadow:0 2px 10px #021b35}
 @media(max-width:650px){.assistance-background .detail-layout{padding-top:250px}}
-@media(prefers-reduced-motion:reduce){.intro-menu button,.intro-menu .intro-emoji{animation:none!important}.intro-menu .intro-emoji{will-change:auto}}
+@media(prefers-reduced-motion:reduce){.intro-menu button,.intro-menu .intro-emoji,.logo-dust span{animation:none!important}.intro-menu .intro-emoji{will-change:auto}.logo-dust{display:none}}
