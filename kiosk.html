@@ -13,7 +13,9 @@
   <script defer src="config.js?v=signup-20261002"></script>
   <link rel="stylesheet" href="registration.css?v=20261005">
   <script defer src="signups.js?v=20261005"></script>
-  <script defer src="app.js?v=emoji-20261005"></script>
+  <link rel="stylesheet" href="discovery.css?v=20261005">
+  <script defer src="discovery.js?v=20261005"></script>
+  <script defer src="app.js?v=discovery-20261005"></script>
 </head>
 <body>
   <div id="intro" class="intro" aria-label="Welcome to HFGC EXPO 2026">
@@ -30,6 +32,7 @@
         <button type="button" data-intro-page="vip"><img class="intro-emoji" data-emoji="honor" src="assets/emoji/honor.svg" width="43" height="43" alt="" aria-hidden="true"><span>VIP Hospitality</span><span class="intro-arrow" aria-hidden="true">›</span></button>
         <button type="button" data-intro-page="join"><img class="intro-emoji" data-emoji="care" src="assets/emoji/care.svg" width="43" height="43" alt="" aria-hidden="true"><span>Get Involved</span><span class="intro-arrow" aria-hidden="true">›</span></button>
       </nav>
+      <div class="intro-tools"><button type="button" data-discovery="search"><span aria-hidden="true">⌕</span> Search ministry</button><button type="button" data-discovery="assistant"><img src="assets/emoji/serve.svg" alt="" width="28" height="28"> Ask Hospitality</button></div>
       <button id="enter" class="intro-enter" type="button">TOUCH TO EXPLORE <span class="touch-mark" aria-hidden="true">↓</span></button>
     </div>
     <p class="intro-caption">WELCOME · HONOR · SERVE · CARE</p>
@@ -47,13 +50,14 @@
         <button data-page="teams">Our Teams</button>
         <button data-page="join" class="nav-join">Join Us</button>
       </nav>
+      <button type="button" class="search-launcher" data-discovery="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"></circle><path d="m16 16 5 5"></path></svg> Search</button>
       <button id="fullscreen" class="icon-button" aria-label="Enter full screen" title="Full screen"></button>
     </header>
     <main id="main" tabindex="-1"></main>
     <footer class="bottom-bar">
       <button data-page="home" class="home-button" id="home-button"></button>
       <p>WELCOME <span>·</span> HONOR <span>·</span> SERVE <span>·</span> CARE</p>
-      <button id="restart" class="text-button">Start Over</button>
+      <button type="button" class="assistant-launcher" data-discovery="assistant"><span class="assistant-hand"><img src="assets/emoji/serve.svg" width="42" height="42" alt=""></span><span>Ask Hospitality<small>Ministry assistant</small></span></button>
     </footer>
   </div>
   <dialog id="idle-dialog" class="idle-dialog" aria-labelledby="idle-title">

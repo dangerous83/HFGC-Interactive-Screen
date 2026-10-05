@@ -304,6 +304,7 @@
   let idleStarted = 0;
   let thankYouStarted = 0;
   let introActive = true;
+  let discovery;
   function btn(label, page, variant='primary', name='') {
     return `<button class="btn ${variant}" data-page="${page}">${name ? icon(name) : ''}${label}</button>`;
   }
@@ -436,6 +437,7 @@
     render();
   }
   function reset(showIntro=true) {
+    discovery?.reset();
     selectedTeam=null;
     registrationDraft={};
     churchFieldsOpen=false;
@@ -535,7 +537,14 @@
   ['pointerdown','keydown','wheel'].forEach(type=>document.addEventListener(type,()=>{if (!idleDialog.open) lastActivity=Date.now();},{passive:true}));
   document.addEventListener('scroll',()=>{if (!idleDialog.open) lastActivity=Date.now();},true);
   document.getElementById('enter').addEventListener('click',enter);
-  document.getElementById('restart').addEventListener('click',()=>reset(true));
+  discovery=window.HFGC_DISCOVERY.create({teams,pillars,openDestination:target=>{
+    enter();
+    if(target.page==='join' && target.params?.team) {
+      selectedTeam=teams.find(t=>t.id===target.params.team);
+      if(selectedTeam) registrationDraft.team=selectedTeam.id;
+    }
+    navigate(target.page,target.params || {});
+  },activity:()=>{lastActivity=Date.now();}});
   document.getElementById('continue').addEventListener('click',continueExploring);
   document.getElementById('idle-home').addEventListener('click',()=>reset());
   idleDialog.addEventListener('cancel',e=>{e.preventDefault();continueExploring();});
@@ -559,8 +568,9 @@
   });
   setInterval(()=>{
     const now=Date.now();
-    if (introActive) return;
-    if (state.page==='thanks' && thankYouStarted && !idleDialog.open) {
+    if (introActive && !discovery.isOpen() && !idleDialog.open) return;
+    if (state.page==='thanks' && discovery.isOpen()) thankYouStarted=now;
+    if (state.page==='thanks' && thankYouStarted && !idleDialog.open && !discovery.isOpen()) {
       const left=Math.max(0,Math.ceil((Number(config.thankYouSeconds)||20)-(now-thankYouStarted)/1000));
       const counter=document.getElementById('thankyou-count');if(counter) counter.textContent=left;
       if (!left) reset();
@@ -571,6 +581,7 @@
       document.getElementById('idle-count').textContent=left;
       if (!left) reset(true);
     } else if (now-lastActivity>=(Number(config.idleSeconds)||90)*1000) {
+      discovery.close('idle');
       idleStarted=now;
       document.getElementById('idle-count').textContent=Number(config.idleWarningSeconds)||15;
       idleDialog.showModal();
