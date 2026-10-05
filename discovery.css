@@ -1,6 +1,6 @@
-.intro-tools{display:flex;justify-content:center;gap:18px;margin:24px 0 0}
+.intro-tools{position:absolute;top:58px;right:58px;z-index:2;display:flex;margin:0}
 .intro-tools button{display:flex;align-items:center;justify-content:center;gap:12px;min-height:64px;padding:12px 22px;border:1px solid #99b9d780;border-radius:18px;background:#062f55d9;color:#ecf6ff;font-size:21px;font-weight:600}
-.intro-tools button span{font-size:34px;line-height:1}.intro-tools img{width:30px;height:30px}
+.intro-tools svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .search-launcher{display:flex;align-items:center;gap:10px;min-height:64px;padding:12px 20px;border:1px solid #7193b3;border-radius:15px;background:#0a3b64;color:#fff;font-size:22px;font-weight:700}
 .search-launcher svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .assistant-launcher{display:flex;align-items:center;gap:12px;min-height:76px;padding:8px 16px;border:1px solid #d9b96077;border-radius:22px;background:#0b3c63;color:#ffdf94;text-align:left;font-size:22px;font-weight:700}
