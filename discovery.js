@@ -117,7 +117,7 @@
     const guide=buildGuide(teams,pillars);
     const assistantName="Bro. Havi";
     const assistantDescription="HFGC Assistant Virtual Intelligence";
-    const assistantGreeting="Hi, I’m Bro. Havi, Your HFGC Hospitality & VIP Assistant. How can I assist you?";
+    const assistantGreeting="Hi, I’m Brother Havi, Your HFGC Hospitality & VIP Assistant. How can I assist you?";
     const voiceProfiles=[
       {id:'simon',name:assistantName,gender:'male',slot:0},
       {id:'mike',name:'Brother Mike',gender:'male',slot:1},
