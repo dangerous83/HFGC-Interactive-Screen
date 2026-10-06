@@ -276,7 +276,7 @@
     "purpose": "Every ride is part of the HFGC experience. We keep every VIP journey organized and comfortable, providing timely transportation from airport to hotel, venue, and every destination in between.",
     "fit": "You enjoy logistics and scheduling, or would like to express interest in serving as a driver.",
     "interest": "I’m Interested in VIP Transportation",
-    "finder": "I love logistics and transportation.",
+    "finder": "I love logistics & transportation.",
     "responsibilityLabel": "VIP Transportation Coordinators",
     "responsibilities": [
       "Airport transfers",
@@ -303,7 +303,7 @@
     "purpose": "Behind every great HFGC VIP experience is a team ready to move, assist, and make things happen when support is needed.",
     "fit": "You enjoy practical tasks, quick responses, and supporting others.",
     "interest": "I’m Interested in Support Runners",
-    "finder": "I enjoy providing quick, practical support.",
+    "finder": "I am good at quick and practical support.",
     "responsibilities": [
       "Deliver documents",
       "Retrieve items",
@@ -326,7 +326,7 @@
     "purpose": "We ensure lounge readiness while creating a comfortable and welcoming space where every VIP guest can rest, refresh, and feel cared for throughout HFGC.",
     "fit": "You enjoy preparing spaces, serving refreshments, and noticing details that improve guest comfort.",
     "interest": "I’m Interested in the VIP Lounge",
-    "finder": "I love preparing spaces and serving guests.",
+    "finder": "I love serving & preparing for guests.",
     "responsibilities": [
       "VIP reception area",
       "Seating",
@@ -351,7 +351,7 @@
     "purpose": "Coordinate with the Protocol Officer to ensure the appropriate protocol is properly carried out for each HFGC VIP guest",
     "fit": "You enjoy organization, clear communication, and following approved arrangements.",
     "interest": "I’m Interested in Protocol Liaison",
-    "finder": "I love organization and protocol.",
+    "finder": "I love organization & protocol.",
     "responsibilityLabel": "View Coordination Areas",
     "responsibilities": [
       "Order of arrival",
@@ -415,13 +415,13 @@
     return `<section class="page general-page">${title('','Hospitality for General Guests','In General hospitality, we give intentional care.')} ${teamCards(teams.filter(t=>t.category==='general'),true)}</section>`;
   }
   const vipGuestGroups = [
-    {id:'church-leaders',name:'PMCC 4th Watch Church Leaders',detail:''},
-    {id:'guest-artists',name:'Guest Artists',detail:'Non-Fourth Watchers'},
-    {id:'church-performers',name:'Fourth Watch Performers',detail:'Internal church talent'},
-    {id:'prominent-leaders',name:'Prominent Leaders & Politicians',detail:'Ambassadors of goodwill'}
+    {id:'church-leaders',name:'PMCC 4th Watch Leaders',detail:''},
+    {id:'guest-artists',name:'Guest Artists & Performers',detail:''},
+    {id:'church-performers',name:'PMCC 4th Watch Artists & Performers',detail:''},
+    {id:'prominent-leaders',name:'Church & Community Dignitaries',detail:''}
   ];
   function vipGuestCircles() {
-    return `<div class="vip-guest-circles" role="group" aria-label="VIP guest groups">${vipGuestGroups.map(g=>`<button type="button" class="vip-guest-circle" data-vip-guest="${g.id}" aria-haspopup="dialog"><span>${escape(g.name)}</span>${g.detail ? `<small>${escape(g.detail)}</small>` : ''}</button>`).join('')}</div>`;
+    return `<div class="vip-guest-circles" role="group" aria-label="HFGC VIP Categories">${vipGuestGroups.map(g=>`<button type="button" class="vip-guest-circle" data-vip-guest="${g.id}" aria-haspopup="dialog"><span>${escape(g.name)}</span>${g.detail ? `<small>${escape(g.detail)}</small>` : ''}</button>`).join('')}</div>`;
   }
   function vip() {
     return `<section class="page vip-page">${title('','Hospitality for VIP Guests','In VIP hospitality, we give personalized care.')} <div class="vip-content">${vipGuestCircles()}${teamCards(teams.filter(t=>t.category==='vip'),false,true)}</div></section>`;
@@ -438,8 +438,9 @@
     const locationMarker='<span class="location-marker" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>';
     return `<section class="page detail-page">${back('Back to Teams')}<div class="detail-top"><h1 class="team-photo-heading">${t.name}</h1></div><div class="detail-layout"><div class="detail-summary"><div class="team-summary-top">${tile(t.icon)}<p class="tagline">${t.tagline}</p></div><p class="purpose">${t.purpose}</p>${t.location ? `<p class="team-location">${locationMarker}<span><strong>Location:</strong> ${escape(t.location)}</span></p>` : ''}${t.note ? `<p class="aside-message">${t.note}</p>` : ''}</div><div class="detail-right"><div class="fit-card"><p class="eyebrow">THIS TEAM MAY SUIT YOU IF…</p><p>${t.fit}</p></div><div class="responsibility-panel">${responsibilities(t.responsibilityLabel || 'View Responsibilities',t.responsibilities)}${t.extraTitle ? responsibilities(t.extraTitle,t.extraList,t.extraText) : ''}</div><button class="btn primary" data-interest="${t.id}">${icon('heart')}${t.interest}</button></div></div></section>`;
   }
+  const finderEmojis={greeters:'❤️',ushers:'💺',assistance:'🙋',reception:'🤲',hosts:'💕',transportation:'🚗',runners:'🏃',lounge:'🛋️',protocol:'📋'};
   function finder() {
-    return `<section class="page">${title('FIND YOUR TEAM','What do you enjoy?','Choose an interest to explore a team that may suit you.')}<div class="finder-grid">${teams.map(t=>`<button class="interest-card" data-team="${t.id}">${tile(t.icon)}<span>${t.finder}</span></button>`).join('')}</div><div class="finder-foot"><p>A starting point to explore your interests. Team assignments are confirmed by ministry leadership.</p><button class="btn secondary" data-unsure>I’m Not Sure Yet</button></div></section>`;
+    return `<section class="page">${title('FIND YOUR TEAM','What do you enjoy?','Choose an interest to explore a team that may suit you.')}<div class="finder-grid">${teams.map(t=>`<button type="button" class="interest-card" data-team="${t.id}"><span class="finder-emoji-tile" aria-hidden="true"><span class="finder-emoji" data-finder-emoji="${t.id}">${finderEmojis[t.id]}</span></span><span>${escape(t.finder)}</span></button>`).join('')}</div><div class="finder-foot"><p>A starting point to explore your interests. Team assignments are confirmed by ministry leadership.</p><button class="btn secondary" data-unsure>I’m Not Sure Yet</button></div></section>`;
   }
   function why() {
     const qualities=['A willing heart','A welcoming spirit','A servant’s heart','A willingness to learn','A commitment to teamwork','A desire to represent Christ'];
@@ -549,6 +550,7 @@
     const guest=vipGuestGroups.find(g=>g.id===id);
     if (!guest) return;
     vipGuestDialog.querySelector('#vip-guest-title').textContent=guest.name;
+    vipGuestDialog.querySelector('.pillar-dialog-icon').innerHTML=icon('honor');
     const detail=vipGuestDialog.querySelector('.vip-guest-detail');
     detail.textContent=guest.detail;
     detail.hidden=!guest.detail;

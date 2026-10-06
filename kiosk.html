@@ -11,14 +11,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&display=swap">
-  <link rel="stylesheet" href="styles.css?v=vip-circles-20261006">
-  <link rel="stylesheet" href="portrait.css?v=vip-circles-20261006">
+  <link rel="stylesheet" href="styles.css?v=vip-categories-emoji-20261006">
+  <link rel="stylesheet" href="portrait.css?v=vip-categories-emoji-20261006">
   <script defer src="config.js?v=signup-20261002"></script>
-  <link rel="stylesheet" href="registration.css?v=vip-circles-20261006">
+  <link rel="stylesheet" href="registration.css?v=vip-categories-emoji-20261006">
   <script defer src="signups.js?v=20261005"></script>
-  <link rel="stylesheet" href="discovery.css?v=vip-circles-20261006">
-  <script defer src="discovery.js?v=vip-circles-20261006"></script>
-  <script defer src="app.js?v=vip-circles-20261006"></script>
+  <link rel="stylesheet" href="discovery.css?v=vip-categories-emoji-20261006">
+  <script defer src="discovery.js?v=vip-categories-emoji-20261006"></script>
+  <script defer src="app.js?v=vip-categories-emoji-20261006"></script>
 </head>
 <body>
   <div id="intro" class="intro" aria-label="Welcome to HFGC EXPO 2026">
@@ -97,12 +97,21 @@
       </div>
     </div>
   </dialog>
-  <dialog id="vip-guest-dialog" class="vip-guest-dialog" aria-labelledby="vip-guest-title">
-    <button type="button" class="vip-guest-close" data-close-vip-guest aria-label="Close VIP guest details">×</button>
-    <p class="eyebrow">HFGC VIP GUESTS</p>
-    <h2 id="vip-guest-title"></h2>
-    <p class="vip-guest-detail"></p>
-    <p>In VIP hospitality, we give personalized care.</p>
+  <dialog id="vip-guest-dialog" class="pillar-dialog vip-guest-dialog" aria-labelledby="vip-guest-title">
+    <div class="pillar-dialog-shell">
+      <button type="button" class="pillar-dialog-close" data-close-vip-guest aria-label="Close VIP category details">×</button>
+      <div class="pillar-dialog-header">
+        <p class="eyebrow">HFGC VIP CATEGORIES</p>
+        <div class="pillar-dialog-title-row">
+          <span class="pillar-dialog-icon" aria-hidden="true"></span>
+          <h2 id="vip-guest-title" class="pillar-dialog-name"></h2>
+        </div>
+        <p class="vip-guest-detail pillar-dialog-tagline" hidden></p>
+      </div>
+      <div class="pillar-dialog-body">
+        <p>In VIP hospitality, we give personalized care.</p>
+      </div>
+    </div>
   </dialog>
   <dialog id="idle-dialog" class="idle-dialog" aria-labelledby="idle-title">
     <div class="idle-icon" aria-hidden="true">✦</div>
