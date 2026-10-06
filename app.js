@@ -142,8 +142,8 @@
     "name": "HFGC Greeters",
     "icon": "users",
     "short": "Create the first impression with warmth, joy, and the love of Christ.",
-    "tagline": "A warm welcome starts with you.",
-    "purpose": "They create the first impression of HFGC by welcoming every guest with warmth, joy, and the love of Christ.",
+    "tagline": "First impressions. Lasting impact.",
+    "purpose": "At HFGC, every welcome carries a message. We greet every guest with warmth, joy, and the love of Christ.",
     "fit": "You enjoy meeting people and helping them feel welcome.",
     "interest": "I’m Interested in Greeters",
     "finder": "I love welcoming people.",
@@ -389,7 +389,7 @@
     return `<div class="page-title"><div>${eyebrow ? `<p class="eyebrow">${eyebrow}</p>` : ''}<h1>${heading}</h1>${text ? `<p>${text}</p>` : ''}</div>${action}</div>`;
   }
   function teamCards(list, large=false) {
-    return `<div class="team-grid ${large ? 'general-grid' : ''}">${list.map(t => `<button class="team-card" data-team="${t.id}">${tile(t.icon)}<div>${!large ? `<p class="mini-label">${t.category === 'general' ? 'GENERAL HOSPITALITY' : 'VIP HOSPITALITY'}</p>` : ''}<h3>${t.name}</h3><p>${t.short}</p>${large ? '<span class="card-link">Explore This Team</span>' : ''}</div></button>`).join('')}</div>`;
+    return `<div class="team-grid ${large ? 'general-grid' : ''}">${list.map(t => `<button class="team-card" data-team="${t.id}">${large ? '<svg class="team-saber" aria-hidden="true" focusable="false"><rect x="4" y="4" width="100%" height="100%" rx="22" pathLength="100"></rect><rect class="team-saber-core" x="4" y="4" width="100%" height="100%" rx="22" pathLength="100"></rect></svg>' : ''}${tile(t.icon)}<div>${!large ? `<p class="mini-label">${t.category === 'general' ? 'GENERAL HOSPITALITY' : 'VIP HOSPITALITY'}</p>` : ''}<h3>${t.name}</h3><p>${t.short}</p>${large ? '<span class="card-link">Explore This Team</span>' : ''}</div></button>`).join('')}</div>`;
   }
   function home() {
     const destinations=[['heart','heart','Our Heart','The love behind every welcome.'],['general','serve','What We Do','Intentional care for every guest.'],['vip','honor','VIP Hospitality','Personalized care, every step.'],['teams','users','Our Teams','Nine ways to make a difference.'],['join','care','Get Involved','Find your place to serve.']];
@@ -420,7 +420,8 @@
   }
   function teamDetail() {
     const t=teams.find(t=>t.id===state.team) || teams[0];
-    return `<section class="page detail-page">${back('Back to Teams')}<div class="detail-top"><p class="eyebrow">${t.category==='general'?'GENERAL HOSPITALITY':'VIP HOSPITALITY'}</p></div><div class="detail-layout"><div class="detail-summary">${tile(t.icon)}<h1>${t.name}</h1><p class="tagline">${t.tagline}</p><p class="purpose">${t.purpose}</p>${t.location ? `<p class="team-location"><strong>Location:</strong> ${escape(t.location)}</p>` : ''}${t.note ? `<p class="aside-message">${t.note}</p>` : ''}</div><div class="detail-right"><div class="fit-card"><p class="eyebrow">THIS TEAM MAY SUIT YOU IF…</p><p>${t.fit}</p></div><div class="responsibility-panel">${responsibilities(t.responsibilityLabel || 'View Responsibilities',t.responsibilities)}${t.extraTitle ? responsibilities(t.extraTitle,t.extraList,t.extraText) : ''}</div><button class="btn primary" data-interest="${t.id}">${icon('heart')}${t.interest}</button></div></div></section>`;
+    const isGreeters=t.id==='greeters';
+    return `<section class="page detail-page">${back('Back to Teams')}<div class="detail-top">${isGreeters ? `<h1 class="greeters-heading">${t.name}</h1>` : `<p class="eyebrow">${t.category==='general'?'GENERAL HOSPITALITY':'VIP HOSPITALITY'}</p>`}</div><div class="detail-layout"><div class="detail-summary">${tile(t.icon)}${isGreeters ? '' : `<h1>${t.name}</h1>`}<p class="tagline">${t.tagline}</p><p class="purpose">${t.purpose}</p>${t.location ? `<p class="team-location"><strong>Location:</strong> ${escape(t.location)}</p>` : ''}${t.note ? `<p class="aside-message">${t.note}</p>` : ''}</div><div class="detail-right"><div class="fit-card"><p class="eyebrow">THIS TEAM MAY SUIT YOU IF…</p><p>${t.fit}</p></div><div class="responsibility-panel">${responsibilities(t.responsibilityLabel || 'View Responsibilities',t.responsibilities)}${t.extraTitle ? responsibilities(t.extraTitle,t.extraList,t.extraText) : ''}</div><button class="btn primary" data-interest="${t.id}">${icon('heart')}${t.interest}</button></div></div></section>`;
   }
   function finder() {
     return `<section class="page">${title('FIND YOUR TEAM','What do you enjoy?','Choose an interest to explore a team that may suit you.')}<div class="finder-grid">${teams.map(t=>`<button class="interest-card" data-team="${t.id}">${tile(t.icon)}<span>${t.finder}</span></button>`).join('')}</div><div class="finder-foot"><p>A starting point to explore your interests. Team assignments are confirmed by ministry leadership.</p><button class="btn secondary" data-unsure>I’m Not Sure Yet</button></div></section>`;

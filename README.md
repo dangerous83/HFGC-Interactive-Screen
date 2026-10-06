@@ -58,6 +58,10 @@ The uploaded `Lougne Music Background Loop.mp3` plays continuously at 22% volume
 
 The four opening-screen circle icons (Welcome, Honor, Serve, Care) open their pillar dialogue over the welcome screen without entering the experience or navigating. Close, Escape, and backdrop dismissal return to the same opening screen. The team navigation action is hidden in these opening-screen dialogues.
 
-General Hospitality uses `General Hospitality 2.png` as its photo background, places the heading at the top, enlarges all three team choices, and omits the small introductory heading and bottom VIP callout.
+General Hospitality uses `General Hospitality 3.png` as its photo background, places the heading at the top, enlarges all three team choices, and omits the small introductory heading and bottom VIP callout.
 
-Our Heart uses the corrected `General Hospitality 2.png` photo. Welcome, Honor, Serve, and Care form a curved icon menu and open pillar dialogues over the same screen. General and VIP Hospitality remain as large navigation choices. The interface uses staggered entrance animations, clear touch targets, keyboard focus states, and reduced-motion alternatives. The marked header Search and VIP navigation tab remain removed.
+Our Heart uses the corrected `General Hospitality 3.png` photo. Welcome, Honor, Serve, and Care form a curved icon menu and open pillar dialogues over the same screen. General and VIP Hospitality remain as large navigation choices. The interface uses staggered entrance animations, clear touch targets, keyboard focus states, and reduced-motion alternatives. The marked header Search and VIP navigation tab remain removed.
+
+The General Hospitality subtitle is light gold for contrast. Its three team cards reveal a cyan and white looping stroke just outside the rounded border on hover, keyboard focus, and touch press. Reduced-motion visitors see a static border. Both Hospitality overview screens use `General Hospitality 3.png`.
+
+The Greeters screen uses `HFGC GREETERS.png`, shows one title above the photo, omits the repeated title and category label, and uses a cursive suitability sentence. The welcome icon has a subtle pulse with a reduced-motion alternative.
