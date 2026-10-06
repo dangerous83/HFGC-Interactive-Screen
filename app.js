@@ -386,7 +386,7 @@
   }
   function back(label='Back') { return `<button class="back-button" data-back>${icon('back')}${label}</button>`; }
   function title(eyebrow, heading, text='', action='') {
-    return `<div class="page-title"><div><p class="eyebrow">${eyebrow}</p><h1>${heading}</h1>${text ? `<p>${text}</p>` : ''}</div>${action}</div>`;
+    return `<div class="page-title"><div>${eyebrow ? `<p class="eyebrow">${eyebrow}</p>` : ''}<h1>${heading}</h1>${text ? `<p>${text}</p>` : ''}</div>${action}</div>`;
   }
   function teamCards(list, large=false) {
     return `<div class="team-grid ${large ? 'general-grid' : ''}">${list.map(t => `<button class="team-card" data-team="${t.id}">${tile(t.icon)}<div>${!large ? `<p class="mini-label">${t.category === 'general' ? 'GENERAL HOSPITALITY' : 'VIP HOSPITALITY'}</p>` : ''}<h3>${t.name}</h3><p>${t.short}</p>${large ? '<span class="card-link">Explore This Team</span>' : ''}</div></button>`).join('')}</div>`;
@@ -406,7 +406,7 @@
     return `<section class="page">${back('Back to Our Four Pillars')}<div class="pillar-detail"><div class="pillar-intro"><p class="eyebrow">THE HEART OF HOSPITALITY</p>${tile(p.id)}<h2>${p.name}</h2><p>${p.tagline}</p></div><div class="pillar-body">${p.text!==p.tagline ? `<p>${p.text}</p>` : ''}<blockquote class="quote">${p.scripture}<cite>${p.reference}</cite></blockquote><div class="actions">${btn('Explore Our Teams','teams')}${btn('Join Us','join','secondary')}</div></div></div></section>`;
   }
   function general() {
-    return `<section class="page">${title('WHAT WE DO · GENERAL HOSPITALITY','Hospitality for General Guests','In General hospitality, we give intentional care.')} ${teamCards(teams.filter(t=>t.category==='general'),true)}<div class="section-note"><p>Everyone receives Christ-centered care.</p>${btn('Explore VIP Hospitality','vip','secondary')}</div></section>`;
+    return `<section class="page general-page">${title('','Hospitality for General Guests','In General hospitality, we give intentional care.')} ${teamCards(teams.filter(t=>t.category==='general'),true)}</section>`;
   }
   function vip() {
     return `<section class="page">${title('VIP HOSPITALITY','Hospitality for VIP Guests','While in VIP hospitality, we give personalized care.')} ${teamCards(teams.filter(t=>t.category==='vip'))}<div class="section-note"><p>Everyone receives Christ-centered care.</p>${btn('Find Your Team','finder','secondary','compass')}</div></section>`;
@@ -473,6 +473,7 @@
   }
   const screens={home,heart,pillars:pillarOverview,pillar:pillarDetail,general,vip,teams:directory,team:teamDetail,finder,why,join,thanks};
   function render(focus=true) {
+    main.classList.toggle('general-background',state.page==='general');
     main.classList.toggle('greeters-background',state.page==='team' && state.team==='greeters');
     main.classList.toggle('ushers-background',state.page==='team' && state.team==='ushers');
     main.classList.toggle('assistance-background',state.page==='team' && state.team==='assistance');
@@ -520,6 +521,8 @@
     pillarDialog.querySelector('.pillar-dialog-scripture').textContent = p.scripture;
     pillarDialog.querySelector('.pillar-dialog-reference').textContent = p.reference;
     pillarDialog.dataset.pillar = p.id;
+    // Opening-screen circles show information without leaving the welcome screen.
+    pillarDialog.querySelector('[data-pillar-dialog-teams]').parentElement.hidden = introActive;
     if (!pillarDialog.open) pillarDialog.showModal();
     lastActivity = Date.now();
   }
@@ -580,7 +583,7 @@
     const b=e.target.closest('button');
     if (!b) return;
     if (b.dataset.introPage) { enter(); navigate(b.dataset.introPage); }
-    else if (b.dataset.introPillar) { enter(); openPillarDialog(b.dataset.introPillar); }
+    else if (b.dataset.introPillar) openPillarDialog(b.dataset.introPillar);
     else if (b.dataset.page) navigate(b.dataset.page);
     else if (b.dataset.team) navigate('team',{team:b.dataset.team});
     else if (b.dataset.pillar) openPillarDialog(b.dataset.pillar);

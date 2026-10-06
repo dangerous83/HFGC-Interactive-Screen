@@ -55,3 +55,7 @@ Before the expo, check the actual screen orientation and resolution, viewing-dis
 ## Background music
 
 The uploaded `Lougne Music Background Loop.mp3` plays continuously at 22% volume after the first touch or keyboard interaction. It continues through navigation and the welcome screen. Bro. Simon’s speech lowers the music to 5% and restores it afterwards. If a browser blocks playback, the next interaction retries. The Our Heart page keeps the two hospitality cards; its lower four-pillars callout and Bible verse have been removed.
+
+The four opening-screen circle icons (Welcome, Honor, Serve, Care) open their pillar dialogue over the welcome screen without entering the experience or navigating. Close, Escape, and backdrop dismissal return to the same opening screen. The team navigation action is hidden in these opening-screen dialogues.
+
+General Hospitality uses `General Hospitality.png` as its photo background, places the heading at the top, enlarges all three team choices, and omits the small introductory heading and bottom VIP callout.
