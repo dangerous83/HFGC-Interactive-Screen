@@ -301,7 +301,7 @@
     "icon": "runner",
     "short": "Provide rapid logistical support for time-sensitive needs.",
     "tagline": "Ready. Responsive. Reliable.",
-    "purpose": "They provide rapid logistical support to VIP Hospitality operations and respond to time-sensitive needs.",
+    "purpose": "Behind every great HFGC VIP experience is a team ready to move, assist, and make things happen when support is needed.",
     "fit": "You enjoy practical tasks, quick responses, and supporting others.",
     "interest": "I’m Interested in Support Runners",
     "finder": "I enjoy providing quick, practical support.",
