@@ -45,11 +45,5 @@
  .organizer-page h1{font-size:36px}.signup-record dl{grid-template-columns:1fr;gap:4px}.signup-record dd{margin-bottom:12px}
 }
 
-.optional-fields{margin-top:24px;border-top:1px solid var(--line);padding-top:16px}
-.church-fields-toggle{width:100%;cursor:pointer;min-height:64px;display:flex;align-items:center;justify-content:space-between;gap:18px;color:var(--gold);font:inherit;font-size:18px;text-align:left;padding:14px 18px;border:1px solid #f3d16f90;border-radius:12px;background:#052b50}
-.church-fields-toggle:hover{background:#084574}.church-fields-toggle:focus-visible{outline:3px solid var(--gold);outline-offset:4px}
-.church-fields-toggle small{font-size:.85em;color:var(--muted)}
-.church-fields-indicator{font-size:1.4em}
-.optional-fields .form-grid{margin-top:18px}
-.optional-fields .form-grid[hidden]{display:none}
-@media(orientation:portrait) and (min-width:700px){.church-fields-toggle{font-size:23px;min-height:76px}.registration-page .join-benefits{font-size:22px}.registration-page .page-title p:last-child{font-size:24px}.registration-page .page-title h1{font-size:56px}.thankyou-page .lead{font-size:27px;max-width:800px}}
+.church-fields{margin-top:22px}
+@media(orientation:portrait) and (min-width:700px){.registration-page .join-benefits{font-size:22px}.registration-page .page-title p:last-child{font-size:24px}.registration-page .page-title h1{font-size:56px}.thankyou-page .lead{font-size:27px;max-width:800px}}

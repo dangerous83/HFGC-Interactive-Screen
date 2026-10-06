@@ -374,7 +374,6 @@
   let state = {page:'home', filter:'all', team:null, pillar:null, unsure:false};
   let selectedTeam = null;
   let registrationDraft = {};
-  let churchFieldsOpen = false;
   let savedRegistration = null;
   let submitting = false;
   let history = [];
@@ -451,7 +450,7 @@
     const field = name => escape(draft[name] || '');
     const url = signupUrl();
     const qr = typeof config.signupQrImage==='string' && /^(?!\/\/)[\w./% -]+\.(png|svg|webp|jpe?g)$/i.test(config.signupQrImage) ? config.signupQrImage : '';
-    return `<section class="page registration-page">${title('JOIN HFGC HOSPITALITY','There’s a place for you.','Share your details and discover your place to serve.')}<div class="join-benefits"><p><strong>Welcome. Honor. Serve. Care.</strong> Reflect Christ through hospitality.</p><div class="registration-links"><button type="button" class="text-button" data-page="why">Why Join Hospitality? ${icon('next')}</button><button type="button" class="text-button" data-page="finder">Help Me Choose a Team ${icon('next')}</button></div></div>
+    return `<section class="page registration-page">${title('','There’s a place for you.','Share your details and discover your place to serve.')}<div class="join-benefits"><p><strong>Welcome. Honor. Serve. Care.</strong> Reflect Christ through hospitality.</p><div class="registration-links"><button type="button" class="text-button" data-page="why">Why Join Hospitality? ${icon('next')}</button><button type="button" class="text-button" data-page="finder">Help Me Choose a Team ${icon('next')}</button></div></div>
       <form id="interest-form" class="registration-form" autocomplete="off">
         <div class="form-heading"><h2>Express your interest</h2><p>* Required fields</p></div>
         <div class="form-grid">
@@ -461,12 +460,9 @@
           <p class="contact-hint" id="contact-hint">* Provide a phone number or email so the team can contact you.</p>
           <label class="form-field wide" for="signup-team">Where would you like to serve? *<select id="signup-team" name="team" required><option value="" ${preferred===''?'selected':''} disabled>Choose a team</option>${teams.map(t=>`<option value="${t.id}" ${preferred===t.id?'selected':''}>${escape(t.name)}</option>`).join('')}<option value="unsure" ${preferred==='unsure'?'selected':''}>I’m not sure — help me find my place</option></select></label>
         </div>
-        <div class="optional-fields">
-          <button type="button" id="church-fields-toggle" class="church-fields-toggle" aria-expanded="${churchFieldsOpen}" aria-controls="church-fields"><span>Locale Church &amp; District <small>(optional)</small></span><span class="church-fields-indicator" aria-hidden="true">${churchFieldsOpen?'−':'+'}</span></button>
-          <div id="church-fields" class="form-grid" ${churchFieldsOpen?'':'hidden'}>
-            <label class="form-field" for="signup-church">Locale Church<input id="signup-church" name="church" type="text" maxlength="160" value="${field('church')}" placeholder="Your locale church"></label>
-            <label class="form-field" for="signup-district">District<input id="signup-district" name="district" type="text" maxlength="160" value="${field('district')}" placeholder="Your district"></label>
-          </div>
+        <div class="form-grid church-fields">
+          <label class="form-field" for="signup-church">Locale Church<input id="signup-church" name="church" type="text" maxlength="160" value="${field('church')}" placeholder="Your locale church"></label>
+          <label class="form-field" for="signup-district">District<input id="signup-district" name="district" type="text" maxlength="160" value="${field('district')}" placeholder="Your district"></label>
         </div>
         <p class="form-notice">Your details will be saved on this kiosk for the Hospitality booth team to review. Submitting expresses your interest; the team will discuss the next steps with you.</p>
         <p id="signup-error" class="form-error" role="alert" hidden></p>
@@ -547,7 +543,6 @@
     if (pillarDialog.open) pillarDialog.close();
     selectedTeam=null;
     registrationDraft={};
-    churchFieldsOpen=false;
     savedRegistration=null;
     submitting=false;
     history=[];
@@ -605,12 +600,6 @@
     else if (b.dataset.filter) {state.filter=b.dataset.filter;render(false);main.querySelector(`[data-filter="${state.filter}"]`).focus({preventScroll:true});}
     else if (b.hasAttribute('data-unsure')) navigate('teams',{filter:'all',unsure:true});
     else if (b.hasAttribute('data-clear-team')) {selectedTeam=null;registrationDraft.team='';render();}
-    else if (b.id==='church-fields-toggle') {
-      churchFieldsOpen=!churchFieldsOpen;
-      b.setAttribute('aria-expanded',String(churchFieldsOpen));
-      b.querySelector('.church-fields-indicator').textContent=churchFieldsOpen?'−':'+';
-      document.getElementById('church-fields').hidden=!churchFieldsOpen;
-    }
     else if (b.hasAttribute('data-finish')) reset();
   });
   document.addEventListener('input',e=>{
@@ -645,7 +634,6 @@
     try {
       savedRegistration=window.HFGC_SIGNUPS.save(details);
       registrationDraft={};
-      churchFieldsOpen=false;
       selectedTeam=null;
       history=[];
       navigate('thanks',{},false);
