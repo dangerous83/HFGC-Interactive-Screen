@@ -466,7 +466,7 @@
         </div>
         <p class="form-notice">Your details will be saved on this kiosk for the Hospitality booth team to review. Submitting expresses your interest; the team will discuss the next steps with you.</p>
         <p id="signup-error" class="form-error" role="alert" hidden></p>
-        <button type="submit" class="btn primary">Submit My Interest ${icon('next')}</button>
+        <button type="submit" class="btn primary">Submit ${icon('next')}</button>
       </form>
       ${url ? `<aside class="external-signup">${qr ? `<img class="qr" src="${escape(qr)}" alt="QR code for the Hospitality online sign-up form">` : ''}<p>Prefer to sign up on your phone? Use our online form instead.</p><a class="btn secondary" href="${escape(url)}" target="_blank" rel="noopener noreferrer">Open Online Form</a></aside>` : ''}
     </section>`;
