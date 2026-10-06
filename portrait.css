@@ -343,17 +343,19 @@ main.protocol-background{
 /* Four equal VIP guest circles, using the same gold and navy palette as the team cards. */
 .vip-background .vip-content{padding-top:380px}
 .vip-guest-circles{position:relative;isolation:isolate;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px;align-items:center;margin-bottom:28px}
-.vip-guest-circles::before{content:"";position:absolute;z-index:-1;left:0;right:0;top:50%;height:2px;background:#ffe69c99}
-.vip-guest-circle{aspect-ratio:1;width:100%;max-width:220px;justify-self:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border-radius:50%;border:2px solid #ffe69c;padding:22px;background:linear-gradient(135deg,#fff0bd,#f3d16f 55%,#e9bb52);color:#082a47;font-family:Arial,Helvetica,sans-serif;font-size:21px;font-weight:700;line-height:1.25;text-align:center;box-shadow:0 6px 18px #00152d44;transition:background .2s,box-shadow .2s,transform .2s}
-.vip-guest-circle small{font-size:16px;font-weight:500;line-height:1.25}
-.vip-guest-circle:is(:hover,:focus-visible){background:linear-gradient(135deg,#fff4cf,#f6da84 55%,#eac56b);box-shadow:0 0 0 2px #fff0bd66,0 8px 20px #00152d44;transform:translateY(-2px)}
-.vip-guest-circle:focus-visible{outline:3px solid #fff9e8;outline-offset:5px}
-.vip-guest-circle:active{transform:translateY(0)}
+.vip-guest-circle{width:100%;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:14px;border:0;border-radius:14px;padding:8px;background:transparent;color:#fff1c0;font-family:Arial,Helvetica,sans-serif;text-align:center;text-shadow:0 2px 8px #021b35}
+.vip-guest-icon{display:grid;place-items:center;flex-shrink:0;width:84px;height:84px;border-radius:50%;border:1px solid #ffe69c;background:linear-gradient(135deg,#fff0bd,#f3d16f 55%,#e9bb52);color:#082a47;box-shadow:0 5px 14px #00152d44;transition:background .2s,box-shadow .2s,transform .2s}
+.vip-guest-icon svg{width:40px;height:40px}
+.vip-guest-label{max-width:210px;min-height:78px;font-size:21px;font-weight:700;line-height:1.25}
+.vip-guest-circle:is(:hover,:focus-visible,:active){background:transparent;color:#fff4d6;transform:none}
+.vip-guest-circle:is(:hover,:focus-visible) .vip-guest-icon{background:#ffe69c;box-shadow:0 0 0 2px #fff0bd66,0 7px 16px #00152d44;transform:translateY(-2px)}
+.vip-guest-circle:focus-visible{outline:2px solid #fff0bd;outline-offset:4px}
+.vip-guest-circle:active .vip-guest-icon{transform:translateY(0)}
 .vip-guest-dialog .pillar-dialog-header{padding-right:88px}
 .vip-guest-dialog .pillar-dialog-name{font-family:Georgia,serif;font-size:48px;line-height:1.2}
 .vip-guest-dialog .pillar-dialog-body p{margin:0;font-size:25px;line-height:1.5}
-@media(max-width:650px){.vip-background .vip-content{padding-top:320px}.vip-guest-circles{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.vip-guest-circles::before{display:none}.vip-guest-circle{max-width:210px;padding:18px;font-size:18px}.vip-guest-circle small{font-size:14px}.vip-guest-dialog .pillar-dialog-header{padding-right:70px}.vip-guest-dialog .pillar-dialog-name{font-size:32px}.vip-guest-dialog .pillar-dialog-body p{font-size:20px}}
-@media(prefers-reduced-motion:reduce){.vip-guest-circle{transition:none}.vip-guest-circle:is(:hover,:focus-visible){transform:none}}
+@media(max-width:650px){.vip-background .vip-content{padding-top:320px}.vip-guest-circles{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.vip-guest-icon{width:68px;height:68px}.vip-guest-icon svg{width:32px;height:32px}.vip-guest-label{font-size:18px;min-height:68px}.vip-guest-dialog .pillar-dialog-header{padding-right:70px}.vip-guest-dialog .pillar-dialog-name{font-size:32px}.vip-guest-dialog .pillar-dialog-body p{font-size:20px}}
+@media(prefers-reduced-motion:reduce){.vip-guest-icon{transition:none}.vip-guest-circle:is(:hover,:focus-visible) .vip-guest-icon{transform:none}}
 
 /* Full-color emojis bring each Find Your Team interest to life. */
 .finder-emoji-tile{display:grid;place-items:center;flex:0 0 68px;width:68px;height:68px;border:1px solid #f3d16f55;border-radius:18px;background:#f3d16f0c}
@@ -383,3 +385,32 @@ main.lounge-background{
  background-position:center top;
  background-repeat:no-repeat;
 }
+
+/* Category-specific motion fills the VIP pop-up without extra body copy. */
+.vip-guest-dialog .vip-guest-animation{padding:18px 28px 24px;background:radial-gradient(ellipse at center,#0b3a6366,transparent 70%),#06243f}
+.vip-category-animation{display:block;width:100%;height:auto;max-height:300px;overflow:visible}
+.vip-motion-orbit{transform-origin:320px 136px}
+.vip-motion-badge{transform-origin:320px 136px}
+.vip-motion-equalizer rect{transform-box:fill-box;transform-origin:center bottom}
+.vip-guest-dialog[open] .pillar-dialog-shell{animation:vip-dialog-reveal .28s ease-out both}
+.vip-guest-dialog[open] .vip-motion-badge{animation:vip-badge-float 4.8s ease-in-out infinite}
+.vip-guest-dialog[open] .vip-motion-orbit{animation:vip-orbit-turn 18s linear infinite}
+.vip-guest-dialog[open] .vip-motion-sparkle{animation:vip-sparkle-glow 4s ease-in-out infinite}
+.vip-guest-dialog[open] .vip-motion-welcome{animation:vip-welcome-glow 4.8s ease-in-out infinite}
+.vip-guest-dialog[open] .vip-motion-equalizer rect{animation:vip-equalizer 1.8s ease-in-out var(--bar-delay) infinite}
+@keyframes vip-dialog-reveal{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes vip-badge-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes vip-orbit-turn{to{transform:rotate(360deg)}}
+@keyframes vip-sparkle-glow{0%,100%{opacity:.35}50%{opacity:.9}}
+@keyframes vip-welcome-glow{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes vip-equalizer{0%,100%{transform:scaleY(.5);opacity:.55}50%{transform:scaleY(1);opacity:.9}}
+@media(max-width:650px){.vip-guest-dialog .vip-guest-animation{padding:12px 14px 18px}}
+@media(prefers-reduced-motion:reduce){.vip-guest-dialog[open] .pillar-dialog-shell,.vip-guest-dialog[open] .vip-category-animation *{animation:none}}
+
+/* Keep category descriptions readable below the animation. */
+.vip-guest-dialog .vip-category-body{padding:20px 40px 34px;background:#06243f}
+.vip-guest-dialog .vip-guest-animation{padding:0 0 18px;background:radial-gradient(ellipse at center,#0b3a6366,transparent 70%)}
+.vip-guest-dialog .vip-category-body .vip-guest-detail{margin:0;padding-top:22px;border-top:1px solid #f3d16f40;color:#eaf2fb;font-size:24px;line-height:1.6;text-align:left}
+.vip-guest-dialog .pillar-dialog-shell{max-height:calc(100dvh - 64px);overflow-y:auto}
+.vip-guest-label{min-height:106px;font-size:20px}
+@media(max-width:650px){.vip-guest-dialog .vip-category-body{padding:16px 24px 26px}.vip-guest-dialog .vip-category-body .vip-guest-detail{font-size:19px;line-height:1.5}.vip-guest-dialog .pillar-dialog-shell{max-height:calc(100dvh - 40px)}.vip-guest-label{min-height:94px;font-size:17px}}

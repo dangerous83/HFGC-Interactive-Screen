@@ -414,14 +414,20 @@
   function general() {
     return `<section class="page general-page">${title('','Hospitality for General Guests','In General hospitality, we give intentional care.')} ${teamCards(teams.filter(t=>t.category==='general'),true)}</section>`;
   }
+  const vipCategorySymbols={
+      'church-leaders':'<path d="m3 7 4 4 5-7 5 7 4-4-2 12H5L3 7ZM6 22h12"/>',
+      'guest-artists':'<rect x="8" y="2" width="8" height="13" rx="4"/><path d="M5 10v2a7 7 0 0 0 14 0v-2M12 19v4M8 23h8"/>',
+      'church-performers':'<path d="M9 17V5l11-3v12M9 9l11-3"/><ellipse cx="6" cy="18" rx="3" ry="2.5"/><ellipse cx="17" cy="15" rx="3" ry="2.5"/>',
+      'prominent-leaders':'<path d="m2 8 5-3 5 2 5-2 5 3-2 9-5 3-3-1-3 1-5-4L2 8Zm5-3-2 11M17 5l3 12M12 7l-4 4 2 2 3-3 5 5M8 16l5 4M11 14l5 5M2 8l3 2M22 8l-3 2"/>'
+    };
   const vipGuestGroups = [
-    {id:'church-leaders',name:'PMCC 4th Watch Leaders',detail:''},
-    {id:'guest-artists',name:'Guest Artists & Performers',detail:''},
-    {id:'church-performers',name:'PMCC 4th Watch Artists & Performers',detail:''},
-    {id:'prominent-leaders',name:'Church & Community Dignitaries',detail:''}
+    {id:'church-leaders',name:'PMCC 4th Watch Leaders',detail:'Apostle & his family, Bishops and their families, Church Council Members with spouses, Apostolic Cabinet Members, Presbyters, Coordinators, Pastors & Ministers.'},
+    {id:'guest-artists',name:'Guest Artists & Performers',detail:'Non-4th Watch artists and performers invited to partner with us in the crusade.'},
+    {id:'church-performers',name:'PMCC 4th Watch Artists & Performers',detail:'Praise and Worship Team, musicians, singers, dancers, and other performers from within the PMCC 4th Watch.'},
+    {id:'prominent-leaders',name:'Church, Government & Community Dignitaries',detail:'Protestant ministers, government officials, and other invited dignitaries.'}
   ];
   function vipGuestCircles() {
-    return `<div class="vip-guest-circles" role="group" aria-label="HFGC VIP Categories">${vipGuestGroups.map(g=>`<button type="button" class="vip-guest-circle" data-vip-guest="${g.id}" aria-haspopup="dialog"><span>${escape(g.name)}</span>${g.detail ? `<small>${escape(g.detail)}</small>` : ''}</button>`).join('')}</div>`;
+    return `<div class="vip-guest-circles" role="group" aria-label="HFGC VIP Categories">${vipGuestGroups.map(g=>`<button type="button" class="vip-guest-circle" data-vip-guest="${g.id}" aria-haspopup="dialog"><span class="vip-guest-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${vipCategorySymbols[g.id]}</svg></span><span class="vip-guest-label">${escape(g.name)}</span></button>`).join('')}</div>`;
   }
   function vip() {
     return `<section class="page vip-page">${title('','Hospitality for VIP Guests','In VIP hospitality, we give personalized care.')} <div class="vip-content">${vipGuestCircles()}${teamCards(teams.filter(t=>t.category==='vip'),false,true)}</div></section>`;
@@ -547,14 +553,34 @@
     if (!pillarDialog.open) pillarDialog.showModal();
     lastActivity = Date.now();
   }
+  function vipCategoryAnimation(guest) {
+    const performer=guest.id==='guest-artists' || guest.id==='church-performers';
+    const bars=performer ? `<g class="vip-motion-equalizer" fill="#f3d16f" stroke="none">${[0,1,2,3,4].map((i)=>`<rect x="${74+i*18}" y="${150-[22,40,58,40,22][i]}" width="8" height="${[22,40,58,40,22][i]}" rx="4" style="--bar-delay:${i*-0.22}s"/><rect x="${486+i*18}" y="${150-[22,40,58,40,22][i]}" width="8" height="${[22,40,58,40,22][i]}" rx="4" style="--bar-delay:${i*-0.22}s"/>`).join('')}</g>` : '<g class="vip-motion-welcome" stroke="#ffe69c" stroke-width="2" fill="none"><circle cx="112" cy="120" r="12"/><path d="M86 163v-9a26 26 0 0 1 52 0v9M134 146l15-18"/><circle cx="528" cy="120" r="12"/><path d="M502 163v-9a26 26 0 0 1 52 0v9M506 146l-15-18"/></g>';
+    return `<svg class="vip-category-animation" data-vip-motion="${guest.id}" viewBox="0 0 640 280" role="img" aria-label="${escape(guest.name)} animated illustration">
+      <ellipse cx="320" cy="240" rx="100" ry="8" fill="#000" opacity=".18"/>
+      <circle cx="320" cy="136" r="118" fill="none" stroke="#f3d16f" stroke-opacity=".16"/>
+      <circle cx="320" cy="136" r="98" fill="none" stroke="#f3d16f" stroke-opacity=".25" stroke-dasharray="2 14"/>
+      <path class="vip-motion-connector" d="M146 146h69M425 146h69" fill="none" stroke="#f3d16f" stroke-opacity=".35" stroke-width="2"/>
+      ${bars}
+      <g class="vip-motion-orbit" fill="#ffe69c"><circle cx="320" cy="18" r="4"/><circle cx="320" cy="254" r="3"/><circle cx="438" cy="136" r="3"/></g>
+      <g class="vip-motion-badge">
+        <circle cx="320" cy="136" r="76" fill="#0b3a63" stroke="#f3d16f" stroke-width="2"/>
+        <circle cx="320" cy="136" r="66" fill="none" stroke="#ffe69c" stroke-opacity=".16"/>
+        <g class="vip-motion-symbol" transform="translate(284 100) scale(3)" fill="none" stroke="#ffe69c" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">${vipCategorySymbols[guest.id]}</g>
+      </g>
+      <g class="vip-motion-sparkle" fill="none" stroke="#ffe69c" stroke-width="2" stroke-linecap="round"><path d="M191 60v12M185 66h12M449 201v12M443 207h12"/><circle cx="467" cy="71" r="3" stroke-width="1.5"/><circle cx="173" cy="207" r="2" stroke-width="1.5"/></g>
+    </svg>`;
+  }
   function openVIPGuestDialog(id) {
     const guest=vipGuestGroups.find(g=>g.id===id);
     if (!guest) return;
     vipGuestDialog.querySelector('#vip-guest-title').textContent=guest.name;
-    vipGuestDialog.querySelector('.pillar-dialog-icon').innerHTML=icon('honor');
+    vipGuestDialog.querySelector('.pillar-dialog-icon').innerHTML=`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${vipCategorySymbols[guest.id]}</svg>`;
+    vipGuestDialog.querySelector('.vip-guest-animation').innerHTML=vipCategoryAnimation(guest);
     const detail=vipGuestDialog.querySelector('.vip-guest-detail');
     detail.textContent=guest.detail;
     detail.hidden=!guest.detail;
+    vipGuestDialog.querySelector('.pillar-dialog-shell').scrollTop=0;
     if (!vipGuestDialog.open) vipGuestDialog.showModal();
     lastActivity=Date.now();
   }
