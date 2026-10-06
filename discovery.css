@@ -87,4 +87,35 @@
 .voice-source{margin-top:4px}
 .voice-chips{justify-content:center;max-width:620px}
 .voice-chips button{text-align:center}
+.discovery-dialog [hidden]{display:none!important}
+.guide-voice-icon{width:30px;height:30px;flex-shrink:0}
+button.voice-orb{padding:0;border:0;background:transparent;color:#062b50;box-shadow:none;border-radius:50%;flex-shrink:0}
+button.voice-orb:hover .voice-core,button.voice-orb:focus-visible .voice-core{transform:scale(1.05);box-shadow:0 0 42px #ffe69c88}
+.voice-core .guide-voice-icon{width:78px;height:78px;filter:drop-shadow(0 2px 1px #ffffff55)}
+.voice-settings-link{min-height:46px;padding:7px 16px;margin-top:-8px;border:1px solid #91b5d36b;border-radius:20px;background:#143f65;color:#e6f3ff;font-size:18px;font-weight:600}
+.voice-settings{max-width:760px;margin:0 auto;padding:18px 10px 32px}
+.voice-back{min-height:52px;padding:10px 16px;border:1px solid #8aacc58c;border-radius:14px;background:#123c60;color:#e6f3ff;font-size:20px}
+.voice-settings-heading{text-align:center;margin:28px 0}
+.voice-settings-heading>svg{width:60px;height:60px;margin-bottom:14px;color:#ffe69c}
+.voice-settings-heading h3{margin:0;color:#ffe69c;font-size:32px;line-height:1.2}
+.voice-settings-heading p{margin:14px 0 0;color:#cfe0ef;font-size:22px;line-height:1.4}
+#voice-unlock-form{max-width:520px;margin:30px auto}
+#voice-unlock-form label{display:block;margin-bottom:12px;font-size:23px;font-weight:600}
+#voice-password{box-sizing:border-box;width:100%;height:82px;padding:16px 20px;border:2px solid #8aacc5;border-radius:16px;background:#f1f6fc;color:#102c46;font:inherit;font-size:30px;letter-spacing:6px}
+#voice-password[aria-invalid=true]{border-color:#ffa7a7}
+#voice-password-error{min-height:30px;margin:12px 0 20px;color:#ffc0c0;font-size:20px;line-height:1.4}
+.voice-unlock{width:100%;justify-content:center;font-size:25px}
+.voice-choice-group{margin-top:26px}
+.voice-choice-group h4{margin:0 0 14px;color:#cfe0ef;font-size:22px;font-weight:600}
+.voice-choice-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.voice-choice{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;min-height:230px;padding:20px 16px;text-align:center;border:1px solid #7393ae;border-radius:22px;background:linear-gradient(145deg,#16486e,#0b3154);color:#eaf6ff}
+.voice-choice[aria-pressed=true]{border:2px solid #ffe69c;background:linear-gradient(145deg,#25597b,#0b3154);box-shadow:0 0 20px #f3d16f26}
+.voice-choice-symbol{display:grid;place-items:center;width:58px;height:58px;border-radius:50%;background:#edce89;color:#062b50}
+.voice-choice-symbol svg{width:34px;height:34px}
+.voice-choice strong{font-size:25px;color:#ffe69c;line-height:1.2}
+.voice-choice small{font-size:16px;line-height:1.4;color:#bdd4e5;overflow-wrap:anywhere}
+.voice-choice-state{font-size:18px;font-weight:600;color:#eaf6ff}
+.voice-choice:disabled{opacity:.55;cursor:default;box-shadow:none}
+.voice-device-note{margin:24px auto 0;color:#bed0df;font-size:18px;line-height:1.5;text-align:center;max-width:620px}
+@media(max-width:650px){.voice-choice-grid{gap:10px}.voice-choice{min-height:210px;padding:16px 10px}.voice-choice strong{font-size:22px}.voice-settings-heading h3{font-size:28px}}
 @media(prefers-reduced-motion:reduce){.assistant-hand,.assistant-hand img,.voice-ring,.voice-core{animation:none!important}}

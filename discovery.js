@@ -115,9 +115,19 @@
   }
   function create({teams,pillars,openDestination,activity}) {
     const guide=buildGuide(teams,pillars);
+    const voiceProfiles=[
+      {id:'simon',name:'Brother Simon',gender:'male',slot:0},
+      {id:'mike',name:'Brother Mike',gender:'male',slot:1},
+      {id:'irish',name:'Sister Irish',gender:'female',slot:0},
+      {id:'jane',name:'Sister Jane',gender:'female',slot:1}
+    ];
+    let selectedVoice='simon',voiceSettings=null,greetingTimer=null;
+    try{const saved=localStorage.getItem('hfgc-assistant-voice');if(voiceProfiles.some(p=>p.id===saved))selectedVoice=saved;}catch{}
+    const profile=()=>voiceProfiles.find(p=>p.id===selectedVoice)||voiceProfiles[0];
+    const voiceIcon='<svg class="guide-voice-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="18" y="5" width="12" height="24" rx="6"></rect><path d="M12 22v2a12 12 0 0 0 24 0v-2M24 36v7M17 43h14M5 16v12M43 16v12"></path></svg>';
     const dialog=document.createElement('dialog');
     dialog.id='discovery-dialog'; dialog.className='discovery-dialog'; dialog.setAttribute('aria-labelledby','discovery-title');
-    dialog.innerHTML=`<div class="discovery-shell"><header class="discovery-header"><div><p class="discovery-kicker">HFGC HOSPITALITY MINISTRY</p><h2 id="discovery-title">Find your way</h2></div><button type="button" class="discovery-close" aria-label="Close search and assistant">×</button></header><div class="discovery-tabs" role="tablist" aria-label="Explore or ask"><button type="button" id="guide-search-tab" role="tab" aria-controls="guide-panel" data-guide-mode="search">Search ministry</button><button type="button" id="guide-assistant-tab" role="tab" aria-controls="guide-panel" data-guide-mode="assistant"><img src="assets/emoji/serve.svg" width="30" height="30" alt=""> Ask Brother Simon</button></div><div id="guide-panel" class="discovery-panel" role="tabpanel"><div id="guide-body" class="discovery-body"></div><form id="guide-form" autocomplete="off"><label for="guide-query" id="guide-label">What would you like to find?</label><div class="guide-input-row"><input id="guide-query" type="text" inputmode="none" maxlength="240" autocomplete="off" spellcheck="false" aria-describedby="guide-hint"><button type="submit" id="guide-send">Search</button></div><p id="guide-hint">Use the touch keyboard below, or type on your keyboard.</p><div id="guide-suggestions" class="guide-suggestions" aria-label="Related suggestions"></div></form></div><div class="touch-keyboard" role="group" aria-label="Touch keyboard"></div></div>`;
+    dialog.innerHTML=`<div class="discovery-shell"><header class="discovery-header"><div><p class="discovery-kicker">HFGC HOSPITALITY MINISTRY</p><h2 id="discovery-title">Find your way</h2></div><button type="button" class="discovery-close" aria-label="Close search and assistant">×</button></header><div class="discovery-tabs" role="tablist" aria-label="Explore or ask"><button type="button" id="guide-search-tab" role="tab" aria-controls="guide-panel" data-guide-mode="search">Search ministry</button><button type="button" id="guide-assistant-tab" role="tab" aria-controls="guide-panel" data-guide-mode="assistant">${voiceIcon}<span>Ask ${escape(profile().name)}</span></button></div><div id="guide-panel" class="discovery-panel" role="tabpanel"><div id="guide-body" class="discovery-body"></div><form id="guide-form" autocomplete="off"><label for="guide-query" id="guide-label">What would you like to find?</label><div class="guide-input-row"><input id="guide-query" type="text" inputmode="none" maxlength="240" autocomplete="off" spellcheck="false" aria-describedby="guide-hint"><button type="submit" id="guide-send">Search</button></div><p id="guide-hint">Use the touch keyboard below, or type on your keyboard.</p><div id="guide-suggestions" class="guide-suggestions" aria-label="Related suggestions"></div></form></div><div class="touch-keyboard" role="group" aria-label="Touch keyboard"></div></div>`;
     document.body.append(dialog);
     const input=dialog.querySelector('#guide-query'),body=dialog.querySelector('#guide-body'),suggestions=dialog.querySelector('#guide-suggestions'),keyboard=dialog.querySelector('.touch-keyboard');
     let mode='search',shift=false,context=null,opener=null,messages=[],queries={search:'',assistant:''},speaking=false;
@@ -127,7 +137,8 @@
     const questionChips=items=>items.map(q=>`<button type="button" data-guide-question="${escape(q)}">${escape(q)}</button>`).join('');
     function drawKeyboard() {
       const key=(label,value=label,cls='')=>`<button type="button" class="${cls}" data-guide-key="${escape(value)}" aria-label="${escape(value===' '?'Space':value)}"${value==='Shift'?` aria-pressed="${shift}"`:''}>${escape(label)}</button>`;
-      keyboard.innerHTML=['1234567890','qwertyuiop','asdfghjkl'].map((r,i)=>`<div class="key-row ${i===2?'key-row-inset':''}">${[...r].map(c=>key(shift?c.toUpperCase():c)).join('')}</div>`).join('')+`<div class="key-row">${key('⇧','Shift','key-control')}${[...'zxcvbnm'].map(c=>key(shift?c.toUpperCase():c)).join('')}${key('⌫','Backspace','key-control')}</div><div class="key-row key-row-actions">${key('Clear','Clear','key-control')}${key('Space',' ','key-space')}${key('?')}${key(mode==='search'?'Search':'Ask','Enter','key-submit')}</div>`;
+      keyboard.hidden=voiceSettings==='choices';
+      keyboard.innerHTML=['1234567890','qwertyuiop','asdfghjkl'].map((r,i)=>`<div class="key-row ${i===2?'key-row-inset':''}">${[...r].map(c=>key(shift?c.toUpperCase():c)).join('')}</div>`).join('')+`<div class="key-row">${key('⇧','Shift','key-control')}${[...'zxcvbnm'].map(c=>key(shift?c.toUpperCase():c)).join('')}${key('⌫','Backspace','key-control')}</div><div class="key-row key-row-actions">${key('Clear','Clear','key-control')}${key('Space',' ','key-space')}${key('?')}${key(voiceSettings==='locked'?'Unlock':mode==='search'?'Search':'Ask','Enter','key-submit')}</div>`;
     }
     function drawResults() {
       const query=queries.search.trim(), ranked=guide.search(query);
@@ -138,9 +149,9 @@
       // The assistant speaks aloud; no transcript or captions are shown, so the stage stays uncluttered.
       const last=[...messages].reverse().find(m=>m.role==='assistant');
       const state=speaking?'speaking':(last?'ready':'idle');
-      const label=state==='speaking'?'Brother Simon is speaking…':state==='ready'?'Tap a suggestion or ask your own question.':'Hi, I’m Brother Simon. Ask me anything about our ministry.';
+      const label=state==='speaking'?`${profile().name} is speaking…`:state==='ready'?'Tap a suggestion or ask your own question.':`Hi, I’m ${profile().name}. Ask me anything about our ministry.`;
       const chips=last?.followups?.length?last.followups:askDefaults;
-      body.innerHTML=`<div class="guide-stage" data-voice-state="${state}" role="status" aria-live="polite"><div class="voice-orb" aria-hidden="true"><span class="voice-ring"></span><span class="voice-ring"></span><span class="voice-ring"></span><span class="voice-core"><img src="assets/emoji/serve.svg" alt="" width="56" height="56"></span></div><p class="voice-name">Brother Simon</p><p class="voice-status">${escape(label)}</p>${last?.unresolved?`<div class="guide-fallback"><p>I can’t find that in the ministry guide. Our hospitality team is ready to help.</p><button type="button" class="btn primary guide-fast-help" data-guide-fast-help>Ask our Hospitality team <span aria-hidden="true">›</span></button></div>`:''}${last?.target&&!last.unresolved?`<button type="button" class="guide-source voice-source" data-guide-target="${escape(JSON.stringify(last.target))}">Open ${escape(last.source)} <span aria-hidden="true">›</span></button>`:''}<div class="guide-question-chips voice-chips">${questionChips(chips)}</div></div>`;
+      body.innerHTML=`<div class="guide-stage" data-voice-state="${state}"><button type="button" class="voice-orb" data-guide-voices aria-label="Change assistant voice. Password required."><span class="voice-ring"></span><span class="voice-ring"></span><span class="voice-ring"></span><span class="voice-core">${voiceIcon}</span></button><p class="voice-name">${escape(profile().name)}</p><button type="button" class="voice-settings-link" data-guide-voices>Change voice</button><p class="voice-status" role="status" aria-live="polite">${escape(label)}</p>${last?.unresolved?`<div class="guide-fallback"><p>I can’t find that in the ministry guide. Our hospitality team is ready to help.</p><button type="button" class="btn primary guide-fast-help" data-guide-fast-help>Ask our Hospitality team <span aria-hidden="true">›</span></button></div>`:''}${last?.target&&!last.unresolved?`<button type="button" class="guide-source voice-source" data-guide-target="${escape(JSON.stringify(last.target))}">Open ${escape(last.source)} <span aria-hidden="true">›</span></button>`:''}<div class="guide-question-chips voice-chips">${questionChips(chips)}</div></div>`;
     }
     function spokenText(m) {
       const parts=[m.text];
@@ -149,28 +160,33 @@
       return parts.filter(Boolean).join(' ');
     }
     const voiceState={voice:null,ready:false};
-    function pickVoice() {
-      if(!('speechSynthesis' in window)) return null;
-      const voices=window.speechSynthesis.getVoices();
-      if(!voices.length) return null;
-      // Prefer voice quality over gender; keep a male voice when quality is comparable.
-      const english=voices.filter(v=>/^en(?:[-_]|$)/i.test(v.lang));
-      const score=v=>{
-        let value=0;
-        if(/natural|neural|wavenet|studio|premium|enhanced/i.test(v.name)) value+=100;
-        else if(/google/i.test(v.name)) value+=65;
-        if(/\bmale\b|\b(guy|brandon|ryan|davis|tony|aaron|liam|andrew|daniel|alex|arthur|oliver|tom|brian|james|mark|david)\b/i.test(v.name)) value+=12;
-        if(/en[-_](US|GB|AU|CA|PH)/i.test(v.lang)) value+=4;
-        if(v.default) value+=2;
-        if(/\b(fred|trinoids|whisper|zarvox|bubbles|bells|bad news|good news)\b/i.test(v.name)) value-=50;
-        return value;
-      };
-      return english.sort((a,b)=>score(b)-score(a))[0] || voices.find(v=>v.default) || voices[0];
+    function availableVoices() {
+      if(!('speechSynthesis' in window))return [];
+      const seen=new Set();
+      const score=v=>(/natural|neural|wavenet|studio|premium|enhanced/i.test(v.name)?100:/google/i.test(v.name)?65:0)+(/en[-_](US|GB|AU|CA|PH)/i.test(v.lang)?4:0)+(v.default?2:0)-(/\b(fred|trinoids|whisper|zarvox|bubbles|bells|bad news|good news)\b/i.test(v.name)?50:0);
+      return window.speechSynthesis.getVoices().filter(v=>{
+        const key=v.voiceURI||`${v.lang}:${v.name}`;
+        if(!/^en(?:[-_]|$)/i.test(v.lang)||seen.has(key))return false;
+        seen.add(key);return true;
+      }).sort((a,b)=>score(b)-score(a));
+    }
+    function voiceGender(voice) {
+      if(/\bfemale\b|\b(zira|samantha|victoria|karen|moira|tessa|fiona|susan|allison|ava|serena|jenny|aria|jane|sonia|hazel|sara|catherine|joanna|emma|michelle|elizabeth|salli|shelley|nicky|siri female)\b/i.test(voice.name))return 'female';
+      if(/\bmale\b|\b(guy|brandon|ryan|davis|tony|aaron|liam|andrew|daniel|alex|arthur|oliver|tom|brian|james|mark|david|george|christopher|eric|roger|thomas|lee|rishi|evan|nathan|siri male)\b/i.test(voice.name))return 'male';
+      return null;
+    }
+    function pickVoice(choice=profile()) {
+      const voices=availableVoices();
+      const candidates=voices.filter(v=>voiceGender(v)===choice.gender);
+      if(candidates[choice.slot])return candidates[choice.slot];
+      // Keep the default assistant usable while voices load or on devices with a limited voice list.
+      return choice.id==='simon'?(voices.find(v=>!voiceGender(v))||voices[0]||null):null;
     }
     function ensureVoice() {
       if(!('speechSynthesis' in window)) return;
       voiceState.voice=pickVoice();
       voiceState.ready=Boolean(voiceState.voice);
+      if(voiceSettings==='choices')drawVoiceSettings();
     }
     if('speechSynthesis' in window){
       ensureVoice();
@@ -184,7 +200,7 @@
         const stage=body.querySelector('.guide-stage');
         if(stage) stage.dataset.voiceState=speaking?'speaking':(messages.some(m=>m.role==='assistant')?'ready':'idle');
         const label=body.querySelector('.voice-status');
-        if(label) label.textContent=speaking?'Brother Simon is speaking…':(messages.some(m=>m.role==='assistant')?'Tap a suggestion or ask your own question.':'Hi, I’m Brother Simon. Ask me anything about our ministry.');
+        if(label) label.textContent=speaking?`${profile().name} is speaking…`:(messages.some(m=>m.role==='assistant')?'Tap a suggestion or ask your own question.':`Hi, I’m ${profile().name}. Ask me anything about our ministry.`);
       }
     }
     function speak(text) {
@@ -205,17 +221,66 @@
       } catch { setSpeaking(false); }
     }
     function stopSpeaking(){try{window.speechSynthesis?.cancel();}catch{} setSpeaking(false);}
+    function updateAssistantName() {
+      dialog.querySelector('#guide-assistant-tab span').textContent=`Ask ${profile().name}`;
+      document.querySelectorAll('[data-assistant-name]').forEach(el=>el.textContent=profile().name);
+      if(mode==='assistant'){
+        dialog.querySelector('#discovery-title').textContent=`Ask ${profile().name}`;
+        dialog.querySelector('#guide-label').textContent=`Ask ${profile().name} about the Hospitality Ministry`;
+        input.placeholder=`Type your question for ${profile().name}…`;
+      }
+    }
+    function drawVoiceSettings() {
+      dialog.querySelector('#guide-form').hidden=true;
+      const lockIcon='<svg viewBox="0 0 48 48" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"><rect x="11" y="21" width="26" height="22" rx="5"></rect><path d="M16 21v-9a8 8 0 0 1 16 0v9M24 30v5"></path></svg>';
+      const groups=['female','male'].map(gender=>`<div class="voice-choice-group"><h4>${gender==='female'?'Female voices':'Male voices'}</h4><div class="voice-choice-grid">${voiceProfiles.filter(p=>p.gender===gender).map(p=>{
+        const voice=pickVoice(p),active=p.id===selectedVoice;
+        return `<button type="button" class="voice-choice" data-guide-voice="${p.id}" aria-pressed="${active}" ${!voice?'disabled':''}><span class="voice-choice-symbol">${voiceIcon}</span><strong>${escape(p.name)}</strong><small>${p.id==='simon'?'Default · ':''}${voice?escape(voice.name):'Not available on this device'}</small><span class="voice-choice-state">${active?'Selected':voice?'Choose & listen':'Unavailable'}</span></button>`;
+      }).join('')}</div></div>`).join('');
+      body.innerHTML=`<section class="voice-settings"><button type="button" class="voice-back" data-guide-voice-back>‹ Back to assistant</button><div class="voice-settings-heading">${voiceSettings==='locked'?lockIcon:voiceIcon}<h3>${voiceSettings==='locked'?'Unlock voice settings':'Choose your assistant'}</h3><p>${voiceSettings==='locked'?'Enter the password to change the voice.':'Choose a voice to hear its introduction.'}</p></div>${voiceSettings==='locked'?`<form id="voice-unlock-form" autocomplete="off"><label for="voice-password">Password</label><input id="voice-password" type="password" inputmode="none" maxlength="40" autocomplete="off" spellcheck="false" aria-describedby="voice-password-error"><p id="voice-password-error" role="alert"></p><button type="submit" class="guide-source voice-unlock">Unlock</button></form>`:`${groups}<p class="voice-device-note">Natural and enhanced voices are preferred when available. Voice options depend on this device.</p>`}</section>`;
+      drawKeyboard();body.scrollTop=0;
+      if(voiceSettings==='locked')body.querySelector('#voice-password').focus();
+    }
+    function openVoiceSettings() {
+      clearTimeout(greetingTimer);stopSpeaking();shift=false;
+      voiceSettings='locked';drawVoiceSettings();
+    }
+    function unlockVoices() {
+      if(voiceSettings!=='locked')return;
+      const password=body.querySelector('#voice-password');
+      if(password.value!=='hfgc'){
+        body.querySelector('#voice-password-error').textContent='Incorrect password. Please try again.';
+        password.value='';password.setAttribute('aria-invalid','true');password.focus();return;
+      }
+      voiceSettings='choices';drawVoiceSettings();
+      body.querySelector('[data-guide-voice]:not(:disabled)')?.focus();
+    }
+    function leaveVoiceSettings() {
+      voiceSettings=null;dialog.querySelector('#guide-form').hidden=false;
+      drawChat();drawKeyboard();body.querySelector('[data-guide-voices]')?.focus();
+    }
+    function chooseVoice(id) {
+      if(voiceSettings!=='choices')return;
+      const choice=voiceProfiles.find(p=>p.id===id);
+      if(!choice||!pickVoice(choice))return;
+      stopSpeaking();selectedVoice=id;
+      try{localStorage.setItem('hfgc-assistant-voice',id);}catch{}
+      updateAssistantName();leaveVoiceSettings();
+      speak(`Hello, I’m ${profile().name}. How can I assist you?`);
+    }
+    updateAssistantName();
     function drawSuggestions() {
       const q=input.value.trim(),related=q?guide.search(q).slice(0,4).map(r=>r.entry.title):(mode==='search'?defaults:askDefaults);
       suggestions.innerHTML=related.length?`<span>${q?'Related topics':'Try'}</span>${related.map(s=>`<button type="button" data-guide-suggest="${escape(s)}">${escape(s)}</button>`).join('')}`:'<span>Try a team name, a role, or “join.”</span>';
     }
     function changeMode(next) {
       queries[mode]=input.value; mode=next; input.value=queries[mode];
+      clearTimeout(greetingTimer);voiceSettings=null;dialog.querySelector('#guide-form').hidden=false;
       stopSpeaking();
-      dialog.querySelector('#discovery-title').textContent=mode==='search'?'Find your way':'Ask Brother Simon';
-      dialog.querySelector('#guide-label').textContent=mode==='search'?'What would you like to find?':'Ask Brother Simon about the Hospitality Ministry';
+      dialog.querySelector('#discovery-title').textContent=mode==='search'?'Find your way':`Ask ${profile().name}`;
+      dialog.querySelector('#guide-label').textContent=mode==='search'?'What would you like to find?':`Ask ${profile().name} about the Hospitality Ministry`;
       dialog.querySelector('#guide-send').textContent=mode==='search'?'Search':'Ask';
-      input.placeholder=mode==='search'?'Search teams, roles, or joining…':'Type your question for Brother Simon…';
+      input.placeholder=mode==='search'?'Search teams, roles, or joining…':`Type your question for ${profile().name}…`;
       dialog.querySelectorAll('[role="tab"]').forEach(tab=>{const active=tab.dataset.guideMode===mode;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;});
       dialog.querySelector('#guide-panel').setAttribute('aria-labelledby',mode==='search'?'guide-search-tab':'guide-assistant-tab');
       mode==='search'?drawResults():drawChat();drawSuggestions();drawKeyboard();
@@ -223,6 +288,7 @@
     }
     function submit() {
       activity();
+      if(voiceSettings)return;
       if(mode==='search') {drawResults();body.scrollTop=0;return;}
       const question=input.value.trim(); if(!question)return;
       const response=guide.answer(question,context); if(!response)return;
@@ -234,35 +300,43 @@
       input.focus();
     }
     function close(reason) {
-      if(!dialog.open)return;dialog.close();stopSpeaking();
+      clearTimeout(greetingTimer);
+      if(!dialog.open)return;dialog.close();stopSpeaking();voiceSettings=null;
+      const password=body.querySelector('#voice-password');if(password)password.value='';
       if(!['navigate','reset','idle'].includes(reason)&&opener?.isConnected)opener.focus();
     }
     function editKey(key) {
       activity();
-      if(key==='Enter'){submit();return;}
+      if(key==='Enter'){voiceSettings==='locked'?unlockVoices():submit();return;}
+      if(voiceSettings==='choices')return;
       if(key==='Shift'){shift=!shift;drawKeyboard();return;}
-      if(key==='Clear'){input.value='';input.setSelectionRange(0,0);}
+      const target=voiceSettings==='locked'?body.querySelector('#voice-password'):input;
+      if(!target)return;
+      if(key==='Clear'){target.value='';target.setSelectionRange(0,0);}
       else {
-        let start=input.selectionStart??input.value.length,end=input.selectionEnd??start;
-        if(key==='Backspace'){if(start===end&&start>0){start--;if(start>0&&/[\uDC00-\uDFFF]/.test(input.value[start]))start--;}input.setRangeText('',start,end,'end');}
-        else if(input.value.length-(end-start)+key.length<=input.maxLength)input.setRangeText(key,start,end,'end');
+        let start=target.selectionStart??target.value.length,end=target.selectionEnd??start;
+        if(key==='Backspace'){if(start===end&&start>0){start--;if(start>0&&/[\uDC00-\uDFFF]/.test(target.value[start]))start--;}target.setRangeText('',start,end,'end');}
+        else if(target.value.length-(end-start)+key.length<=target.maxLength)target.setRangeText(key,start,end,'end');
       }
-      input.focus();input.dispatchEvent(new Event('input',{bubbles:true}));
+      target.focus();target.dispatchEvent(new Event('input',{bubbles:true}));
     }
     document.querySelectorAll('[data-discovery]').forEach(button=>button.addEventListener('click',()=>{
       const alreadyOpen=dialog.open;
       opener=button; if(!alreadyOpen)dialog.showModal();changeMode(button.dataset.discovery);
       // First open of Ask Brother Simon → he greets the visitor out loud, then the dialog waits for a question.
       if(button.dataset.discovery==='assistant' && !alreadyOpen){
-        const greet='Hello, I’m Brother Simon. How can I assist you?';
+        const greet=`Hello, I’m ${profile().name}. How can I assist you?`;
         // speechSynthesis.getVoices often returns [] on the very first call until the voices load — give it a tick.
-        setTimeout(()=>speak(greet),120);
+        greetingTimer=setTimeout(()=>{if(dialog.open&&mode==='assistant'&&!voiceSettings)speak(greet);},120);
       }
     }));
     dialog.addEventListener('pointerdown',e=>{if(e.target.closest('[data-guide-key], [data-guide-suggest]'))e.preventDefault();});
     dialog.addEventListener('click',e=>{
       const button=e.target.closest('button');if(!button)return;activity();
       if(button.classList.contains('discovery-close'))close();
+      else if(button.hasAttribute('data-guide-voices'))openVoiceSettings();
+      else if(button.hasAttribute('data-guide-voice-back'))leaveVoiceSettings();
+      else if(button.dataset.guideVoice)chooseVoice(button.dataset.guideVoice);
       else if(button.dataset.guideMode)changeMode(button.dataset.guideMode);
       else if(button.dataset.guideTarget){const target=JSON.parse(button.dataset.guideTarget);close('navigate');openDestination(target);}
       else if(button.dataset.guideKey)editKey(button.dataset.guideKey);
@@ -272,6 +346,7 @@
       else if(button.hasAttribute('data-guide-fast-help')){close('navigate');openDestination({page:'join'});}
     });
     dialog.querySelector('#guide-form').addEventListener('submit',e=>{e.preventDefault();submit();});
+    body.addEventListener('submit',e=>{if(e.target.id==='voice-unlock-form'){e.preventDefault();activity();unlockVoices();}});
     input.addEventListener('input',()=>{queries[mode]=input.value;activity();if(mode==='search')drawResults();drawSuggestions();});
     dialog.addEventListener('cancel',e=>{e.preventDefault();close();});
     dialog.querySelector('.discovery-tabs').addEventListener('keydown',e=>{if(['ArrowLeft','ArrowRight','Home','End'].includes(e.key)){e.preventDefault();changeMode(e.key==='Home'?'search':e.key==='End'?'assistant':mode==='search'?'assistant':'search');dialog.querySelector('[aria-selected="true"]').focus();}});
