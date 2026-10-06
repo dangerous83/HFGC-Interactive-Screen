@@ -399,7 +399,7 @@
     return `<div class="team-grid ${large ? 'general-grid' : ''}">${list.map(t => `<button class="team-card" data-team="${t.id}">${highlight ? '<svg class="team-saber" aria-hidden="true" focusable="false"><rect x="4" y="4" width="100%" height="100%" rx="22" pathLength="100"></rect><rect class="team-saber-core" x="4" y="4" width="100%" height="100%" rx="22" pathLength="100"></rect></svg>' : ''}${tile(t.icon)}<div>${!large && !highlight ? `<p class="mini-label">${t.category === 'general' ? 'GENERAL HOSPITALITY' : 'VIP HOSPITALITY'}</p>` : ''}<h3>${t.name}</h3><p>${t.short}</p>${large ? '<span class="card-link">Explore This Team</span>' : ''}</div></button>`).join('')}</div>`;
   }
   function home() {
-    const destinations=[['heart','heart','Our Heart','The love behind every welcome.'],['general','serve','What We Do','Intentional care for every guest.'],['vip','honor','VIP Hospitality','Personalized care, every step.'],['teams','users','Our Teams','Nine ways to make a difference.'],['join','care','Get Involved','Find your place to serve.']];
+    const destinations=[['heart','heart','Our Heart','The love behind every welcome.'],['general','serve','Find Your Team','Intentional care for every guest.'],['vip','honor','VIP Hospitality','Personalized care, every step.'],['teams','users','Our Teams','Nine ways to make a difference.'],['join','care','Get Involved','Find your place to serve.']];
     return `<section class="page home-page portrait-home"><div class="portrait-welcome"><p class="eyebrow gold-text">WELCOME TO HOSPITALITY</p><h1>There’s a place<br><em>for you.</em></h1><p class="lead">Every guest matters.<br>Every person matters to Christ.</p></div><div class="welcome-menu">${destinations.map(([page,name,label,description])=>`<button type="button" data-page="${page}">${tile(name)}<span><strong>${label}</strong><small>${description}</small></span><span class="welcome-arrow" aria-hidden="true">›</span></button>`).join('')}</div><div class="scripture-strip">${icon('book')}<p>“Accept one another, then, just as Christ accepted you, in order to bring praise to God.” <cite>Romans 15:7</cite></p></div></section>`;
   }
   function heart() {
@@ -416,7 +416,7 @@
     return `<section class="page general-page">${title('','Hospitality for General Guests','In General hospitality, we give intentional care.')} ${teamCards(teams.filter(t=>t.category==='general'),true)}</section>`;
   }
   function vip() {
-    return `<section class="page vip-page">${title('','Hospitality for VIP Guests','While in VIP hospitality, we give personalized care.')} ${teamCards(teams.filter(t=>t.category==='vip'),false,true)}<div class="section-note"><p>Everyone receives Christ-centered care.</p>${btn('Find Your Team','finder','secondary','compass')}</div></section>`;
+    return `<section class="page vip-page">${title('','Hospitality for VIP Guests','While in VIP hospitality, we give personalized care.')} <div class="vip-content">${teamCards(teams.filter(t=>t.category==='vip'),false,true)}<div class="section-note"><p>Everyone receives Christ-centered care.</p>${btn('Find Your Team','finder','secondary','compass')}</div></div></section>`;
   }
   function directory() {
     const list = teams.filter(t=>state.filter==='all' || t.category===state.filter);
@@ -483,6 +483,7 @@
   function render(focus=true) {
     main.classList.toggle('heart-photo-background',state.page==='heart');
     main.classList.toggle('general-background',state.page==='general');
+    main.classList.toggle('vip-background',state.page==='vip');
     main.classList.toggle('team-photo-template',state.page==='team');
     main.classList.toggle('greeters-background',state.page==='team' && state.team==='greeters');
     main.classList.toggle('ushers-background',state.page==='team' && state.team==='ushers');

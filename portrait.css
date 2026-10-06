@@ -296,3 +296,15 @@ main.assistance-background{
 .vip-page .page-title p:last-child{color:var(--gold-light);font-weight:500}
 .vip-page .team-card{position:relative;overflow:visible}
 .team-summary-top>.icon-tile{margin-bottom:0}
+
+/* VIP photo overview: keep the heading high and the team container below the photo. */
+#main.vip-background{background:linear-gradient(180deg,#021b3526 0%,#021b350d 35%,#021b3570 65%,#021b35d9 100%),url('Hospitality%20for%20VIP%20Guests.png') center top/cover no-repeat}
+.vip-background .vip-page{margin:0;min-height:100%;display:flex;flex-direction:column;padding:32px 36px 40px}
+.vip-background .page-title{margin:0;text-shadow:0 2px 14px #00152d}
+.vip-background .page-title h1{font-size:clamp(34px,5.6vw,62px);line-height:1.12}
+.vip-background .page-title p:last-child{color:var(--gold-light);font-size:clamp(20px,2.5vw,28px);margin-top:16px}
+.vip-content{margin-top:auto;padding-top:300px;flex-shrink:0}
+.vip-background .team-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.vip-background .team-card{background:linear-gradient(135deg,#063d68f2,#021e3bf5);border-color:#f3d16f99;box-shadow:0 12px 30px #00152d55}
+.vip-background .section-note{background:#073658ed;border:1px solid #f3d16f55}
+@media(max-width:650px){.vip-background .vip-page{padding:24px 20px}.vip-content{padding-top:220px}.vip-background .team-grid{grid-template-columns:1fr;gap:16px}}
