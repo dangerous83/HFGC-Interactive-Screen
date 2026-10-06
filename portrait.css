@@ -243,9 +243,9 @@ main.assistance-background{
 .heart-orbit-button:is(:hover,:focus-visible){transform:translateY(-6px);background:linear-gradient(145deg,#1778b8,#05294c);box-shadow:0 0 0 3px #ffe69c55,0 0 28px #53c6ff55}
 .heart-orbit-button:active{transform:scale(.96)}
 .heart-service-choices{position:absolute;top:700px;bottom:auto;left:0;right:0;display:grid;grid-template-columns:1fr 1fr;gap:20px}
-.heart-service-choices button{display:flex;align-items:center;gap:20px;padding:30px 26px;min-height:170px;text-align:left;background:linear-gradient(135deg,#074471f2,#031e3bf5);border:1px solid #f3d16f99;border-radius:22px;box-shadow:0 12px 36px #00172b66;transition:transform .25s,border-color .25s;animation:heart-heading-in .7s .55s ease-out both}
-.heart-service-choices button svg{width:44px;height:44px;flex-shrink:0;color:#ffe69c}.heart-service-choices strong{display:block;font-size:29px;line-height:1.2;font-family:Georgia,serif;font-weight:400}.heart-service-choices small{display:block;font-size:22px;line-height:1.4;color:#d4e9fc;margin-top:12px}
-.heart-service-choices button:is(:hover,:focus-visible){transform:translateY(-4px);border-color:#ffe69c}.heart-service-choices button:active{transform:scale(.98)}
+.heart-service-choices button{display:flex;align-items:center;gap:20px;padding:30px 26px;min-height:170px;text-align:left;background:linear-gradient(135deg,#fff0bd,#f3d16f 55%,#e9bb52);color:#082a47;border:1px solid #ffe69c;border-radius:22px;box-shadow:0 12px 36px #00172b66;transition:transform .25s,border-color .25s,background .25s;animation:heart-heading-in .7s .55s ease-out both}
+.heart-service-choices button svg{width:44px;height:44px;flex-shrink:0;color:#082a47}.heart-service-choices strong{display:block;color:#082a47;font-size:29px;line-height:1.2;font-family:Georgia,serif;font-weight:400}.heart-service-choices small{display:block;font-size:22px;line-height:1.4;color:#173b50;margin-top:12px}
+.heart-service-choices button:is(:hover,:focus-visible){transform:translateY(-4px);background:linear-gradient(135deg,#fff4cf,#f6da84 55%,#eac56b);color:#082a47;border-color:#fff4d6}.heart-service-choices button:active{transform:scale(.98)}
 @keyframes heart-heading-in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes heart-node-in{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
 @keyframes heart-orbit-in{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
@@ -315,6 +315,14 @@ main.assistance-background{
 /* The uploaded handlers photo belongs to the VIP Hosts / Handlers detail screen. */
 main.hosts-background{
  background-image:linear-gradient(180deg,#021b3550 0%,#021b3510 26%,#021b3570 55%,#021b35e8 100%),url('handlers.png');
+ background-size:cover;
+ background-position:center top;
+ background-repeat:no-repeat;
+}
+
+/* The uploaded support runner photo belongs to the VIP Support Runners detail screen. */
+main.runners-background{
+ background-image:linear-gradient(180deg,#021b3550 0%,#021b3510 26%,#021b3570 55%,#021b35e8 100%),url('support%20runner.png');
  background-size:cover;
  background-position:center top;
  background-repeat:no-repeat;
