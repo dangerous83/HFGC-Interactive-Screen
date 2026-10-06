@@ -182,7 +182,7 @@ main.transport-background{
 @media(max-width:650px){.transport-background .detail-layout{padding-top:250px}}
 /* The usher and elderly guests photo belongs to the HFGC Ushers detail screen. */
 main.ushers-background{
- background-image:linear-gradient(180deg,#021b3508 0%,#021b3510 30%,#021b3570 55%,#021b35e8 100%),url('HFGC%20Ushers.png');
+ background-image:linear-gradient(180deg,#021b3508 0%,#021b3510 30%,#021b3570 55%,#021b35e8 100%),url('ushers-background.webp');
  background-size:cover;
  background-position:center 30%;
  background-repeat:no-repeat;
