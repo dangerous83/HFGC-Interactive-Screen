@@ -70,6 +70,9 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline-color:var(--g
 .intro-menu .intro-emoji{display:block;flex:0 0 auto;width:34px;height:34px;object-fit:contain;transform-origin:center;will-change:transform}
 .intro-emoji[data-emoji="heart"]{animation:emoji-heartbeat 3.6s ease-in-out infinite}
 .intro-emoji[data-emoji="serve"]{animation:emoji-offer 3.8s ease-in-out infinite}
+.intro-emoji[data-emoji="happy"]{animation:emoji-happy 3.4s ease-in-out infinite;filter:drop-shadow(0 2px 5px #ffcc4d55)}
+.intro-menu button:is(:hover,:focus-visible) .intro-emoji[data-emoji="happy"]{animation-duration:1.4s}
+@keyframes emoji-happy{0%,16%,80%,100%{transform:translateY(0) rotate(0) scale(1)}28%{transform:translateY(-4px) rotate(-9deg) scale(1.08)}40%{transform:translateY(-2px) rotate(8deg) scale(1.06)}52%{transform:translateY(-4px) rotate(-5deg) scale(1.08)}64%{transform:translateY(0) rotate(3deg) scale(1)}}
 .intro-emoji[data-emoji="honor"]{animation:emoji-crown 4.2s ease-in-out infinite}
 .intro-emoji[data-emoji="care"]{animation:emoji-care 4.6s ease-in-out infinite}
 .intro-emoji[data-emoji="sparkle"]{animation:emoji-sparkle 2.8s ease-in-out infinite;filter:drop-shadow(0 0 6px #f3d16faa)}
