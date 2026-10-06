@@ -226,7 +226,7 @@
     "icon": "reception",
     "short": "Receive, welcome, verify, and introduce VIPs to their Hosts.",
     "tagline": "We receive. We welcome. We connect.",
-    "purpose": "They receive, welcome, verify, and introduce VIP guests to their assigned HFGC host.",
+    "purpose": "From the moment our VIP guests arrive, we receive them with warmth, welcome them with joy, and connect them to the HFGC experience at the airport, hotel, and venue.",
     "fit": "You enjoy welcoming guests and coordinating arrival arrangements.",
     "interest": "I’m Interested in VIP Reception",
     "finder": "I enjoy welcoming guests and organizing arrivals.",
@@ -248,8 +248,8 @@
     "name": "HFGC VIP Hosts / Handlers",
     "icon": "host",
     "short": "Provide personalized care throughout each VIP’s HFGC experience.",
-    "tagline": "One guest. One Host. One commitment to care.",
-    "purpose": "They provide personalized care and assistance to assigned VIP guests throughout their HFGC experience.",
+    "tagline": "PERSONALIZED CARE FROM ARRIVAL TO DEPARTURE",
+    "purpose": "From the first welcome to the final farewell, our VIP Hosts are by their assigned guests’ side, ready to assist, care, and make every HFGC moment special.",
     "fit": "You enjoy attentive guest care, communication, and keeping track of schedules.",
     "interest": "I’m Interested in VIP Hosting",
     "finder": "I love personalized guest care.",
@@ -273,8 +273,8 @@
     "name": "HFGC VIP Transportation Team",
     "icon": "car",
     "short": "Manage VIP vehicle movement and safe transportation.",
-    "tagline": "Safe journeys. Coordinated movements.",
-    "purpose": "Manage the movement and scheduling of VIP vehicles.",
+    "tagline": "WE MANAGE THE MOVEMENT.",
+    "purpose": "Every ride is part of the HFGC experience. We keep every VIP journey organized and comfortable, providing timely transportation from airport to hotel, venue, and every destination in between.",
     "fit": "You enjoy logistics and scheduling, or would like to express interest in serving as a driver.",
     "interest": "I’m Interested in VIP Transportation",
     "finder": "I love logistics and transportation.",
@@ -415,7 +415,7 @@
     return `<section class="page general-page">${title('','Hospitality for General Guests','In General hospitality, we give intentional care.')} ${teamCards(teams.filter(t=>t.category==='general'),true)}</section>`;
   }
   function vip() {
-    return `<section class="page vip-page">${title('','Hospitality for VIP Guests','In VIP hospitality, we give personalized care.')} <div class="vip-content">${teamCards(teams.filter(t=>t.category==='vip'),false,true)}<div class="section-note"><p>Everyone receives Christ-centered care.</p>${btn('Find Your Team','finder','secondary','compass')}</div></div></section>`;
+    return `<section class="page vip-page">${title('','Hospitality for VIP Guests','In VIP hospitality, we give personalized care.')} <div class="vip-content">${teamCards(teams.filter(t=>t.category==='vip'),false,true)}</div></section>`;
   }
   function directory() {
     const list = teams.filter(t=>state.filter==='all' || t.category===state.filter);
@@ -568,7 +568,7 @@
         if(a.effect?.target?.closest?.('.intro-saber')) return;
         a.cancel();a.play();
       });
-      document.getElementById('enter').focus({preventScroll:true});
+      intro.querySelector('[data-intro-page]')?.focus({preventScroll:true});
     }
   }
   function continueExploring() {
@@ -651,7 +651,6 @@
   });
   ['pointerdown','keydown','wheel'].forEach(type=>document.addEventListener(type,()=>{if (!idleDialog.open) lastActivity=Date.now();},{passive:true}));
   document.addEventListener('scroll',()=>{if (!idleDialog.open) lastActivity=Date.now();},true);
-  document.getElementById('enter').addEventListener('click',enter);
   discovery=window.HFGC_DISCOVERY.create({teams,pillars,openDestination:target=>{
     enter();
     if(target.page==='join' && target.params?.team) {
