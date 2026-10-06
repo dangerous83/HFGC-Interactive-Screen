@@ -433,8 +433,15 @@
     return `<section class="page vip-page">${title('','Hospitality for VIP Guests','In VIP hospitality, we give personalized care.')} <div class="vip-content">${vipGuestCircles()}${teamCards(teams.filter(t=>t.category==='vip'),false,true)}</div></section>`;
   }
   function directory() {
-    const list = teams.filter(t=>state.filter==='all' || t.category===state.filter);
-    return `<section class="page">${title('OUR TEAMS · NINE WAYS TO SERVE','Find your place to serve.','Explore a team to learn how you can contribute.',btn('Find a Team for Me','finder','secondary','compass'))}${state.unsure ? '<div class="section-note" style="margin:0 0 20px"><p>Explore our teams, or express your interest and ask for help finding a place to serve.</p><button class="btn secondary" data-page="join">Express My Interest</button></div>' : ''}<div class="filters" role="group" aria-label="Filter teams">${[['all','All Teams'],['general','General Hospitality'],['vip','VIP Hospitality']].map(([id,label])=>`<button class="filter" data-filter="${id}" aria-pressed="${state.filter===id}">${label}</button>`).join('')}</div>${teamCards(list)}</section>`;
+    const areas = [
+      {id:'general',name:'General Hospitality',icon:'users',description:'Intentional care for every guest.'},
+      {id:'vip',name:'VIP Hospitality',icon:'honor',description:'Personalized care, every step.'}
+    ];
+    const groups = areas.map(area=>{
+      const list=teams.filter(t=>t.category===area.id);
+      return `<section class="directory-area directory-${area.id}" aria-labelledby="directory-${area.id}-title"><header class="directory-area-heading">${tile(area.icon)}<div><h2 id="directory-${area.id}-title">${area.name}</h2><p>${area.description}</p></div><span class="directory-team-count">${list.length} teams</span></header><div class="directory-team-grid">${list.map(t=>`<button type="button" class="directory-team-card" data-team="${t.id}">${tile(t.icon)}<div class="directory-team-copy"><h3>${t.name}</h3><p>${t.short}</p><span class="directory-card-link">Explore team <span aria-hidden="true">↗</span></span></div></button>`).join('')}</div></section>`;
+    }).join('');
+    return `<section class="page team-directory-page">${title('OUR TEAMS · NINE WAYS TO SERVE','Find your place to serve.','Two service areas. One heart for hospitality.',btn('Find a Team for Me','finder','secondary','compass'))}${state.unsure ? '<div class="section-note"><p>Explore our teams, or ask for help finding your place to serve.</p><button class="btn secondary" data-page="join">Express My Interest</button></div>' : ''}<div class="directory-areas">${groups}</div></section>`;
   }
   function responsibilities(label, list, text='') {
     return `<details><summary>${label}</summary><div class="responsibilities" tabindex="0" role="region" aria-label="${escape(label)}">${list ? `<ul>${list.map(item=>`<li>${escape(item)}</li>`).join('')}</ul>` : ''}${text ? `<p>${escape(text)}</p>` : ''}</div></details>`;

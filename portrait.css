@@ -233,7 +233,7 @@ main.assistance-background{
 .heart-photo-heading p{margin-top:20px;font-size:26px;color:#d4e9fc;letter-spacing:.05em}
 .heart-orbit-stage{position:relative;flex:1;min-height:1120px;margin-top:16px}
 /* Equal gold glass capsules, inspired by the supplied hover reference. */
-.heart-pillar-choices{position:absolute;top:0;left:0;right:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:center}
+.heart-pillar-choices{position:absolute;top:38%;left:0;right:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;align-items:center}
 .heart-orbit-button{position:relative;isolation:isolate;width:100%;min-height:84px;display:flex;align-items:center;justify-content:center;gap:12px;padding:18px 20px;border-radius:999px;border:1px solid #ffe5a5;background:linear-gradient(110deg,#fff4c5e8 0%,#ffdc83de 42%,#f9ae36e8 100%);color:#082a47;box-shadow:inset 0 2px 2px #fff9df, inset 0 -3px 4px #c9762299,0 4px 0 #c5892b,0 10px 22px #00172b66;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);text-shadow:0 1px 0 #fff7d966;transition:transform .22s,box-shadow .22s;animation:heart-node-in .7s ease-out both}
 .heart-orbit-button:before{content:'';position:absolute;inset:3px 10px 48%;border-radius:999px;background:linear-gradient(180deg,#fffdf28c,#ffffff08);pointer-events:none;z-index:0}
 .heart-orbit-button>svg:not(.heart-glass-edge){width:32px;height:32px;flex-shrink:0;position:relative;z-index:2}
@@ -431,3 +431,41 @@ main.lounge-background{
 @media(max-width:650px){.vip-guest-dialog .vip-category-body{padding:16px 24px 26px}.vip-guest-dialog .vip-category-body .vip-guest-detail{font-size:19px;line-height:1.5}.vip-guest-dialog .pillar-dialog-shell{max-height:calc(100dvh - 40px)}.vip-guest-label{min-height:94px;font-size:17px}}
 
 @media(prefers-reduced-motion:reduce){.heart-glass-edge rect,.heart-orbit-button .heart-glass-flare{animation:none!important}.heart-orbit-button .heart-glass-flare{transition:none}}
+
+/* Two clearly separated service areas in the team directory. */
+.team-directory-page{margin:0 auto;padding:40px 36px 44px;max-width:1440px}
+.team-directory-page .page-title{display:flex;align-items:flex-end;gap:24px;margin-bottom:30px}
+.team-directory-page .page-title h1{font-size:clamp(36px,4.8vw,58px);line-height:1.12}
+.team-directory-page .page-title .eyebrow{font-size:15px;letter-spacing:.12em;margin-bottom:12px}
+.team-directory-page .page-title p:last-child{font-size:23px;line-height:1.45;margin-top:14px}
+.team-directory-page .page-title>.btn{flex-shrink:0;min-height:60px;font-size:19px;padding:16px 22px}
+.team-directory-page .section-note{margin:0 0 24px}
+.directory-areas{display:grid;gap:32px}
+.directory-area{padding:24px;border:1px solid #b8d3ea55;border-radius:24px;background:linear-gradient(135deg,#0a3e6666,#04254099)}
+.directory-area-heading{display:flex;align-items:center;gap:18px;margin-bottom:22px}
+.directory-area-heading>.icon-tile{width:58px;height:58px;border-radius:16px;background:#b8d3ea12;border-color:#b8d3ea44;color:#deedf9}
+.directory-area-heading>.icon-tile svg{width:30px;height:30px}
+.directory-area-heading h2{font-family:Georgia,serif;font-weight:400;font-size:34px;line-height:1.15;margin:0;color:#f0f7fd}
+.directory-area-heading p{font-size:21px;line-height:1.4;color:#c7d9eb;margin:8px 0 0}
+.directory-team-count{margin-left:auto;flex-shrink:0;padding:8px 13px;border:1px solid #b8d3ea44;border-radius:999px;color:#deedf9;font-size:16px;font-weight:700;white-space:nowrap}
+.directory-team-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.directory-general .directory-team-card:last-child{grid-column:1/-1}
+.directory-team-card{display:flex;gap:16px;align-items:flex-start;padding:22px;text-align:left;border:1px solid #b8d3ea40;border-radius:17px;background:#083458cc;color:#f7f8fc;transition:border-color .2s,background .2s,box-shadow .2s}
+.directory-team-card>.icon-tile{width:46px;height:46px;border-radius:12px;background:#b8d3ea0d;border-color:#b8d3ea35;color:#d6eaf9}
+.directory-team-card>.icon-tile svg{width:25px;height:25px}
+.directory-team-copy{min-width:0;display:flex;flex-direction:column;align-self:stretch;flex:1}
+.directory-team-card h3{font-size:25px;line-height:1.2;margin:0 0 10px}
+.directory-team-card p{font-size:21px;line-height:1.4;color:#c7d9eb;margin:0 0 16px}
+.directory-card-link{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:auto;font-size:17px;font-weight:700;color:#deedf9}
+.directory-card-link>span{font-size:23px;line-height:1}
+.directory-team-card:is(:hover,:focus-visible){border-color:#deedf9;background:#0b4066;box-shadow:inset 0 0 0 1px #deedf926}
+.directory-vip{border-color:#f3d16f70;background:linear-gradient(135deg,#f3d16f0f,#052540cc 55%)}
+.directory-vip .directory-area-heading h2{color:#ffe69c}
+.directory-vip .directory-area-heading>.icon-tile,.directory-vip .directory-team-card>.icon-tile{color:#ffe69c;background:#f3d16f10;border-color:#f3d16f45}
+.directory-vip .directory-team-count{color:#ffe69c;border-color:#f3d16f55;background:#f3d16f0b}
+.directory-vip .directory-team-card{border-color:#f3d16f40;background:linear-gradient(120deg,#f3d16f08,#062c4acc)}
+.directory-vip .directory-card-link{color:#ffe69c}
+.directory-vip .directory-team-card:is(:hover,:focus-visible){border-color:#ffe69c;background:#f3d16f16;box-shadow:inset 0 0 0 1px #f3d16f26}
+@media(orientation:portrait) and (min-width:700px){.team-directory-page .page-title{display:block}.team-directory-page .page-title>.btn{margin-top:20px}}
+@media(max-width:650px){.heart-pillar-choices{top:34%}.team-directory-page{padding:28px 20px}.team-directory-page .page-title{display:block}.team-directory-page .page-title h1{font-size:36px}.team-directory-page .page-title p:last-child{font-size:18px}.team-directory-page .page-title>.btn{margin-top:18px}.directory-areas{gap:24px}.directory-area{padding:18px;border-radius:20px}.directory-area-heading{flex-wrap:wrap;gap:12px}.directory-area-heading h2{font-size:26px}.directory-area-heading p{font-size:17px}.directory-area-heading>.icon-tile{width:44px;height:44px}.directory-team-count{margin-left:56px;font-size:14px}.directory-team-grid{grid-template-columns:1fr;gap:12px}.directory-team-card{padding:18px;gap:12px}.directory-team-card h3{font-size:22px}.directory-team-card p{font-size:18px}.directory-card-link{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.directory-team-card{transition:none}}
