@@ -375,3 +375,11 @@ main.protocol-background{
 @keyframes finder-run{0%,15%,85%,100%{transform:translateY(0) rotate(0)}32%,60%{transform:translateY(-4px) rotate(-5deg)}45%,72%{transform:translateY(0) rotate(3deg)}}
 @media(max-width:650px){.finder-emoji-tile{flex-basis:56px;width:56px;height:56px;border-radius:14px}.finder-emoji{font-size:38px}}
 @media(prefers-reduced-motion:reduce){.finder-emoji[data-finder-emoji]{animation:none}}
+
+/* Uploaded portrait for the VIP Lounge Team detail screen. */
+main.lounge-background{
+ background-image:linear-gradient(180deg,#021b3550 0%,#021b3510 26%,#021b3570 55%,#021b35e8 100%),url('HFGC%20VIP%20Lounge%20Team.jpg');
+ background-size:cover;
+ background-position:center top;
+ background-repeat:no-repeat;
+}
