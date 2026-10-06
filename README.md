@@ -32,7 +32,7 @@ The optional online form appears as a second sign-up choice. Its entries are man
 
 ## Search and Hospitality Assistant
 
-Search is available at the top center of the opening screen and in the header. The opening screen has no Ask Hospitality launcher; the assistant remains in the experience footer and as a tab inside the search dialog. It searches the approved ministry copy, including team purposes, responsibilities, pillar verses, and joining information. Related topic suggestions update as visitors type; matching topics open their exact screen. Common role aliases, partial words, and small spelling errors are supported. A built-in touch keyboard includes Shift, Backspace, Clear, Space, and Search/Ask; physical keyboards also work. The full dialog scales with the same portrait canvas on mobile.
+Search is available at the top center of the opening screen. The experience header has no Search button or VIP Hospitality tab. The opening screen has no Ask Hospitality launcher; the assistant remains in the experience footer and as a tab inside the search dialog. It searches the approved ministry copy, including team purposes, responsibilities, pillar verses, and joining information. Related topic suggestions update as visitors type; matching topics open their exact screen. Common role aliases, partial words, and small spelling errors are supported. A built-in touch keyboard includes Shift, Backspace, Clear, Space, and Search/Ask; physical keyboards also work. The full dialog scales with the same portrait canvas on mobile.
 
 The bottom-right Start Over button is replaced with an animated open-hands **Ask Hospitality** widget. This is a local, content-based assistant, not a connected generative AI service. It uses the same team and pillar arrays as the page content, answers common ministry questions, offers team recommendations and follow-up questions, and links to relevant pages or the interest form. Team-specific joining links prefill the selected team while preserving other draft fields. Exact event details that are absent from the guide are referred to the booth team rather than invented. No API keys, external AI calls, or search of private sign-up records are involved.
 
@@ -51,3 +51,7 @@ After 90 seconds without interaction, **Still exploring?** offers Continue or Re
 The Greeters detail screen uses the approved `Greeters.png` as its background, with dark blue panels for readable content. Other screens keep the standard blue background. The browser favicon and Apple touch icon use the uploaded `pmcc_logo_icon.png`.
 
 Before the expo, check the actual screen orientation and resolution, viewing-distance readability, touch calibration, browser full-screen settings, and approved registration link/QR on real phones. Motion respects the device's reduced-motion preference. Ministry photographs can be incorporated when authentic approved assets are available.
+
+## Background music
+
+The uploaded `Lougne Music Background Loop.mp3` plays continuously at 22% volume after the first touch or keyboard interaction. It continues through navigation and the welcome screen. Bro. Simon’s speech lowers the music to 5% and restores it afterwards. If a browser blocks playback, the next interaction retries. The Our Heart page keeps the two hospitality cards; its lower four-pillars callout and Bible verse have been removed.

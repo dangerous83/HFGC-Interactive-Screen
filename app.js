@@ -51,6 +51,25 @@
     sfx.tap('default');
   }, true);
   window.HFGC_SFX = sfx;
+  // Keep one music player alive across all screens; a visitor gesture unlocks playback.
+  const backgroundMusic = new Audio('Lougne%20Music%20Background%20Loop.mp3');
+  backgroundMusic.loop = true;
+  backgroundMusic.preload = 'auto';
+  backgroundMusic.volume = 0.22;
+  let musicStarted = false;
+  let musicPending = false;
+  const startMusic = () => {
+    if (musicStarted || musicPending) return;
+    musicPending = true;
+    backgroundMusic.play().then(() => { musicStarted = true; })
+      .catch(() => { /* Retry on the next gesture if playback was blocked. */ })
+      .finally(() => { musicPending = false; });
+  };
+  ['pointerdown', 'keydown', 'click'].forEach(type =>
+    document.addEventListener(type, startMusic, { capture: true, passive: true }));
+  document.addEventListener('hfgc-speaking', event => {
+    backgroundMusic.volume = event.detail ? 0.05 : 0.22;
+  });
   const config = window.HFGC_CONFIG || {};
   const logo = 'HFGC%20EXPO%20GOLD%20FLAT%20LOGO.png';
   const icons = {
@@ -377,7 +396,7 @@
     return `<section class="page home-page portrait-home"><div class="portrait-welcome"><p class="eyebrow gold-text">WELCOME TO HOSPITALITY</p><h1>There’s a place<br><em>for you.</em></h1><p class="lead">Every guest matters.<br>Every person matters to Christ.</p></div><div class="welcome-menu">${destinations.map(([page,name,label,description])=>`<button type="button" data-page="${page}">${tile(name)}<span><strong>${label}</strong><small>${description}</small></span><span class="welcome-arrow" aria-hidden="true">›</span></button>`).join('')}</div><div class="scripture-strip">${icon('book')}<p>“Accept one another, then, just as Christ accepted you, in order to bring praise to God.” <cite>Romans 15:7</cite></p></div></section>`;
   }
   function heart() {
-    return `<section class="page">${title('WHO ARE WE?','HFGC Hospitality Ministry','We are a ministry of welcome, honor, service, and care—committed to making every guest experience the love of Christ through intentional hospitality.')}<div class="split-cards"><button class="feature-card" data-page="general">${tile('users')}<h2>General Hospitality</h2><p>In General hospitality, we give intentional care.</p><span class="card-link">Explore General Hospitality</span></button><button class="feature-card dark" data-page="vip">${tile('honor')}<h2>VIP Hospitality</h2><p>While in VIP hospitality, we give personalized care.</p><span class="card-link">Explore VIP Hospitality</span></button></div><div class="heart-bottom"><div><h3>Everyone receives Christ-centered care.</h3><p>Welcome. Honor. Serve. Care.</p></div>${btn('Explore Our Four Pillars','pillars','primary')}</div><div class="scripture-strip">${icon('book')}<p>“Accept one another, then, just as Christ accepted you, in order to bring praise to God.” <cite>Romans 15:7</cite></p></div></section>`;
+    return `<section class="page">${title('WHO ARE WE?','HFGC Hospitality Ministry','We are a ministry of welcome, honor, service, and care—committed to making every guest experience the love of Christ through intentional hospitality.')}<div class="split-cards"><button class="feature-card" data-page="general">${tile('users')}<h2>General Hospitality</h2><p>In General hospitality, we give intentional care.</p><span class="card-link">Explore General Hospitality</span></button><button class="feature-card dark" data-page="vip">${tile('honor')}<h2>VIP Hospitality</h2><p>While in VIP hospitality, we give personalized care.</p><span class="card-link">Explore VIP Hospitality</span></button></div></section>`;
   }
   function pillarOverview() {
     return `<section class="page">${back('Back to Our Heart')}${title('OUR FOUR PILLARS','Welcome. Honor. Serve. Care.','Touch a pillar to discover the heart and Scripture behind it.')}<div class="pillar-grid">${pillars.map((p,i)=>`<button class="pillar-card" data-pillar="${p.id}"><span class="pillar-number">0${i+1} / OUR HEART</span>${tile(p.id)}<h2>${p.name}</h2><p>${p.tagline}</p><span class="card-link">Discover ${p.name}</span></button>`).join('')}</div><div class="section-note"><p>VIP hospitality gives personalized care. General hospitality gives intentional care. But everyone receives Christ-centered care.</p><div class="actions">${btn('Explore Our Teams','teams','secondary')}${btn('Join Us','join')}</div></div></section>`;

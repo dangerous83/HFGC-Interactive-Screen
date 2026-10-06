@@ -176,6 +176,7 @@
     function setSpeaking(next){
       if(speaking===next) return;
       speaking=next;
+      document.dispatchEvent(new CustomEvent('hfgc-speaking', { detail: next }));
       if(mode==='assistant' && dialog.open){
         const stage=body.querySelector('.guide-stage');
         if(stage) stage.dataset.voiceState=speaking?'speaking':(messages.some(m=>m.role==='assistant')?'ready':'idle');
