@@ -58,4 +58,6 @@ The uploaded `Lougne Music Background Loop.mp3` plays continuously at 22% volume
 
 The four opening-screen circle icons (Welcome, Honor, Serve, Care) open their pillar dialogue over the welcome screen without entering the experience or navigating. Close, Escape, and backdrop dismissal return to the same opening screen. The team navigation action is hidden in these opening-screen dialogues.
 
-General Hospitality uses `General Hospitality.png` as its photo background, places the heading at the top, enlarges all three team choices, and omits the small introductory heading and bottom VIP callout.
+General Hospitality uses `General Hospitality 2.png` as its photo background, places the heading at the top, enlarges all three team choices, and omits the small introductory heading and bottom VIP callout.
+
+Our Heart uses the corrected `General Hospitality 2.png` photo. Welcome, Honor, Serve, and Care form a curved icon menu and open pillar dialogues over the same screen. General and VIP Hospitality remain as large navigation choices. The interface uses staggered entrance animations, clear touch targets, keyboard focus states, and reduced-motion alternatives. The marked header Search and VIP navigation tab remain removed.
