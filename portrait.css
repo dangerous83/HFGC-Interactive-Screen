@@ -143,17 +143,17 @@ button:focus-visible,a:focus-visible,summary:focus-visible{outline-color:var(--g
 @media(orientation:portrait) and (min-width:700px){.team-location{font-size:24px}}
 /* The approved photo belongs only to the HFGC Greeters detail screen. */
 main.greeters-background{
- background-image:linear-gradient(180deg,#021b3520 0%,#021b3510 22%,#021b3570 48%,#021b35e8 100%),url('HFGC%20GREETERS.png');
+ background-image:linear-gradient(180deg,#021b3520 0%,#021b3510 22%,#021b3570 48%,#021b35e8 100%),url('HFGC%20GREETERS%202.png');
  background-size:cover;
  background-position:center top;
  background-repeat:no-repeat;
 }
-.greeters-background .detail-page{margin:0 auto}
-.greeters-background .detail-layout{padding-top:clamp(200px,34vw,360px)}
-.greeters-background .detail-summary{background:linear-gradient(130deg,#064677e8,#032448ed);border-color:#f3d16f80}
-.greeters-background .fit-card,.greeters-background .responsibility-panel{background:#032747ed;border-color:#f3d16f70}
-.greeters-background .back-button,.greeters-background .detail-top .eyebrow{text-shadow:0 2px 10px #021b35}
-@media(max-width:650px){.greeters-background .detail-layout{padding-top:190px}}
+.team-photo-template .detail-page{margin:0 auto}
+.team-photo-template .detail-layout{padding-top:clamp(200px,34vw,360px)}
+.team-photo-template .detail-summary{background:linear-gradient(130deg,#064677e8,#032448ed);border-color:#f3d16f80}
+.team-photo-template .fit-card,.team-photo-template .responsibility-panel{background:#032747ed;border-color:#f3d16f70}
+.team-photo-template .back-button,.team-photo-template .detail-top .eyebrow{text-shadow:0 2px 10px #021b35}
+@media(max-width:650px){.team-photo-template .detail-layout{padding-top:190px}}
 /* The uploaded reception photo belongs to the VIP Reception detail screen. */
 main.reception-background{
  background-image:linear-gradient(180deg,#021b350a 0%,#021b3510 28%,#021b3570 52%,#021b35e8 100%),url('VIP%20Reception.png');
@@ -259,24 +259,34 @@ main.assistance-background{
 @keyframes team-saber-loop{to{stroke-dashoffset:-100}}
 @media(prefers-reduced-motion:reduce){.team-saber{transition:none}.team-saber rect{animation:none;stroke-dasharray:none;filter:none}}
 
-.greeters-background .detail-page{padding-top:28px}
-.greeters-heading{font-size:clamp(38px,6vw,68px);line-height:1.1;margin:14px 0 0;text-shadow:0 3px 20px #001a34}
-.greeters-background .detail-summary .tagline{font-family:Georgia,serif;color:#ffe69c;font-size:34px;margin-top:24px}
-.greeters-background .detail-summary .purpose{font-family:Georgia,serif;color:#f6f9ff;font-size:27px;line-height:1.5}
-.greeters-background .fit-card p:not(.eyebrow){font-family:'Dancing Script','Brush Script MT',cursive;font-size:36px;font-weight:600;line-height:1.35;color:#fff1c0}
-.greeters-background .greeters-summary-top>.icon-tile{animation:greeters-icon-pulse 2.8s ease-in-out infinite}
+.team-photo-template .detail-page{padding-top:28px}
+.team-photo-heading{font-size:clamp(38px,6vw,68px);line-height:1.1;margin:14px 0 0;text-shadow:0 3px 20px #001a34}
+.team-photo-template .detail-summary .tagline{font-family:Georgia,serif;color:#ffe69c;font-size:34px;margin-top:24px}
+.team-photo-template .detail-summary .purpose{font-family:Georgia,serif;color:#f6f9ff;font-size:27px;line-height:1.5}
+.team-photo-template .fit-card p:not(.eyebrow){font-family:'Dancing Script','Brush Script MT',cursive;font-size:36px;font-weight:600;line-height:1.35;color:#fff1c0}
+.team-photo-template .team-summary-top>.icon-tile{animation:greeters-icon-pulse 2.8s ease-in-out infinite}
 @keyframes greeters-icon-pulse{0%,100%{box-shadow:0 0 0 0 #5ddcff00;transform:scale(1)}50%{box-shadow:0 0 0 8px #5ddcff15,0 0 24px #5ddcff44;transform:scale(1.045)}}
-@media(max-width:650px){.greeters-background .detail-summary .tagline{font-size:28px}.greeters-background .detail-summary .purpose{font-size:22px}.greeters-background .fit-card p:not(.eyebrow){font-size:30px}}
-@media(prefers-reduced-motion:reduce){.greeters-background .greeters-summary-top>.icon-tile{animation:none}}
+@media(max-width:650px){.team-photo-template .detail-summary .tagline{font-size:28px}.team-photo-template .detail-summary .purpose{font-size:22px}.team-photo-template .fit-card p:not(.eyebrow){font-size:30px}}
+@media(prefers-reduced-motion:reduce){.team-photo-template .team-summary-top>.icon-tile{animation:none}}
 
-.greeters-summary-top{display:flex;align-items:center;gap:24px}
-.greeters-summary-top>.icon-tile{flex-shrink:0}
-.greeters-background .greeters-summary-top .tagline{margin:0;line-height:1.25}
-.greeters-background .detail-summary .purpose{margin:18px 0 0}
-.greeters-background .team-location{display:flex;align-items:center;gap:15px;margin-top:18px}
+.team-summary-top{display:flex;align-items:center;gap:24px}
+.team-summary-top>.icon-tile{flex-shrink:0}
+.team-photo-template .team-summary-top .tagline{margin:0;line-height:1.25}
+.team-photo-template .detail-summary .purpose{margin:18px 0 0}
+.team-photo-template .team-location{display:flex;align-items:center;gap:15px;margin-top:18px}
 .location-marker{position:relative;display:grid;place-items:center;width:42px;height:42px;flex-shrink:0;border-radius:50%;color:#ffe69c;background:#f3d16f12}
 .location-marker svg{width:28px;height:28px}
 .location-marker::after{content:'';position:absolute;inset:0;border:1px solid #ffe69c99;border-radius:50%;animation:location-marker-pulse 2.4s ease-out infinite;pointer-events:none}
 @keyframes location-marker-pulse{0%{transform:scale(.85);opacity:.8}85%,100%{transform:scale(1.65);opacity:0}}
-@media(max-width:650px){.greeters-summary-top{gap:16px}.location-marker{width:36px;height:36px}.location-marker svg{width:24px;height:24px}}
+@media(max-width:650px){.team-summary-top{gap:16px}.location-marker{width:36px;height:36px}.location-marker svg{width:24px;height:24px}}
 @media(prefers-reduced-motion:reduce){.location-marker::after{animation:none;opacity:.4}}
+
+/* Shared Greeters arrangement for all three General Hospitality teams. */
+.team-photo-template .detail-page{margin:0 auto;padding-top:28px}
+.team-photo-template .detail-layout{grid-template-columns:1fr;gap:24px;padding-top:clamp(200px,34vw,360px)}
+.team-photo-template .detail-summary{background:linear-gradient(130deg,#064677e8,#032448ed);border-color:#f3d16f80}
+.team-photo-template .fit-card,.team-photo-template .responsibility-panel{background:#032747ed;border-color:#f3d16f70}
+.team-photo-template .back-button{background:transparent;border-radius:0;padding:0;text-shadow:0 2px 10px #021b35}
+.team-photo-template .detail-right>.btn{width:100%}
+.team-photo-template .detail-summary .aside-message{font-size:25px;line-height:1.4}
+@media(max-width:650px){.team-photo-template .detail-layout{padding-top:190px}.team-photo-template .detail-summary .aside-message{font-size:20px}}

@@ -64,6 +64,8 @@ Our Heart uses the corrected `General Hospitality 3.png` photo. Welcome, Honor, 
 
 The General Hospitality subtitle is light gold for contrast. Its three team cards reveal a cyan and white looping stroke just outside the rounded border on hover, keyboard focus, and touch press. Reduced-motion visitors see a static border. Both Hospitality overview screens use `General Hospitality 3.png`.
 
-The Greeters screen uses `HFGC GREETERS.png`, shows one title above the photo, omits the repeated title and category label, and uses a cursive suitability sentence. The welcome icon has a subtle pulse with a reduced-motion alternative.
+The Greeters screen uses `HFGC GREETERS 2.png`, shows one title above the photo, omits the repeated title and category label, and uses a cursive suitability sentence. The welcome icon has a subtle pulse with a reduced-motion alternative.
 
 The Our Heart service cards sit higher beneath the pillar arc. The Greeters tagline aligns beside its welcome icon with tighter paragraph spacing. A location pin beside the arrival-area text has a looping pulse, with a static reduced-motion alternative.
+
+Greeters, Ushers, and the “May I Help You?” Team share the same portrait detail layout: one title above the photo, icon and gold tagline in one row, purpose and pulsing location pin, cursive suitability text, expandable responsibilities, and a full-width interest button. Each keeps its own team text and background.

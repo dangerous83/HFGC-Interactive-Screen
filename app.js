@@ -168,6 +168,7 @@
     "id": "ushers",
     "category": "general",
     "name": "HFGC Ushers",
+    "location": "Seating areas, venue facilities, and program areas",
     "icon": "guide",
     "short": "Guide guests safely throughout the venue and program.",
     "tagline": "We guide. We assist. We care.",
@@ -192,6 +193,7 @@
     "id": "assistance",
     "category": "general",
     "name": "HFGC “May I Help You?” Team",
+    "location": "Throughout the venue",
     "icon": "help",
     "short": "Provide mobile information and proactive guest care.",
     "tagline": "Help wherever it is needed.",
@@ -420,8 +422,8 @@
   }
   function teamDetail() {
     const t=teams.find(t=>t.id===state.team) || teams[0];
-    const isGreeters=t.id==='greeters';
-    return `<section class="page detail-page">${back('Back to Teams')}<div class="detail-top">${isGreeters ? `<h1 class="greeters-heading">${t.name}</h1>` : `<p class="eyebrow">${t.category==='general'?'GENERAL HOSPITALITY':'VIP HOSPITALITY'}</p>`}</div><div class="detail-layout"><div class="detail-summary">${isGreeters ? `<div class="greeters-summary-top">${tile(t.icon)}<p class="tagline">${t.tagline}</p></div>` : `${tile(t.icon)}<h1>${t.name}</h1><p class="tagline">${t.tagline}</p>`}<p class="purpose">${t.purpose}</p>${t.location ? `<p class="team-location">${isGreeters ? '<span class="location-marker" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>' : ''}<span><strong>Location:</strong> ${escape(t.location)}</span></p>` : ''}${t.note ? `<p class="aside-message">${t.note}</p>` : ''}</div><div class="detail-right"><div class="fit-card"><p class="eyebrow">THIS TEAM MAY SUIT YOU IF…</p><p>${t.fit}</p></div><div class="responsibility-panel">${responsibilities(t.responsibilityLabel || 'View Responsibilities',t.responsibilities)}${t.extraTitle ? responsibilities(t.extraTitle,t.extraList,t.extraText) : ''}</div><button class="btn primary" data-interest="${t.id}">${icon('heart')}${t.interest}</button></div></div></section>`;
+    const usesPhotoTemplate=['greeters','ushers','assistance'].includes(t.id);
+    return `<section class="page detail-page">${back('Back to Teams')}<div class="detail-top">${usesPhotoTemplate ? `<h1 class="team-photo-heading">${t.name}</h1>` : `<p class="eyebrow">${t.category==='general'?'GENERAL HOSPITALITY':'VIP HOSPITALITY'}</p>`}</div><div class="detail-layout"><div class="detail-summary">${usesPhotoTemplate ? `<div class="team-summary-top">${tile(t.icon)}<p class="tagline">${t.tagline}</p></div>` : `${tile(t.icon)}<h1>${t.name}</h1><p class="tagline">${t.tagline}</p>`}<p class="purpose">${t.purpose}</p>${t.location ? `<p class="team-location">${usesPhotoTemplate ? '<span class="location-marker" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>' : ''}<span><strong>Location:</strong> ${escape(t.location)}</span></p>` : ''}${t.note ? `<p class="aside-message">${t.note}</p>` : ''}</div><div class="detail-right"><div class="fit-card"><p class="eyebrow">THIS TEAM MAY SUIT YOU IF…</p><p>${t.fit}</p></div><div class="responsibility-panel">${responsibilities(t.responsibilityLabel || 'View Responsibilities',t.responsibilities)}${t.extraTitle ? responsibilities(t.extraTitle,t.extraList,t.extraText) : ''}</div><button class="btn primary" data-interest="${t.id}">${icon('heart')}${t.interest}</button></div></div></section>`;
   }
   function finder() {
     return `<section class="page">${title('FIND YOUR TEAM','What do you enjoy?','Choose an interest to explore a team that may suit you.')}<div class="finder-grid">${teams.map(t=>`<button class="interest-card" data-team="${t.id}">${tile(t.icon)}<span>${t.finder}</span></button>`).join('')}</div><div class="finder-foot"><p>A starting point to explore your interests. Team assignments are confirmed by ministry leadership.</p><button class="btn secondary" data-unsure>I’m Not Sure Yet</button></div></section>`;
@@ -476,6 +478,7 @@
   function render(focus=true) {
     main.classList.toggle('heart-photo-background',state.page==='heart');
     main.classList.toggle('general-background',state.page==='general');
+    main.classList.toggle('team-photo-template',state.page==='team' && ['greeters','ushers','assistance'].includes(state.team));
     main.classList.toggle('greeters-background',state.page==='team' && state.team==='greeters');
     main.classList.toggle('ushers-background',state.page==='team' && state.team==='ushers');
     main.classList.toggle('assistance-background',state.page==='team' && state.team==='assistance');
