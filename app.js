@@ -487,6 +487,7 @@
     main.classList.toggle('reception-background',state.page==='team' && state.team==='reception');
     main.classList.toggle('hosts-background',state.page==='team' && state.team==='hosts');
     main.classList.toggle('runners-background',state.page==='team' && state.team==='runners');
+    main.classList.toggle('protocol-background',state.page==='team' && state.team==='protocol');
     main.classList.toggle('transport-background',state.page==='team' && state.team==='transportation');
     main.innerHTML=(screens[state.page] || home)();
     const active = state.page==='team' ? teams.find(t=>t.id===state.team)?.category : ({pillars:'heart',pillar:'heart',finder:'teams',why:'join',thanks:'join'})[state.page] || state.page;
