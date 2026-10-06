@@ -485,6 +485,7 @@
     main.classList.toggle('ushers-background',state.page==='team' && state.team==='ushers');
     main.classList.toggle('assistance-background',state.page==='team' && state.team==='assistance');
     main.classList.toggle('reception-background',state.page==='team' && state.team==='reception');
+    main.classList.toggle('hosts-background',state.page==='team' && state.team==='hosts');
     main.classList.toggle('transport-background',state.page==='team' && state.team==='transportation');
     main.innerHTML=(screens[state.page] || home)();
     const active = state.page==='team' ? teams.find(t=>t.id===state.team)?.category : ({pillars:'heart',pillar:'heart',finder:'teams',why:'join',thanks:'join'})[state.page] || state.page;

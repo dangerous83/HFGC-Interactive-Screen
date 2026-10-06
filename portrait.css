@@ -311,3 +311,11 @@ main.assistance-background{
 .vip-background .team-card{background:linear-gradient(135deg,#063d68f2,#021e3bf5);border-color:#f3d16f99;box-shadow:0 12px 30px #00152d55}
 .vip-background .section-note{background:#073658ed;border:1px solid #f3d16f55}
 @media(max-width:650px){.vip-background .vip-page{padding:24px 20px}.vip-content{padding-top:240px}.vip-background .team-grid{grid-template-columns:1fr;gap:16px}}
+
+/* The uploaded handlers photo belongs to the VIP Hosts / Handlers detail screen. */
+main.hosts-background{
+ background-image:linear-gradient(180deg,#021b3550 0%,#021b3510 26%,#021b3570 55%,#021b35e8 100%),url('handlers.png');
+ background-size:cover;
+ background-position:center top;
+ background-repeat:no-repeat;
+}
