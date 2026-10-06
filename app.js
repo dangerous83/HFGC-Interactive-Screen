@@ -216,7 +216,7 @@
     ],
     "note": "Our key question: “May I help you?”",
     "extraTitle": "When We Don’t Know the Answer",
-    "extraText": "When they don’t know the answer: “Let me find someone who can help you.” That is hospitality."
+    "extraText": "We Reply: “Let me find someone who can help you.” That is hospitality."
   },
   {
     "id": "reception",
