@@ -1,5 +1,56 @@
 'use strict';
 (() => {
+  // Lightweight click SFX — synthesized through the Web Audio API so no files need to ship.
+  // One short, bright tap on every button press, with a slightly warmer tone for assistant / primary buttons.
+  const sfx = (() => {
+    let ctx = null;
+    const resume = () => {
+      if (!window.AudioContext && !window.webkitAudioContext) return null;
+      if (!ctx) { try { ctx = new (window.AudioContext || window.webkitAudioContext)(); } catch { return null; } }
+      if (ctx.state === 'suspended') { ctx.resume?.().catch(() => {}); }
+      return ctx;
+    };
+    const tap = (variant = 'default') => {
+      const audio = resume();
+      if (!audio) return;
+      const now = audio.currentTime;
+      const osc = audio.createOscillator();
+      const gain = audio.createGain();
+      const bp = audio.createBiquadFilter();
+      bp.type = 'bandpass'; bp.Q.value = 6;
+      const presets = {
+        default:   { freq: 880,  dur: 0.09, peak: 0.14 },
+        primary:   { freq: 660,  dur: 0.14, peak: 0.18 },
+        assistant: { freq: 520,  dur: 0.18, peak: 0.20 },
+        soft:      { freq: 1200, dur: 0.06, peak: 0.09 }
+      };
+      const p = presets[variant] || presets.default;
+      bp.frequency.setValueAtTime(p.freq, now);
+      bp.frequency.exponentialRampToValueAtTime(Math.max(180, p.freq * 0.55), now + p.dur);
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(p.freq, now);
+      osc.frequency.exponentialRampToValueAtTime(Math.max(220, p.freq * 0.6), now + p.dur);
+      gain.gain.setValueAtTime(0.0001, now);
+      gain.gain.exponentialRampToValueAtTime(p.peak, now + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + p.dur);
+      osc.connect(bp).connect(gain).connect(audio.destination);
+      osc.start(now);
+      osc.stop(now + p.dur + 0.02);
+    };
+    return { tap, resume };
+  })();
+  // Any trusted interaction kicks the audio context awake (browsers block autoplay until a gesture).
+  ['pointerdown','keydown'].forEach(type => document.addEventListener(type, () => sfx.resume(), { capture: true, passive: true, once: false }));
+  // Play the click on real button activations (click fires after pointerup, so every tap and keyboard activation gets a sound).
+  document.addEventListener('click', e => {
+    const b = e.target.closest('button, [role="button"]');
+    if (!b || b.disabled) return;
+    if (b.closest('.touch-keyboard')) { sfx.tap('soft'); return; }
+    if (b.classList.contains('assistant-launcher') || b.dataset.discovery === 'assistant') { sfx.tap('assistant'); return; }
+    if (b.classList.contains('primary') || b.classList.contains('nav-join') || b.id === 'enter') { sfx.tap('primary'); return; }
+    sfx.tap('default');
+  }, true);
+  window.HFGC_SFX = sfx;
   const config = window.HFGC_CONFIG || {};
   const logo = 'HFGC%20EXPO%20GOLD%20FLAT%20LOGO.png';
   const icons = {
