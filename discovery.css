@@ -3,13 +3,19 @@
 .intro-tools svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 .search-launcher{display:flex;align-items:center;gap:10px;min-height:64px;padding:12px 20px;border:1px solid #7193b3;border-radius:15px;background:#0a3b64;color:#fff;font-size:22px;font-weight:700}
 .search-launcher svg{width:27px;height:27px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
-.assistant-launcher{display:flex;align-items:center;gap:12px;min-height:76px;padding:8px 16px;border:1px solid #d9b96077;border-radius:22px;background:#0b3c63;color:#ffdf94;text-align:left;font-size:22px;font-weight:700}
+.assistant-launcher{position:relative;display:flex;align-items:center;gap:12px;min-height:76px;padding:8px 16px;border:1px solid #d9b96077;border-radius:22px;background:#0b3c63;color:#ffdf94;text-align:left;font-size:22px;font-weight:700;animation:assistant-attention 2.4s ease-in-out infinite;transition:background .2s,border-color .2s}
+.assistant-launcher:hover{background:#124d7d;border-color:#ffe69c}
 .assistant-launcher small{display:block;margin-top:3px;color:#bed1e2;font-size:15px;font-weight:500}
 .bottom-bar .assistant-launcher{height:64px;min-height:64px;padding:4px 16px}
-.assistant-hand{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:#e6be6512;animation:help-glow 4s ease-in-out infinite}
-.assistant-hand img{width:42px;height:42px;animation:help-hands 4s ease-in-out infinite}
-@keyframes help-hands{0%,100%{transform:translateY(1px) rotate(-3deg)}50%{transform:translateY(-4px) rotate(3deg)}}
-@keyframes help-glow{0%,100%{box-shadow:0 0 4px #f4d58010}50%{box-shadow:0 0 23px #f4d58055}}
+.assistant-hand{display:grid;place-items:center;width:54px;height:54px;border-radius:50%;background:#e6be6518;position:relative}
+.assistant-avatar{overflow:visible;background:radial-gradient(circle at 50% 45%,#f6d87b 0%,#b4842c 70%,#5a3f0e 100%);border:2px solid #ffe69c;box-shadow:0 0 0 2px #0b3c63,0 0 18px #f3d16f66}
+.assistant-avatar:before,.assistant-avatar:after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid #ffe69c;opacity:0;pointer-events:none;animation:assistant-ring 2.4s ease-out infinite}
+.assistant-avatar:after{animation-delay:1.2s}
+.assistant-hand img{width:46px;height:46px;animation:assistant-head 3s ease-in-out infinite;transform-origin:50% 70%}
+@keyframes assistant-head{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-2px) rotate(2deg)}}
+@keyframes assistant-attention{0%,100%{box-shadow:0 0 0 0 #f3d16f00,0 6px 18px #00000030}50%{box-shadow:0 0 0 3px #f3d16f55,0 0 24px #f3d16f55,0 6px 18px #00000030}}
+@keyframes assistant-ring{0%{transform:scale(.85);opacity:0}20%{opacity:.65}100%{transform:scale(1.55);opacity:0}}
+@media(prefers-reduced-motion:reduce){.assistant-launcher,.assistant-avatar:before,.assistant-avatar:after,.assistant-hand img{animation:none!important}}
 .discovery-dialog{width:min(960px,calc(100vw - 64px));height:min(1700px,calc(100svh - 90px));max-width:none;max-height:none;margin:auto;padding:0;border:1px solid #dabb70;border-radius:30px;background:#062b50;color:#f4f8ff;box-shadow:0 36px 140px #0009;overflow:hidden}
 .discovery-dialog::backdrop{background:#011326d9;backdrop-filter:blur(8px)}
 .discovery-shell{height:100%;display:flex;flex-direction:column;min-height:0}

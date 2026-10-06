@@ -246,7 +246,14 @@
       input.focus();input.dispatchEvent(new Event('input',{bubbles:true}));
     }
     document.querySelectorAll('[data-discovery]').forEach(button=>button.addEventListener('click',()=>{
-      opener=button; if(!dialog.open)dialog.showModal();changeMode(button.dataset.discovery);
+      const alreadyOpen=dialog.open;
+      opener=button; if(!alreadyOpen)dialog.showModal();changeMode(button.dataset.discovery);
+      // First open of Ask Bro. Simon → he greets the visitor out loud, then the dialog waits for a question.
+      if(button.dataset.discovery==='assistant' && !alreadyOpen){
+        const greet='Hello, I’m Bro. Simon. How can I assist you?';
+        // speechSynthesis.getVoices often returns [] on the very first call until the voices load — give it a tick.
+        setTimeout(()=>speak(greet),120);
+      }
     }));
     dialog.addEventListener('pointerdown',e=>{if(e.target.closest('[data-guide-key], [data-guide-suggest]'))e.preventDefault();});
     dialog.addEventListener('click',e=>{
