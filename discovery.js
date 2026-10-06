@@ -115,8 +115,11 @@
   }
   function create({teams,pillars,openDestination,activity}) {
     const guide=buildGuide(teams,pillars);
+    const assistantName="Bro. Havi";
+    const assistantDescription="HFGC Assistant Virtual Intelligence";
+    const assistantGreeting="Hi, I’m Bro. Havi, Your HFGC Hospitality & VIP Assistant. How can I assist you?";
     const voiceProfiles=[
-      {id:'simon',name:'Brother Simon',gender:'male',slot:0},
+      {id:'simon',name:assistantName,gender:'male',slot:0},
       {id:'mike',name:'Brother Mike',gender:'male',slot:1},
       {id:'irish',name:'Sister Irish',gender:'female',slot:0},
       {id:'jane',name:'Sister Jane',gender:'female',slot:1}
@@ -127,7 +130,7 @@
     const voiceIcon='<svg class="guide-voice-icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="18" y="5" width="12" height="24" rx="6"></rect><path d="M12 22v2a12 12 0 0 0 24 0v-2M24 36v7M17 43h14M5 16v12M43 16v12"></path></svg>';
     const dialog=document.createElement('dialog');
     dialog.id='discovery-dialog'; dialog.className='discovery-dialog'; dialog.setAttribute('aria-labelledby','discovery-title');
-    dialog.innerHTML=`<div class="discovery-shell"><header class="discovery-header"><div><p class="discovery-kicker">HFGC HOSPITALITY MINISTRY</p><h2 id="discovery-title">Find your way</h2></div><button type="button" class="discovery-close" aria-label="Close search and assistant">×</button></header><div class="discovery-tabs" role="tablist" aria-label="Explore or ask"><button type="button" id="guide-search-tab" role="tab" aria-controls="guide-panel" data-guide-mode="search">Search ministry</button><button type="button" id="guide-assistant-tab" role="tab" aria-controls="guide-panel" data-guide-mode="assistant">${voiceIcon}<span>Ask ${escape(profile().name)}</span></button></div><div id="guide-panel" class="discovery-panel" role="tabpanel"><div id="guide-body" class="discovery-body"></div><form id="guide-form" autocomplete="off"><label for="guide-query" id="guide-label">What would you like to find?</label><div class="guide-input-row"><input id="guide-query" type="text" inputmode="none" maxlength="240" autocomplete="off" spellcheck="false" aria-describedby="guide-hint"><button type="submit" id="guide-send">Search</button></div><p id="guide-hint">Use the touch keyboard below, or type on your keyboard.</p><div id="guide-suggestions" class="guide-suggestions" aria-label="Related suggestions"></div></form></div><div class="touch-keyboard" role="group" aria-label="Touch keyboard"></div></div>`;
+    dialog.innerHTML=`<div class="discovery-shell"><header class="discovery-header"><div><p class="discovery-kicker">HFGC HOSPITALITY MINISTRY</p><h2 id="discovery-title">Find your way</h2></div><button type="button" class="discovery-close" aria-label="Close search and assistant">×</button></header><div class="discovery-tabs" role="tablist" aria-label="Explore or ask"><button type="button" id="guide-search-tab" role="tab" aria-controls="guide-panel" data-guide-mode="search">Search ministry</button><button type="button" id="guide-assistant-tab" role="tab" aria-controls="guide-panel" data-guide-mode="assistant">${voiceIcon}<span>Ask ${escape(assistantName)}</span></button></div><div id="guide-panel" class="discovery-panel" role="tabpanel"><div id="guide-body" class="discovery-body"></div><form id="guide-form" autocomplete="off"><label for="guide-query" id="guide-label">What would you like to find?</label><div class="guide-input-row"><input id="guide-query" type="text" inputmode="none" maxlength="240" autocomplete="off" spellcheck="false" aria-describedby="guide-hint"><button type="submit" id="guide-send">Search</button></div><p id="guide-hint">Use the touch keyboard below, or type on your keyboard.</p><div id="guide-suggestions" class="guide-suggestions" aria-label="Related suggestions"></div></form></div><div class="touch-keyboard" role="group" aria-label="Touch keyboard"></div></div>`;
     document.body.append(dialog);
     const input=dialog.querySelector('#guide-query'),body=dialog.querySelector('#guide-body'),suggestions=dialog.querySelector('#guide-suggestions'),keyboard=dialog.querySelector('.touch-keyboard');
     let mode='search',shift=false,context=null,opener=null,messages=[],queries={search:'',assistant:''},speaking=false;
@@ -143,15 +146,15 @@
     function drawResults() {
       const query=queries.search.trim(), ranked=guide.search(query);
       const results=query?ranked.slice(0,8):['heart','greeters','ushers','transportation','join'].map(id=>({entry:guide.get(id)}));
-      body.innerHTML=`<p class="guide-result-count" role="status">${query?(results.length?`${ranked.length} matching ${ranked.length===1?'topic':'topics'}`:'No matching topics'):'Popular topics · Tap to explore'}</p><div class="guide-results">${results.map(({entry:e})=>`<button type="button" class="guide-result" data-guide-target="${escape(JSON.stringify(e.target))}"><span class="guide-category">${escape(e.category)}</span><strong>${escape(e.title)} <span aria-hidden="true">›</span></strong><span>${escape(e.kind==='team'?e.team.short:e.text)}</span></button>`).join('')}</div>${query&&!results.length?`<div class="guide-empty"><h3>Let’s try another word</h3><p>Try “welcome,” “transportation,” or “join.” You can also ask a question in Ask Hospitality.</p><button type="button" data-guide-mode="assistant" class="guide-source">Ask Hospitality</button></div>`:''}`;
+      body.innerHTML=`<p class="guide-result-count" role="status">${query?(results.length?`${ranked.length} matching ${ranked.length===1?'topic':'topics'}`:'No matching topics'):'Popular topics · Tap to explore'}</p><div class="guide-results">${results.map(({entry:e})=>`<button type="button" class="guide-result" data-guide-target="${escape(JSON.stringify(e.target))}"><span class="guide-category">${escape(e.category)}</span><strong>${escape(e.title)} <span aria-hidden="true">›</span></strong><span>${escape(e.kind==='team'?e.team.short:e.text)}</span></button>`).join('')}</div>${query&&!results.length?`<div class="guide-empty"><h3>Let’s try another word</h3><p>Try “welcome,” “transportation,” or “join.” You can also ask a question in Ask Bro. Havi.</p><button type="button" data-guide-mode="assistant" class="guide-source">Ask Bro. Havi</button></div>`:''}`;
     }
     function drawChat() {
       // The assistant speaks aloud; no transcript or captions are shown, so the stage stays uncluttered.
       const last=[...messages].reverse().find(m=>m.role==='assistant');
       const state=speaking?'speaking':(last?'ready':'idle');
-      const label=state==='speaking'?`${profile().name} is speaking…`:state==='ready'?'Tap a suggestion or ask your own question.':`Hi, I’m ${profile().name}. Ask me anything about our ministry.`;
+      const label=state==='speaking'?`${assistantName} is speaking…`:state==='ready'?'Tap a suggestion or ask your own question.':`Hi, I’m ${assistantName}. Ask me anything about our ministry.`;
       const chips=last?.followups?.length?last.followups:askDefaults;
-      body.innerHTML=`<div class="guide-stage" data-voice-state="${state}"><button type="button" class="voice-orb" data-guide-voices aria-label="Change assistant voice. Password required."><span class="voice-ring"></span><span class="voice-ring"></span><span class="voice-ring"></span><span class="voice-core">${voiceIcon}</span></button><p class="voice-name">${escape(profile().name)}</p><button type="button" class="voice-settings-link" data-guide-voices>Change voice</button><p class="voice-status" role="status" aria-live="polite">${escape(label)}</p>${last?.unresolved?`<div class="guide-fallback"><p>I can’t find that in the ministry guide. Our hospitality team is ready to help.</p><button type="button" class="btn primary guide-fast-help" data-guide-fast-help>Ask our Hospitality team <span aria-hidden="true">›</span></button></div>`:''}${last?.target&&!last.unresolved?`<button type="button" class="guide-source voice-source" data-guide-target="${escape(JSON.stringify(last.target))}">Open ${escape(last.source)} <span aria-hidden="true">›</span></button>`:''}<div class="guide-question-chips voice-chips">${questionChips(chips)}</div></div>`;
+      body.innerHTML=`<div class="guide-stage" data-voice-state="${state}"><button type="button" class="voice-orb" data-guide-voices aria-label="Change assistant voice. Password required."><span class="voice-ring"></span><span class="voice-ring"></span><span class="voice-ring"></span><span class="voice-core">${voiceIcon}</span></button><p class="voice-name">${escape(assistantName)}</p><p class="voice-description">${escape(assistantDescription)}</p><button type="button" class="voice-settings-link" data-guide-voices>Change voice</button><p class="voice-status" role="status" aria-live="polite">${escape(label)}</p>${last?.unresolved?`<div class="guide-fallback"><p>I can’t find that in the ministry guide. Our hospitality team is ready to help.</p><button type="button" class="btn primary guide-fast-help" data-guide-fast-help>Ask our Hospitality team <span aria-hidden="true">›</span></button></div>`:''}${last?.target&&!last.unresolved?`<button type="button" class="guide-source voice-source" data-guide-target="${escape(JSON.stringify(last.target))}">Open ${escape(last.source)} <span aria-hidden="true">›</span></button>`:''}<div class="guide-question-chips voice-chips">${questionChips(chips)}</div></div>`;
     }
     function spokenText(m) {
       const parts=[m.text];
@@ -200,7 +203,7 @@
         const stage=body.querySelector('.guide-stage');
         if(stage) stage.dataset.voiceState=speaking?'speaking':(messages.some(m=>m.role==='assistant')?'ready':'idle');
         const label=body.querySelector('.voice-status');
-        if(label) label.textContent=speaking?`${profile().name} is speaking…`:(messages.some(m=>m.role==='assistant')?'Tap a suggestion or ask your own question.':`Hi, I’m ${profile().name}. Ask me anything about our ministry.`);
+        if(label) label.textContent=speaking?`${assistantName} is speaking…`:(messages.some(m=>m.role==='assistant')?'Tap a suggestion or ask your own question.':`Hi, I’m ${assistantName}. Ask me anything about our ministry.`);
       }
     }
     function speak(text) {
@@ -222,12 +225,12 @@
     }
     function stopSpeaking(){try{window.speechSynthesis?.cancel();}catch{} setSpeaking(false);}
     function updateAssistantName() {
-      dialog.querySelector('#guide-assistant-tab span').textContent=`Ask ${profile().name}`;
-      document.querySelectorAll('[data-assistant-name]').forEach(el=>el.textContent=profile().name);
+      dialog.querySelector('#guide-assistant-tab span').textContent=`Ask ${assistantName}`;
+      document.querySelectorAll('[data-assistant-name]').forEach(el=>el.textContent=assistantName);
       if(mode==='assistant'){
-        dialog.querySelector('#discovery-title').textContent=`Ask ${profile().name}`;
-        dialog.querySelector('#guide-label').textContent=`Ask ${profile().name} about the Hospitality Ministry`;
-        input.placeholder=`Type your question for ${profile().name}…`;
+        dialog.querySelector('#discovery-title').textContent=`Ask ${assistantName}`;
+        dialog.querySelector('#guide-label').textContent=`Ask ${assistantName} about the Hospitality Ministry`;
+        input.placeholder=`Type your question for ${assistantName}…`;
       }
     }
     function drawVoiceSettings() {
@@ -237,7 +240,7 @@
         const voice=pickVoice(p),active=p.id===selectedVoice;
         return `<button type="button" class="voice-choice" data-guide-voice="${p.id}" aria-pressed="${active}" ${!voice?'disabled':''}><span class="voice-choice-symbol">${voiceIcon}</span><strong>${escape(p.name)}</strong><small>${p.id==='simon'?'Default · ':''}${voice?escape(voice.name):'Not available on this device'}</small><span class="voice-choice-state">${active?'Selected':voice?'Choose & listen':'Unavailable'}</span></button>`;
       }).join('')}</div></div>`).join('');
-      body.innerHTML=`<section class="voice-settings"><button type="button" class="voice-back" data-guide-voice-back>‹ Back to assistant</button><div class="voice-settings-heading">${voiceSettings==='locked'?lockIcon:voiceIcon}<h3>${voiceSettings==='locked'?'Unlock voice settings':'Choose your assistant'}</h3><p>${voiceSettings==='locked'?'Enter the password to change the voice.':'Choose a voice to hear its introduction.'}</p></div>${voiceSettings==='locked'?`<form id="voice-unlock-form" autocomplete="off"><label for="voice-password">Password</label><input id="voice-password" type="password" inputmode="none" maxlength="40" autocomplete="off" spellcheck="false" aria-describedby="voice-password-error"><p id="voice-password-error" role="alert"></p><button type="submit" class="guide-source voice-unlock">Unlock</button></form>`:`${groups}<p class="voice-device-note">Natural and enhanced voices are preferred when available. Voice options depend on this device.</p>`}</section>`;
+      body.innerHTML=`<section class="voice-settings"><button type="button" class="voice-back" data-guide-voice-back>‹ Back to assistant</button><div class="voice-settings-heading">${voiceSettings==='locked'?lockIcon:voiceIcon}<h3>${voiceSettings==='locked'?'Unlock voice settings':'Choose a voice'}</h3><p>${voiceSettings==='locked'?'Enter the password to change the voice.':'Choose a voice to hear its introduction.'}</p></div>${voiceSettings==='locked'?`<form id="voice-unlock-form" autocomplete="off"><label for="voice-password">Password</label><input id="voice-password" type="password" inputmode="none" maxlength="40" autocomplete="off" spellcheck="false" aria-describedby="voice-password-error"><p id="voice-password-error" role="alert"></p><button type="submit" class="guide-source voice-unlock">Unlock</button></form>`:`${groups}<p class="voice-device-note">Natural and enhanced voices are preferred when available. Voice options depend on this device.</p>`}</section>`;
       drawKeyboard();body.scrollTop=0;
       if(voiceSettings==='locked')body.querySelector('#voice-password').focus();
     }
@@ -266,7 +269,7 @@
       stopSpeaking();selectedVoice=id;
       try{localStorage.setItem('hfgc-assistant-voice',id);}catch{}
       updateAssistantName();leaveVoiceSettings();
-      speak(`Hello, I’m ${profile().name}. How can I assist you?`);
+      speak(assistantGreeting);
     }
     updateAssistantName();
     function drawSuggestions() {
@@ -277,10 +280,10 @@
       queries[mode]=input.value; mode=next; input.value=queries[mode];
       clearTimeout(greetingTimer);voiceSettings=null;dialog.querySelector('#guide-form').hidden=false;
       stopSpeaking();
-      dialog.querySelector('#discovery-title').textContent=mode==='search'?'Find your way':`Ask ${profile().name}`;
-      dialog.querySelector('#guide-label').textContent=mode==='search'?'What would you like to find?':`Ask ${profile().name} about the Hospitality Ministry`;
+      dialog.querySelector('#discovery-title').textContent=mode==='search'?'Find your way':`Ask ${assistantName}`;
+      dialog.querySelector('#guide-label').textContent=mode==='search'?'What would you like to find?':`Ask ${assistantName} about the Hospitality Ministry`;
       dialog.querySelector('#guide-send').textContent=mode==='search'?'Search':'Ask';
-      input.placeholder=mode==='search'?'Search teams, roles, or joining…':`Type your question for ${profile().name}…`;
+      input.placeholder=mode==='search'?'Search teams, roles, or joining…':`Type your question for ${assistantName}…`;
       dialog.querySelectorAll('[role="tab"]').forEach(tab=>{const active=tab.dataset.guideMode===mode;tab.setAttribute('aria-selected',String(active));tab.tabIndex=active?0:-1;});
       dialog.querySelector('#guide-panel').setAttribute('aria-labelledby',mode==='search'?'guide-search-tab':'guide-assistant-tab');
       mode==='search'?drawResults():drawChat();drawSuggestions();drawKeyboard();
@@ -323,9 +326,9 @@
     document.querySelectorAll('[data-discovery]').forEach(button=>button.addEventListener('click',()=>{
       const alreadyOpen=dialog.open;
       opener=button; if(!alreadyOpen)dialog.showModal();changeMode(button.dataset.discovery);
-      // First open of Ask Brother Simon → he greets the visitor out loud, then the dialog waits for a question.
+      // First open of Ask Bro. Havi → he greets the visitor out loud, then the dialog waits for a question.
       if(button.dataset.discovery==='assistant' && !alreadyOpen){
-        const greet=`Hello, I’m ${profile().name}. How can I assist you?`;
+        const greet=assistantGreeting;
         // speechSynthesis.getVoices often returns [] on the very first call until the voices load — give it a tick.
         greetingTimer=setTimeout(()=>{if(dialog.open&&mode==='assistant'&&!voiceSettings)speak(greet);},120);
       }

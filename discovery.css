@@ -83,6 +83,9 @@
 @keyframes voice-ring-pulse{0%{transform:scale(.55);opacity:.0}20%{opacity:.65}100%{transform:scale(1.35);opacity:0}}
 @keyframes voice-core-pulse{0%,100%{transform:scale(1);box-shadow:0 10px 40px #f3d16f55,inset 0 0 30px #ffffff30}50%{transform:scale(1.07);box-shadow:0 14px 58px #f3d16faa,inset 0 0 36px #ffffff50}}
 .voice-name{margin:0;font-size:30px;font-weight:700;color:#f5d992;letter-spacing:.02em}
+.voice-description{margin:-8px 0 0;font-size:20px;line-height:1.4;color:#cfe0ef;text-align:center;max-width:520px}
+.assistant-launcher [data-assistant-name]+small{max-width:270px;font-size:14px;line-height:1.3}
+.bottom-bar .assistant-launcher{height:auto;min-height:72px}
 .voice-status{margin:0 0 6px;font-size:20px;color:#cfe0ef;text-align:center;max-width:520px;min-height:28px}
 .voice-source{margin-top:4px}
 .voice-chips{justify-content:center;max-width:620px}
