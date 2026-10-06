@@ -415,7 +415,7 @@
     return `<section class="page general-page">${title('','Hospitality for General Guests','In General hospitality, we give intentional care.')} ${teamCards(teams.filter(t=>t.category==='general'),true)}</section>`;
   }
   function vip() {
-    return `<section class="page vip-page">${title('','Hospitality for VIP Guests','While in VIP hospitality, we give personalized care.')} <div class="vip-content">${teamCards(teams.filter(t=>t.category==='vip'),false,true)}<div class="section-note"><p>Everyone receives Christ-centered care.</p>${btn('Find Your Team','finder','secondary','compass')}</div></div></section>`;
+    return `<section class="page vip-page">${title('','Hospitality for VIP Guests','In VIP hospitality, we give personalized care.')} <div class="vip-content">${teamCards(teams.filter(t=>t.category==='vip'),false,true)}<div class="section-note"><p>Everyone receives Christ-centered care.</p>${btn('Find Your Team','finder','secondary','compass')}</div></div></section>`;
   }
   function directory() {
     const list = teams.filter(t=>state.filter==='all' || t.category===state.filter);
