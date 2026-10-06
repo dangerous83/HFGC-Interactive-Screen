@@ -151,15 +151,14 @@
       "Welcome arriving guests",
       "Smile and greet",
       "Direct guests toward registration/venue",
-      "Identify guests needing assistance (PWD - People with Determination)",
+      "Identify guests needing assistance (PWD — People with Determination, elderly guests, pregnant guests, infants, and children)",
       "Create a joyful atmosphere",
-      "Coordinate with Information/May I Help You teams"
+      "Coordinate with the Information / “May I Help You?” Team"
     ],
     "extraTitle": "Atmosphere & Welcome Elements",
     "extraList": [
       "Mascots",
       "Air Dancers",
-      "Mascots from HFGC locations, if possible: Japan, UAE, Cavite, Laguna, Pampanga",
       "HFGC Welcome Presentations"
     ],
     "location": "Entrances, arrival points, key access areas"
@@ -347,9 +346,9 @@
     "category": "vip",
     "name": "HFGC VIP Protocol Liaison Team",
     "icon": "protocol",
-    "short": "Coordinate with official Protocol leadership.",
+    "short": "Coordinate with the Protocol Officer to ensure the appropriate protocol is properly carried out for each HFGC VIP guest",
     "tagline": "We coordinate. We implement. We honor.",
-    "purpose": "Working alongside Protocol Leadership, we ensure every VIP detail is handled according to approved protocol, from precedence and seating to stage access, meetings, introductions, and special requirements.",
+    "purpose": "Coordinate with the Protocol Officer to ensure the appropriate protocol is properly carried out for each HFGC VIP guest",
     "fit": "You enjoy organization, clear communication, and following approved arrangements.",
     "interest": "I’m Interested in Protocol Liaison",
     "finder": "I love organization and protocol.",
@@ -371,6 +370,7 @@
   const experience = document.getElementById('experience');
   const idleDialog = document.getElementById('idle-dialog');
   const pillarDialog = document.getElementById('pillar-dialog');
+  const vipGuestDialog = document.getElementById('vip-guest-dialog');
   let state = {page:'home', filter:'all', team:null, pillar:null, unsure:false};
   let selectedTeam = null;
   let registrationDraft = {};
@@ -414,8 +414,17 @@
   function general() {
     return `<section class="page general-page">${title('','Hospitality for General Guests','In General hospitality, we give intentional care.')} ${teamCards(teams.filter(t=>t.category==='general'),true)}</section>`;
   }
+  const vipGuestGroups = [
+    {id:'church-leaders',name:'PMCC 4th Watch Church Leaders',detail:''},
+    {id:'guest-artists',name:'Guest Artists',detail:'Non-Fourth Watchers'},
+    {id:'church-performers',name:'Fourth Watch Performers',detail:'Internal church talent'},
+    {id:'prominent-leaders',name:'Prominent Leaders & Politicians',detail:'Ambassadors of goodwill'}
+  ];
+  function vipGuestCircles() {
+    return `<div class="vip-guest-circles" role="group" aria-label="VIP guest groups">${vipGuestGroups.map(g=>`<button type="button" class="vip-guest-circle" data-vip-guest="${g.id}" aria-haspopup="dialog"><span>${escape(g.name)}</span>${g.detail ? `<small>${escape(g.detail)}</small>` : ''}</button>`).join('')}</div>`;
+  }
   function vip() {
-    return `<section class="page vip-page">${title('','Hospitality for VIP Guests','In VIP hospitality, we give personalized care.')} <div class="vip-content">${teamCards(teams.filter(t=>t.category==='vip'),false,true)}</div></section>`;
+    return `<section class="page vip-page">${title('','Hospitality for VIP Guests','In VIP hospitality, we give personalized care.')} <div class="vip-content">${vipGuestCircles()}${teamCards(teams.filter(t=>t.category==='vip'),false,true)}</div></section>`;
   }
   function directory() {
     const list = teams.filter(t=>state.filter==='all' || t.category===state.filter);
@@ -536,6 +545,20 @@
     if (!pillarDialog.open) pillarDialog.showModal();
     lastActivity = Date.now();
   }
+  function openVIPGuestDialog(id) {
+    const guest=vipGuestGroups.find(g=>g.id===id);
+    if (!guest) return;
+    vipGuestDialog.querySelector('#vip-guest-title').textContent=guest.name;
+    const detail=vipGuestDialog.querySelector('.vip-guest-detail');
+    detail.textContent=guest.detail;
+    detail.hidden=!guest.detail;
+    if (!vipGuestDialog.open) vipGuestDialog.showModal();
+    lastActivity=Date.now();
+  }
+  function closeVIPGuestDialog() {
+    if (vipGuestDialog.open) vipGuestDialog.close();
+    lastActivity=Date.now();
+  }
   function closePillarDialog() {
     if (pillarDialog.open) pillarDialog.close();
     lastActivity = Date.now();
@@ -544,6 +567,7 @@
     clearIntroPress();
     discovery?.reset();
     if (pillarDialog.open) pillarDialog.close();
+    if (vipGuestDialog.open) vipGuestDialog.close();
     selectedTeam=null;
     registrationDraft={};
     savedRegistration=null;
@@ -593,6 +617,8 @@
     if (!b) return;
     if (b.dataset.introPage) { enter(); navigate(b.dataset.introPage); }
     else if (b.dataset.introPillar) openPillarDialog(b.dataset.introPillar);
+    else if (b.dataset.vipGuest) openVIPGuestDialog(b.dataset.vipGuest);
+    else if (b.hasAttribute('data-close-vip-guest')) closeVIPGuestDialog();
     else if (b.dataset.page) navigate(b.dataset.page);
     else if (b.dataset.team) navigate('team',{team:b.dataset.team});
     else if (b.dataset.pillar) openPillarDialog(b.dataset.pillar);
@@ -668,6 +694,10 @@
     // Clicking the dim backdrop outside the shell closes the pop-up.
     const shell=pillarDialog.querySelector('.pillar-dialog-shell');
     if (shell && !shell.contains(e.target) && e.target===pillarDialog) closePillarDialog();
+  });
+  vipGuestDialog.addEventListener('cancel',e=>{e.preventDefault();closeVIPGuestDialog();});
+  vipGuestDialog.addEventListener('click',e=>{
+    if (e.target===vipGuestDialog) closeVIPGuestDialog();
   });
   const full=document.getElementById('fullscreen');
   let fullscreenDocument=document;
