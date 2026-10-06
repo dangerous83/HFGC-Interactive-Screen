@@ -254,8 +254,8 @@ main.assistance-background{
 .team-saber{position:absolute;inset:-7px;width:calc(100% + 14px);height:calc(100% + 14px);overflow:visible;pointer-events:none;z-index:2;opacity:0;transition:opacity .25s}
 .team-saber rect{width:calc(100% - 8px);height:calc(100% - 8px);fill:none;stroke:#5ddcff;stroke-width:4;stroke-linecap:round;stroke-dasharray:18 82;filter:drop-shadow(0 0 5px #3acbff) drop-shadow(0 0 10px #3acbff);animation:team-saber-loop 2.6s linear infinite;animation-play-state:paused}
 .team-saber .team-saber-core{stroke:#f2fdff;stroke-width:1.5;filter:none}
-.general-background .team-card:is(:hover,:focus-visible,:active) .team-saber{opacity:1}
-.general-background .team-card:is(:hover,:focus-visible,:active) .team-saber rect{animation-play-state:running}
+.team-card:is(:hover,:focus-visible,:active) .team-saber{opacity:1}
+.team-card:is(:hover,:focus-visible,:active) .team-saber rect{animation-play-state:running}
 @keyframes team-saber-loop{to{stroke-dashoffset:-100}}
 @media(prefers-reduced-motion:reduce){.team-saber{transition:none}.team-saber rect{animation:none;stroke-dasharray:none;filter:none}}
 
@@ -281,7 +281,7 @@ main.assistance-background{
 @media(max-width:650px){.team-summary-top{gap:16px}.location-marker{width:36px;height:36px}.location-marker svg{width:24px;height:24px}}
 @media(prefers-reduced-motion:reduce){.location-marker::after{animation:none;opacity:.4}}
 
-/* Shared Greeters arrangement for all three General Hospitality teams. */
+/* Shared portrait arrangement for all General and VIP Hospitality teams. */
 .team-photo-template .detail-page{margin:0 auto;padding-top:28px}
 .team-photo-template .detail-layout{grid-template-columns:1fr;gap:24px;padding-top:clamp(200px,34vw,360px)}
 .team-photo-template .detail-summary{background:linear-gradient(130deg,#064677e8,#032448ed);border-color:#f3d16f80}
@@ -290,3 +290,9 @@ main.assistance-background{
 .team-photo-template .detail-right>.btn{width:100%}
 .team-photo-template .detail-summary .aside-message{font-size:25px;line-height:1.4}
 @media(max-width:650px){.team-photo-template .detail-layout{padding-top:190px}.team-photo-template .detail-summary .aside-message{font-size:20px}}
+
+/* VIP overview uses the same top alignment and light-gold brand subtitle. */
+.vip-page{margin:0 auto;padding-top:28px}
+.vip-page .page-title p:last-child{color:var(--gold-light);font-weight:500}
+.vip-page .team-card{position:relative;overflow:visible}
+.team-summary-top>.icon-tile{margin-bottom:0}
