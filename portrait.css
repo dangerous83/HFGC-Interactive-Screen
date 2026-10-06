@@ -239,14 +239,14 @@ main.assistance-background{
 .orbit-welcome{left:0;top:300px;animation-delay:.18s}.orbit-honor{left:20%;top:-20px;animation-delay:.28s}.orbit-serve{right:20%;top:-20px;animation-delay:.38s}.orbit-care{right:0;top:300px;animation-delay:.48s}
 .heart-orbit-button:is(:hover,:focus-visible){transform:translateY(-6px);background:linear-gradient(145deg,#1778b8,#05294c);box-shadow:0 0 0 3px #ffe69c55,0 0 28px #53c6ff55}
 .heart-orbit-button:active{transform:scale(.96)}
-.heart-service-choices{position:absolute;bottom:0;left:0;right:0;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.heart-service-choices{position:absolute;top:700px;bottom:auto;left:0;right:0;display:grid;grid-template-columns:1fr 1fr;gap:20px}
 .heart-service-choices button{display:flex;align-items:center;gap:20px;padding:30px 26px;min-height:170px;text-align:left;background:linear-gradient(135deg,#074471f2,#031e3bf5);border:1px solid #f3d16f99;border-radius:22px;box-shadow:0 12px 36px #00172b66;transition:transform .25s,border-color .25s;animation:heart-heading-in .7s .55s ease-out both}
 .heart-service-choices button svg{width:44px;height:44px;flex-shrink:0;color:#ffe69c}.heart-service-choices strong{display:block;font-size:29px;line-height:1.2;font-family:Georgia,serif;font-weight:400}.heart-service-choices small{display:block;font-size:22px;line-height:1.4;color:#d4e9fc;margin-top:12px}
 .heart-service-choices button:is(:hover,:focus-visible){transform:translateY(-4px);border-color:#ffe69c}.heart-service-choices button:active{transform:scale(.98)}
 @keyframes heart-heading-in{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes heart-node-in{from{opacity:0;translate:0 18px}to{opacity:1;translate:0 0}}
 @keyframes heart-orbit-in{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
-@media(max-width:650px){.heart-photo-page{padding:28px 20px}.heart-photo-heading p{font-size:19px}.heart-orbit-stage{min-height:900px}.heart-orbit{top:40px;height:490px}.heart-orbit-button{width:94px;min-height:94px;gap:8px}.heart-orbit-button svg{width:29px;height:29px}.heart-orbit-button span{font-size:16px}.orbit-welcome,.orbit-care{top:240px}.orbit-honor{left:16%}.orbit-serve{right:16%}.heart-service-choices{grid-template-columns:1fr;gap:12px}.heart-service-choices button{min-height:112px;padding:20px}.heart-service-choices strong{font-size:25px}.heart-service-choices small{font-size:18px}.heart-service-choices button svg{width:34px;height:34px}}
+@media(max-width:650px){.heart-photo-page{padding:28px 20px}.heart-photo-heading p{font-size:19px}.heart-orbit-stage{min-height:900px}.heart-orbit{top:40px;height:490px}.heart-orbit-button{width:94px;min-height:94px;gap:8px}.heart-orbit-button svg{width:29px;height:29px}.heart-orbit-button span{font-size:16px}.orbit-welcome,.orbit-care{top:240px}.orbit-honor{left:16%}.orbit-serve{right:16%}.heart-service-choices{top:560px;grid-template-columns:1fr;gap:12px}.heart-service-choices button{min-height:112px;padding:20px}.heart-service-choices strong{font-size:25px}.heart-service-choices small{font-size:18px}.heart-service-choices button svg{width:34px;height:34px}}
 @media(prefers-reduced-motion:reduce){.heart-photo-heading,.heart-orbit,.heart-orbit-button,.heart-service-choices button{animation:none;transition:none}.heart-orbit-button:is(:hover,:focus-visible),.heart-service-choices button:is(:hover,:focus-visible){transform:none}}
 
 .general-background .page-title p:last-child{color:#ffe69c;text-shadow:0 2px 14px #00152d;font-weight:500}
@@ -264,7 +264,19 @@ main.assistance-background{
 .greeters-background .detail-summary .tagline{font-family:Georgia,serif;color:#ffe69c;font-size:34px;margin-top:24px}
 .greeters-background .detail-summary .purpose{font-family:Georgia,serif;color:#f6f9ff;font-size:27px;line-height:1.5}
 .greeters-background .fit-card p:not(.eyebrow){font-family:'Dancing Script','Brush Script MT',cursive;font-size:36px;font-weight:600;line-height:1.35;color:#fff1c0}
-.greeters-background .detail-summary>.icon-tile{animation:greeters-icon-pulse 2.8s ease-in-out infinite}
+.greeters-background .greeters-summary-top>.icon-tile{animation:greeters-icon-pulse 2.8s ease-in-out infinite}
 @keyframes greeters-icon-pulse{0%,100%{box-shadow:0 0 0 0 #5ddcff00;transform:scale(1)}50%{box-shadow:0 0 0 8px #5ddcff15,0 0 24px #5ddcff44;transform:scale(1.045)}}
 @media(max-width:650px){.greeters-background .detail-summary .tagline{font-size:28px}.greeters-background .detail-summary .purpose{font-size:22px}.greeters-background .fit-card p:not(.eyebrow){font-size:30px}}
-@media(prefers-reduced-motion:reduce){.greeters-background .detail-summary>.icon-tile{animation:none}}
+@media(prefers-reduced-motion:reduce){.greeters-background .greeters-summary-top>.icon-tile{animation:none}}
+
+.greeters-summary-top{display:flex;align-items:center;gap:24px}
+.greeters-summary-top>.icon-tile{flex-shrink:0}
+.greeters-background .greeters-summary-top .tagline{margin:0;line-height:1.25}
+.greeters-background .detail-summary .purpose{margin:18px 0 0}
+.greeters-background .team-location{display:flex;align-items:center;gap:15px;margin-top:18px}
+.location-marker{position:relative;display:grid;place-items:center;width:42px;height:42px;flex-shrink:0;border-radius:50%;color:#ffe69c;background:#f3d16f12}
+.location-marker svg{width:28px;height:28px}
+.location-marker::after{content:'';position:absolute;inset:0;border:1px solid #ffe69c99;border-radius:50%;animation:location-marker-pulse 2.4s ease-out infinite;pointer-events:none}
+@keyframes location-marker-pulse{0%{transform:scale(.85);opacity:.8}85%,100%{transform:scale(1.65);opacity:0}}
+@media(max-width:650px){.greeters-summary-top{gap:16px}.location-marker{width:36px;height:36px}.location-marker svg{width:24px;height:24px}}
+@media(prefers-reduced-motion:reduce){.location-marker::after{animation:none;opacity:.4}}
