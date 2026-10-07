@@ -184,9 +184,7 @@
       "Coordinate with Security",
       "Assist with altar-call movement",
       "Assist with baptism movement"
-    ],
-    "extraTitle": "HFGC Altar Call Team",
-    "extraText": "They guide people who respond to the altar call."
+    ]
   },
   {
     "id": "assistance",
