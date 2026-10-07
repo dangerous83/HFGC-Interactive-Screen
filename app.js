@@ -143,7 +143,7 @@
     "icon": "users",
     "short": "Create the first impression with warmth, joy, and the love of Christ.",
     "tagline": "First impressions. Lasting impact.",
-    "purpose": "At HFGC, every welcome carries a message. We greet every guest with warmth, joy, and the love of Christ.",
+    "purpose": "Creating a warm and welcoming first HFGC greeting experience for every guest.",
     "fit": "You enjoy meeting people and helping them feel welcome.",
     "interest": "I’m Interested in Greeters",
     "finder": "I love welcoming people.",
@@ -476,7 +476,7 @@
   function teamDetail() {
     const t=teams.find(t=>t.id===state.team) || teams[0];
     const locationMarker='<span class="location-marker" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg></span>';
-    return `<section class="page detail-page">${back('Back to Teams')}<div class="detail-top"><h1 class="team-photo-heading">${t.name}</h1></div><div class="detail-layout"><div class="detail-summary"><div class="team-summary-top">${tile(t.icon)}<p class="tagline">${t.tagline}</p></div>${t.id==='greeters' ? '' : `<p class="purpose">${t.purpose}</p>`}${t.location ? `<p class="team-location">${locationMarker}<span><strong>Location:</strong> ${escape(t.location)}</span></p>` : ''}${t.note ? `<p class="aside-message">${t.note}</p>` : ''}</div><div class="detail-right"><div class="fit-card"><p class="eyebrow">THIS TEAM MAY SUIT YOU IF…</p><p>${t.fit}</p></div><div class="responsibility-panel">${responsibilities(t.responsibilityLabel || 'View Responsibilities',t.responsibilities)}${t.extraTitle ? responsibilities(t.extraTitle,t.extraList,t.extraText) : ''}</div><button class="btn primary" data-interest="${t.id}">${icon('heart')}${t.interest}</button></div></div></section>`;
+    return `<section class="page detail-page">${back('Back to Teams')}<div class="detail-top"><h1 class="team-photo-heading">${t.name}</h1></div><div class="detail-layout"><div class="detail-summary"><div class="team-summary-top">${tile(t.icon)}<p class="tagline">${t.tagline}</p></div><p class="purpose">${t.purpose}</p>${t.location ? `<p class="team-location">${locationMarker}<span><strong>Location:</strong> ${escape(t.location)}</span></p>` : ''}${t.note ? `<p class="aside-message">${t.note}</p>` : ''}</div><div class="detail-right"><div class="fit-card"><p class="eyebrow">THIS TEAM MAY SUIT YOU IF…</p><p>${t.fit}</p></div><div class="responsibility-panel">${responsibilities(t.responsibilityLabel || 'View Responsibilities',t.responsibilities)}${t.extraTitle ? responsibilities(t.extraTitle,t.extraList,t.extraText) : ''}</div><button class="btn primary" data-interest="${t.id}">${icon('heart')}${t.interest}</button></div></div></section>`;
   }
   const finderEmojis={greeters:'❤️',ushers:'💺',assistance:'🙋',reception:'🤲',hosts:'💕',transportation:'🚗',runners:'🏃',lounge:'🛋️',protocol:'📋'};
   function finder() {
