@@ -365,12 +365,39 @@
     "note": "This prevents Hospitality from accidentally making protocol decisions that belong to leadership."
   }
 ];
+  const guestArtists = [
+    {id:'raffia-thomas',name:'Raffia Thomas',image:'Raffia Thomas.jpg'},
+    {id:'wes-hampton',name:'Wes Hampton',image:'Wes Hampton.jpg'},
+    {id:'laura-story',name:'Laura Story',image:'Laura Story.jpg'},
+    {id:'nicole-mullen',name:'Nicole Mullen',image:'Nicole Mullen.jpg'},
+    {id:'jaci-velasquez',name:'Jaci Velasquez',image:'Jaci Velasquez.jpg'},
+    {id:'rachael-lampa',name:'Rachael Lampa',image:'Rachael Lampa.jpg'},
+    {id:'cece-winans',name:'Cece Winans',image:'Cece Winans.jpg'},
+    {id:'matthew-west',name:'Matthew West',image:'Matthew West.jpg'},
+    {id:'katinas',name:'Katinas',image:null},
+    {id:'avalon',name:'Avalon',image:'Avalon Worship.jpg'},
+    {id:'selah',name:'Selah',image:'Selah trio.jpg'},
+    {id:'alex-gonzaga',name:'Alex Gonzaga',image:'Alex Gonzaga.jpg'},
+    {id:'toni-gonzaga',name:'Toni Gonzaga',image:'Toni Gonzaga.jpg'},
+    {id:'yeng-constantino',name:'Yeng Constantino',image:'Yeng Constantino.jpg'},
+    {id:'taya',name:'Taya',image:'Taya.jpg'},
+    {id:'tasha-cobbs',name:'Tasha Cobbs',image:'Tasha Cobbs.jpg'}
+  ];
+  const artistEdge = '<svg class="artist-saber" viewBox="0 0 320 360" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect x="2" y="2" width="316" height="356" rx="20" pathLength="100" vector-effect="non-scaling-stroke"/><rect class="artist-saber-core" x="2" y="2" width="316" height="356" rx="20" pathLength="100" vector-effect="non-scaling-stroke"/></svg>';
+  function artistPortrait(artist,large=false) {
+    const initials=artist.name.split(' ').map(word=>word[0]).slice(0,2).join('');
+    return `<div class="artist-portrait ${artist.image ? '' : 'artist-name-portrait'}"><span class="artist-initials" aria-hidden="true">${escape(initials)}</span>${artist.image ? `<img data-artist-image src="${escape(encodeURI(artist.image))}" alt="${large ? escape(artist.name) : ''}" loading="${large ? 'eager' : 'lazy'}" decoding="async">` : '<span class="artist-portrait-caption">HFGC GUEST ARTIST</span>'}</div>`;
+  }
+  function artists() {
+    return `<section class="page guest-artists-page"><button type="button" class="back-button" data-page="home">${icon('back')}Back to Welcome</button><header class="guest-artists-heading"><div class="guest-artists-emblem" aria-hidden="true">✦</div><p class="eyebrow">HOME FREE GLOBAL CRUSADE</p><h1>HFGC <em>Guest Artists</em></h1><p>Honoring the guest artists who share their gifts with the Home Free Global Crusade. We welcome them with joy and care, making every moment of their HFGC experience special.</p><div class="guest-artists-meta"><span>${guestArtists.length} GUEST ARTISTS</span><span>Select an artist to explore</span></div></header><div class="guest-artists-grid">${guestArtists.map((artist,i)=>`<button type="button" class="guest-artist-card" data-artist="${artist.id}" aria-haspopup="dialog" aria-label="View ${escape(artist.name)}">${artistEdge}${artistPortrait(artist)}<span class="artist-card-copy"><span class="artist-card-label">HFGC GUEST ARTIST <span aria-hidden="true">${String(i+1).padStart(2,'0')}</span></span><strong>${escape(artist.name)}</strong><span class="artist-card-link">View artist <span aria-hidden="true">↗</span></span></span></button>`).join('')}</div><p class="guest-artists-footer">Welcomed with joy. Honored with excellence. Cared for every step.</p></section>`;
+  }
   const main = document.getElementById('main');
   const intro = document.getElementById('intro');
   const experience = document.getElementById('experience');
   const idleDialog = document.getElementById('idle-dialog');
   const pillarDialog = document.getElementById('pillar-dialog');
   const vipGuestDialog = document.getElementById('vip-guest-dialog');
+  const artistDialog = document.getElementById('artist-dialog');
   let state = {page:'home', filter:'all', team:null, pillar:null, unsure:false};
   let selectedTeam = null;
   let registrationDraft = {};
@@ -398,7 +425,7 @@
     return `<div class="team-grid ${large ? 'general-grid' : ''}">${list.map(t => `<button class="team-card" data-team="${t.id}">${highlight ? '<svg class="team-saber" aria-hidden="true" focusable="false"><rect x="4" y="4" width="100%" height="100%" rx="22" pathLength="100"></rect><rect class="team-saber-core" x="4" y="4" width="100%" height="100%" rx="22" pathLength="100"></rect></svg>' : ''}${tile(t.icon)}<div>${!large && !highlight ? `<p class="mini-label">${t.category === 'general' ? 'GENERAL HOSPITALITY' : 'VIP HOSPITALITY'}</p>` : ''}<h3>${t.name}</h3><p>${t.short}</p>${large ? '<span class="card-link">Explore This Team</span>' : ''}</div></button>`).join('')}</div>`;
   }
   function home() {
-    const destinations=[['heart','heart','Our Heart','The love behind every welcome.'],['finder','serve','Find Your Team','Explore a team that suits your interests.'],['vip','honor','VIP Hospitality','Personalized care, every step.'],['teams','users','Our Teams','Nine ways to make a difference.'],['join','care','Get Involved','Find your place to serve.']];
+    const destinations=[['heart','heart','Our Heart','The love behind every welcome.'],['finder','serve','Find Your Team','Explore a team that suits your interests.'],['vip','honor','VIP Hospitality','Personalized care, every step.'],['teams','users','Our Teams','Nine ways to make a difference.'],['join','care','Get Involved','Find your place to serve.'],['artists','honor','HFGC Guest Artists','Meet our honored guest artists.']];
     return `<section class="page home-page portrait-home"><div class="portrait-welcome"><p class="eyebrow gold-text">WELCOME TO HOSPITALITY</p><h1>There’s a place<br><em>for you.</em></h1><p class="lead">Every guest matters.<br>Every person matters to Christ.</p></div><div class="welcome-menu">${destinations.map(([page,name,label,description])=>`<button type="button" data-page="${page}">${tile(name)}<span><strong>${label}</strong><small>${description}</small></span><span class="welcome-arrow" aria-hidden="true">›</span></button>`).join('')}</div><div class="scripture-strip">${icon('book')}<p>“Accept one another, then, just as Christ accepted you, in order to bring praise to God.” <cite>Romans 15:7</cite></p></div></section>`;
   }
   function heart() {
@@ -498,7 +525,7 @@
     if (!savedRegistration) return join();
     return `<section class="page thankyou-page">${tile('check')}<p class="eyebrow gold-text">INTEREST SAVED ON THIS KIOSK</p><h1>Thank you for stepping forward.</h1><p class="lead">Your details have been saved for the Hospitality booth team to review.<br>We’re excited to meet you.</p><div class="saved-summary"><p>Your preferred team<br><strong>${escape(savedRegistration.team)}</strong></p></div><p class="receipt-note">Please speak with the booth team about training,<br>team placement, and the next steps.</p><p class="eyebrow" style="margin:30px 0">WELCOME · HONOR · SERVE · CARE</p><button class="btn primary" data-finish>Return to Home</button><p class="countdown">Returning home in <span id="thankyou-count">${Number(config.thankYouSeconds)||20}</span> seconds.</p></section>`;
   }
-  const screens={home,heart,pillars:pillarOverview,pillar:pillarDetail,general,vip,teams:directory,team:teamDetail,finder,why,join,thanks};
+  const screens={home,artists,heart,pillars:pillarOverview,pillar:pillarDetail,general,vip,teams:directory,team:teamDetail,finder,why,join,thanks};
   function render(focus=true) {
     main.classList.toggle('heart-photo-background',state.page==='heart');
     main.classList.toggle('general-background',state.page==='general');
@@ -599,9 +626,24 @@
     if (pillarDialog.open) pillarDialog.close();
     lastActivity = Date.now();
   }
+  function openArtistDialog(id) {
+    const artist=guestArtists.find(item=>item.id===id);
+    if (!artist) return;
+    artistDialog.querySelector('.artist-dialog-portrait').innerHTML=artistPortrait(artist,true);
+    artistDialog.querySelector('#artist-dialog-title').textContent=artist.name;
+    artistDialog.querySelector('#artist-dialog-description').textContent=`We warmly welcome ${artist.name} as an HFGC guest artist. With a heart for hospitality, we are here to welcome, honor, serve, and care for our guests throughout their HFGC experience.`;
+    artistDialog.querySelector('.artist-dialog-shell').scrollTop=0;
+    if (!artistDialog.open) artistDialog.showModal();
+    lastActivity=Date.now();
+  }
+  function closeArtistDialog() {
+    if (artistDialog.open) artistDialog.close();
+    lastActivity=Date.now();
+  }
   function reset(showIntro=true) {
     clearIntroPress();
     discovery?.reset();
+    closeArtistDialog();
     if (pillarDialog.open) pillarDialog.close();
     if (vipGuestDialog.open) vipGuestDialog.close();
     selectedTeam=null;
@@ -653,6 +695,8 @@
     if (!b) return;
     if (b.dataset.introPage) { enter(); navigate(b.dataset.introPage); }
     else if (b.dataset.introPillar) openPillarDialog(b.dataset.introPillar);
+    else if (b.dataset.artist) openArtistDialog(b.dataset.artist);
+    else if (b.hasAttribute('data-close-artist')) closeArtistDialog();
     else if (b.dataset.vipGuest) openVIPGuestDialog(b.dataset.vipGuest);
     else if (b.hasAttribute('data-close-vip-guest')) closeVIPGuestDialog();
     else if (b.dataset.page) navigate(b.dataset.page);
@@ -735,6 +779,14 @@
   vipGuestDialog.addEventListener('click',e=>{
     if (e.target===vipGuestDialog) closeVIPGuestDialog();
   });
+  artistDialog.addEventListener('cancel',e=>{e.preventDefault();closeArtistDialog();});
+  artistDialog.addEventListener('click',e=>{if(e.target===artistDialog) closeArtistDialog();});
+  document.addEventListener('error',e=>{
+    if(e.target.matches?.('[data-artist-image]')) {
+      e.target.hidden=true;
+      e.target.parentElement.classList.add('artist-name-portrait');
+    }
+  },true);
   const full=document.getElementById('fullscreen');
   let fullscreenDocument=document;
   try {
@@ -802,3 +854,4 @@
   },250);
   render(false);
 })();
+

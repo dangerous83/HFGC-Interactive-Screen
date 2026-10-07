@@ -1,0 +1,85 @@
+.intro-menu .intro-artist-symbol{width:43px;flex:0 0 43px;color:#ffe69c;font-size:43px;text-align:center;line-height:1}
+.guest-artists-page{min-height:100%;background:radial-gradient(ellipse at 80% 0%,#e9bc4d16,transparent 48%),linear-gradient(160deg,#052c50,#02182f);padding:34px 40px 42px}
+.guest-artists-heading{position:relative;text-align:center;max-width:850px;margin:12px auto 32px}
+.guest-artists-emblem{color:#ffe69c;font-size:38px;line-height:1;margin:0 auto 14px}
+.guest-artists-heading .eyebrow{color:#f3d16f;font-size:15px;letter-spacing:.19em;margin:0 0 12px}
+.guest-artists-heading h1{font-size:62px;line-height:1.1;font-weight:400;margin:0 0 18px;color:#fff7e6}
+.guest-artists-heading h1 em{color:#ffe69c;font-style:normal}
+.guest-artists-heading>p:last-of-type{font-size:23px;line-height:1.55;color:#d4e4ef;max-width:790px;margin:0 auto 22px}
+.guest-artists-meta{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:16px 24px;color:#cadbe7;font-size:17px}
+.guest-artists-meta>span:first-child{border:1px solid #f3d16f66;background:#f3d16f0d;border-radius:30px;padding:9px 16px;color:#ffe69c;font-size:13px;letter-spacing:.12em}
+.guest-artists-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}
+.guest-artist-card{position:relative;isolation:isolate;display:flex;flex-direction:column;min-width:0;padding:0;text-align:left;border:1px solid #e5c27266;border-radius:20px;background:linear-gradient(145deg,#123859cc,#05243ce6);color:#fff8e9;box-shadow:0 12px 28px #00000020;transition:transform .22s,border-color .22s,box-shadow .22s;backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.guest-artist-card:is(:hover,:focus-visible,:active){border-color:#ffe69c;transform:translateY(-3px);box-shadow:0 0 0 1px #f3d16f33,0 14px 34px #00000033,0 0 22px #f3d16f22}
+.guest-artist-card:focus-visible{outline:2px solid #fff0bd;outline-offset:5px}
+.artist-portrait{position:relative;width:100%;aspect-ratio:1.15;overflow:hidden;border-radius:19px 19px 0 0;background:radial-gradient(circle at 45% 25%,#23537c,#04233f 75%);display:grid;place-items:center}
+.artist-portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 24%;z-index:1}
+.artist-portrait img[hidden]{display:none}
+.artist-initials{font-family:Georgia,serif;color:#ffe69c;font-size:54px;letter-spacing:.08em;font-weight:400}
+.artist-portrait-caption{position:absolute;bottom:18px;font-size:11px;letter-spacing:.12em;color:#ffe69c99}
+.artist-name-portrait:before{content:'';position:absolute;width:104px;height:104px;border:1px solid #f3d16f55;border-radius:50%}
+.artist-card-copy{display:flex;flex-direction:column;flex:1;padding:18px 18px 16px;gap:10px}
+.artist-card-label{font-size:10px;color:#e7c779;letter-spacing:.1em;display:flex;justify-content:space-between;gap:6px}
+.artist-card-label>span{color:#96b2c9}
+.artist-card-copy strong{font-family:Georgia,serif;font-size:25px;font-weight:400;line-height:1.2;overflow-wrap:anywhere}
+.artist-card-link{display:flex;justify-content:space-between;align-items:center;font-size:15px;color:#d4e4ef;margin-top:auto;padding-top:2px}
+.artist-card-link>span{font-size:22px;color:#ffe69c}
+.artist-saber{position:absolute;inset:-2px;width:calc(100% + 4px);height:calc(100% + 4px);overflow:visible;pointer-events:none;z-index:3;opacity:0;transition:opacity .2s}
+.artist-saber rect{fill:none;stroke:#ffd778;stroke-width:4;stroke-linecap:round;stroke-dasharray:16 84;filter:drop-shadow(0 0 5px #ffd166);animation:artist-edge-loop 2.8s linear infinite;animation-play-state:paused}
+.artist-saber .artist-saber-core{stroke:#fff8e3;stroke-width:1.5;filter:none}
+.guest-artist-card:is(:hover,:focus-visible,:active) .artist-saber{opacity:1}
+.guest-artist-card:is(:hover,:focus-visible,:active) .artist-saber rect{animation-play-state:running}
+@keyframes artist-edge-loop{to{stroke-dashoffset:-100}}
+.guest-artists-footer{border-top:1px solid #f3d16f33;color:#e7c779;text-align:center;font-size:18px;line-height:1.5;padding-top:24px;margin:32px 0 0}
+.artist-dialog{width:min(850px,calc(100vw - 56px));max-width:none;max-height:calc(100vh - 56px);max-height:calc(100dvh - 56px);border:1px solid #f3d16f80;border-radius:26px;padding:0;background:#03223f;color:#fff7e6;overflow:hidden;box-shadow:0 30px 100px #00000066}
+.artist-dialog::backdrop{background:#011324cc;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.artist-dialog[open]{animation:artist-dialog-in .28s ease-out both}
+@keyframes artist-dialog-in{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
+.artist-dialog-shell{position:relative;max-height:calc(100vh - 58px);max-height:calc(100dvh - 58px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.artist-dialog-close{position:sticky;top:16px;float:right;z-index:4;margin:16px 16px -72px 0;width:56px;height:56px;min-height:56px;border-radius:50%;border:1px solid #f3d16f99;background:#021b35e6;color:#ffe69c;font-size:36px;line-height:1}
+.artist-dialog-close:focus-visible{outline:2px solid #fff0bd;outline-offset:3px}
+.artist-dialog-portrait .artist-portrait{aspect-ratio:1.2;border-radius:25px 25px 0 0}
+.artist-dialog-portrait .artist-portrait img{object-position:center 25%}
+.artist-dialog-portrait .artist-initials{font-size:100px}
+.artist-dialog-copy{padding:34px 44px 40px;text-align:center}
+.artist-dialog-copy .eyebrow{color:#f3d16f;font-size:14px;letter-spacing:.18em;margin-bottom:12px}
+.artist-dialog-copy h2{color:#ffe69c;font-size:52px;line-height:1.1;font-weight:400;margin:0}
+.artist-dialog-divider{display:flex;align-items:center;gap:18px;justify-content:center;color:#f3d16f;margin:22px auto;max-width:300px}
+.artist-dialog-divider:before,.artist-dialog-divider:after{content:'';height:1px;flex:1;background:linear-gradient(90deg,transparent,#f3d16f88)}
+.artist-dialog-divider:after{transform:rotate(180deg)}
+.artist-dialog-copy>p:last-of-type{font-size:23px;line-height:1.55;color:#d4e4ef;margin:0 0 28px}
+.artist-dialog-copy .btn{min-height:56px;font-size:20px}
+[data-layout="tablet"] .guest-artists-page{padding:24px}
+[data-layout="tablet"] .guest-artists-heading h1{font-size:44px}
+[data-layout="tablet"] .guest-artists-heading>p:last-of-type{font-size:19px}
+[data-layout="tablet"] .guest-artists-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+[data-layout="tablet"] .artist-card-copy strong{font-size:23px}
+[data-layout="tablet"] .artist-dialog{width:min(760px,calc(100vw - 32px));max-height:calc(100dvh - 32px)}
+[data-layout="tablet"] .artist-dialog-shell{max-height:calc(100dvh - 34px)}
+[data-layout="tablet"] .artist-dialog-portrait .artist-portrait{aspect-ratio:1.5;max-height:44vh}
+[data-layout="tablet"] .artist-dialog-copy{padding:24px 30px 30px}
+[data-layout="tablet"] .artist-dialog-copy h2{font-size:38px}
+[data-layout="tablet"] .artist-dialog-copy>p:last-of-type{font-size:19px}
+@media(min-width:900px) and (orientation:landscape){
+ [data-layout="tablet"] .guest-artists-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+ [data-layout="tablet"] .guest-artists-heading{margin-bottom:24px}
+ [data-layout="tablet"] .artist-dialog-portrait .artist-portrait{aspect-ratio:2.4;max-height:34vh}
+}
+@media(max-width:650px){
+ .intro-menu .intro-artist-symbol{width:25px;flex-basis:25px;font-size:25px}
+ [data-layout="tablet"] .guest-artists-page{padding:20px 16px}
+ [data-layout="tablet"] .guest-artists-heading h1{font-size:34px}
+ [data-layout="tablet"] .guest-artists-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+ [data-layout="tablet"] .artist-card-copy{padding:14px 12px}
+ [data-layout="tablet"] .artist-card-copy strong{font-size:20px}
+ [data-layout="tablet"] .artist-card-label{font-size:9px;letter-spacing:.04em}
+ [data-layout="tablet"] .artist-card-label>span{display:none}
+ [data-layout="tablet"] .artist-dialog-copy{padding:24px 20px}
+ [data-layout="tablet"] .artist-dialog-copy h2{font-size:32px}
+}
+@media(prefers-reduced-motion:reduce){
+ .artist-dialog[open],.artist-saber rect{animation:none}
+ .artist-saber rect{stroke-dasharray:none;filter:none}
+ .artist-saber,.guest-artist-card{transition:none}
+ .guest-artist-card:is(:hover,:focus-visible,:active){transform:none}
+}
