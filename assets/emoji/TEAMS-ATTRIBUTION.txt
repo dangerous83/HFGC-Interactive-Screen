@@ -1,0 +1,10 @@
+Our Teams emoji artwork
+
+These unmodified SVGs are from Twemoji by Twitter, Inc. and contributors.
+Source: https://github.com/jdecked/twemoji/tree/main/assets/svg
+Graphics license: Creative Commons Attribution 4.0 International (CC BY 4.0).
+License: https://creativecommons.org/licenses/by/4.0/
+Full graphics license: LICENSE-GRAPHICS.txt in this directory.
+
+Files: teams-wave.svg, teams-compass.svg, teams-raisehand.svg, teams-bell.svg,
+teams-handshake.svg, teams-car.svg, teams-bolt.svg, teams-sofa.svg, teams-clipboard.svg.

@@ -1,0 +1,32 @@
+/* Motion and emoji accents are scoped to the Our Teams directory. */
+.team-directory-page{background:radial-gradient(ellipse at 0 10%,#12659a28,transparent 55%)}
+.team-directory-page .directory-hero{position:relative;isolation:isolate;padding:6px 0 26px;border-bottom:1px solid #f3d16f38;margin-bottom:30px}
+.directory-hero::after{content:'';position:absolute;left:0;bottom:-2px;width:92px;height:3px;background:linear-gradient(90deg,#ffe69c,#f3d16f33);border-radius:3px}
+.team-directory-page .directory-hero .eyebrow{display:flex;align-items:center;gap:12px;color:#ffe69c;letter-spacing:.18em}
+.directory-hero .eyebrow::before{content:'';width:8px;height:8px;border-radius:50%;background:#ffe69c;box-shadow:0 0 14px #f3d16f88}
+.team-directory-page .directory-hero h1{color:#fff4d8;text-shadow:0 3px 24px #00172d66}
+.team-directory-page .directory-hero>.btn{border-color:#f3d16f88;background:linear-gradient(120deg,#164f76,#083458);box-shadow:0 8px 24px #00172d30}
+.team-directory-page .directory-area{position:relative;border-top:3px solid #87c9ea;box-shadow:0 14px 34px #00142733;background:radial-gradient(ellipse at 0 0,#327cac25,transparent 60%),linear-gradient(135deg,#093b60ee,#042540f2)}
+.team-directory-page .directory-vip{border-top-color:#f3d16f;background:radial-gradient(ellipse at 0 0,#f3d16f1a,transparent 65%),linear-gradient(135deg,#103952ee,#042540f2)}
+.directory-emoji-badge{width:54px;height:54px;flex:0 0 54px;display:grid;place-items:center;border-radius:16px;border:1px solid #b8d3ea55;background:linear-gradient(145deg,#3674a04a,#0b385b);box-shadow:inset 0 1px 0 #ffffff16,0 5px 15px #00132625}
+.directory-area-heading>.directory-emoji-badge{width:68px;height:68px;flex-basis:68px;border-radius:21px}
+.directory-vip .directory-emoji-badge{border-color:#f3d16f55;background:linear-gradient(145deg,#f3d16f22,#07324f);box-shadow:inset 0 1px 0 #fff0bd22,0 5px 18px #00132630}
+.directory-emoji{display:block;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;font-size:32px;line-height:1.1;transform-origin:50% 75%;animation:directory-emoji-float 5.5s ease-in-out infinite}
+.directory-emoji{width:32px;height:32px}.directory-emoji img{width:100%;height:100%;object-fit:contain}.directory-area-heading .directory-emoji{width:40px;height:40px}
+.directory-team-card .directory-emoji{animation-delay:calc(var(--team-order,0)*-.7s)}
+.directory-emoji.emoji-wave{animation-name:directory-emoji-wave}
+.directory-emoji.emoji-crown{animation-name:directory-crown-float;filter:drop-shadow(0 3px 7px #f3d16f30)}
+.team-directory-page .directory-team-card{position:relative;border-color:#b8d3ea55;background:linear-gradient(135deg,#174b6c80,#082c4ddd);box-shadow:inset 0 1px 0 #ffffff08;transition:transform .25s,border-color .25s,background .25s,box-shadow .25s}
+.team-directory-page .directory-vip .directory-team-card{border-color:#f3d16f50;background:linear-gradient(135deg,#f3d16f0d,#082b47dd)}
+.team-directory-page .directory-team-card:is(:hover,:focus-visible){transform:translateY(-3px);border-color:#b5e6ff;box-shadow:0 12px 24px #00152d44,inset 0 0 0 1px #b5e6ff22;background:linear-gradient(135deg,#205c7eaa,#0a3555)}
+.team-directory-page .directory-vip .directory-team-card:is(:hover,:focus-visible){border-color:#ffe69c;box-shadow:0 12px 24px #00152d44,inset 0 0 0 1px #f3d16f33}
+.directory-card-link>span{transition:transform .25s}
+.directory-team-card:is(:hover,:focus-visible) .directory-card-link>span{transform:translate(3px,-3px)}
+.directory-team-card:focus-visible{outline:3px solid #ffe69c;outline-offset:4px}
+@keyframes directory-emoji-float{0%,20%,80%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+@keyframes directory-emoji-wave{0%,15%,65%,100%{transform:rotate(0)}25%{transform:rotate(12deg)}35%{transform:rotate(-8deg)}45%{transform:rotate(10deg)}55%{transform:rotate(-4deg)}}
+@keyframes directory-crown-float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-4px) rotate(3deg)}}
+@keyframes directory-card-enter{from{opacity:0;translate:0 10px}to{opacity:1;translate:0 0}}
+@media(prefers-reduced-motion:no-preference){.directory-team-card{animation:directory-card-enter .45s ease-out both;animation-delay:calc(var(--team-order,0)*.06s)}}
+@media(max-width:650px){.directory-emoji-badge{width:44px;height:44px;flex-basis:44px;border-radius:13px}.directory-emoji{width:27px;height:27px}.directory-area-heading>.directory-emoji-badge{width:54px;height:54px;flex-basis:54px;border-radius:17px}.directory-area-heading .directory-emoji{width:33px;height:33px}.directory-team-count{margin-left:66px}}
+@media(prefers-reduced-motion:reduce){.directory-emoji,.directory-team-card{animation:none!important}.team-directory-page .directory-team-card,.directory-card-link>span{transition:none}.team-directory-page .directory-team-card:is(:hover,:focus-visible),.directory-team-card:is(:hover,:focus-visible) .directory-card-link>span{transform:none}}

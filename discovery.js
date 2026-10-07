@@ -115,7 +115,7 @@
   }
   function create({teams,pillars,openDestination,activity}) {
     const guide=buildGuide(teams,pillars);
-    const assistantName="BRO. HAVI";
+    const assistantName="Bro. HAVI";
     const assistantDescription="HFGC Assistant Virtual Intelligence";
     const assistantGreeting="Hi, I’m Brother Havi, Your HFGC Hospitality & VIP Assistant. How can I assist you?";
     const voiceProfiles=[
@@ -146,7 +146,7 @@
     function drawResults() {
       const query=queries.search.trim(), ranked=guide.search(query);
       const results=query?ranked.slice(0,8):['heart','greeters','ushers','transportation','join'].map(id=>({entry:guide.get(id)}));
-      body.innerHTML=`<p class="guide-result-count" role="status">${query?(results.length?`${ranked.length} matching ${ranked.length===1?'topic':'topics'}`:'No matching topics'):'Popular topics · Tap to explore'}</p><div class="guide-results">${results.map(({entry:e})=>`<button type="button" class="guide-result" data-guide-target="${escape(JSON.stringify(e.target))}"><span class="guide-category">${escape(e.category)}</span><strong>${escape(e.title)} <span aria-hidden="true">›</span></strong><span>${escape(e.kind==='team'?e.team.short:e.text)}</span></button>`).join('')}</div>${query&&!results.length?`<div class="guide-empty"><h3>Let’s try another word</h3><p>Try “welcome,” “transportation,” or “join.” You can also ask a question in Ask BRO. HAVI.</p><button type="button" data-guide-mode="assistant" class="guide-source">Ask BRO. HAVI</button></div>`:''}`;
+      body.innerHTML=`<p class="guide-result-count" role="status">${query?(results.length?`${ranked.length} matching ${ranked.length===1?'topic':'topics'}`:'No matching topics'):'Popular topics · Tap to explore'}</p><div class="guide-results">${results.map(({entry:e})=>`<button type="button" class="guide-result" data-guide-target="${escape(JSON.stringify(e.target))}"><span class="guide-category">${escape(e.category)}</span><strong>${escape(e.title)} <span aria-hidden="true">›</span></strong><span>${escape(e.kind==='team'?e.team.short:e.text)}</span></button>`).join('')}</div>${query&&!results.length?`<div class="guide-empty"><h3>Let’s try another word</h3><p>Try “welcome,” “transportation,” or “join.” You can also ask a question in Ask Bro. HAVI.</p><button type="button" data-guide-mode="assistant" class="guide-source">Ask Bro. HAVI</button></div>`:''}`;
     }
     function drawChat() {
       // The assistant speaks aloud; no transcript or captions are shown, so the stage stays uncluttered.
@@ -326,7 +326,7 @@
     document.querySelectorAll('[data-discovery]').forEach(button=>button.addEventListener('click',()=>{
       const alreadyOpen=dialog.open;
       opener=button; if(!alreadyOpen)dialog.showModal();changeMode(button.dataset.discovery);
-      // First open of Ask BRO. HAVI → he greets the visitor out loud, then the dialog waits for a question.
+      // First open of Ask Bro. HAVI → he greets the visitor out loud, then the dialog waits for a question.
       if(button.dataset.discovery==='assistant' && !alreadyOpen){
         const greet=assistantGreeting;
         // speechSynthesis.getVoices often returns [] on the very first call until the voices load — give it a tick.
