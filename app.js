@@ -374,7 +374,7 @@
     {id:'rachael-lampa',name:'Rachael Lampa',image:'Rachael Lampa.jpg'},
     {id:'cece-winans',name:'Cece Winans',image:'Cece Winans.jpg'},
     {id:'matthew-west',name:'Matthew West',image:'Matthew West.jpg'},
-    {id:'katinas',name:'Katinas',image:null},
+    {id:'katinas',name:'Katinas',image:'Katinas.png'},
     {id:'avalon',name:'Avalon',image:'Avalon Worship.jpg'},
     {id:'selah',name:'Selah',image:'Selah trio.jpg'},
     {id:'alex-gonzaga',name:'Alex Gonzaga',image:'Alex Gonzaga.jpg'},
