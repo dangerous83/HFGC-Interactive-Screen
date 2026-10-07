@@ -60,3 +60,50 @@
 @media(max-width:950px){.why-hero{grid-template-columns:minmax(0,1fr) 150px;gap:16px}.why-hero-art{width:150px;height:150px}.why-hero-heart{width:80px;height:80px}.why-intro{font-size:21px}.why-quality-card h3{font-size:23px}.why-quality-card>p{font-size:19px}.why-quality-card{padding:22px}.why-invitation{align-items:flex-start;flex-direction:column}.why-invitation .actions{width:100%}.why-invitation .btn{flex:1}}
 @media(max-width:650px){.why-join-page,[data-layout="tablet"] .why-join-page{padding:24px 20px 30px}.why-hero{grid-template-columns:minmax(0,1fr);margin-bottom:26px;position:relative;padding-top:12px}.why-hero-copy{position:relative;z-index:1}.why-hero h1{font-size:50px;max-width:440px}.why-hero-copy .eyebrow{font-size:14px;padding-right:80px}.why-hero-art{position:absolute;right:-4px;top:-15px;width:78px;height:78px;opacity:.9}.why-hero-heart{width:39px;height:39px}.why-heart-orbit{inset:3px}.why-heart-orbit.orbit-inner{inset:13px}.why-sparkle.sparkle-one{width:15px;height:15px;right:0;top:8px}.why-sparkle.sparkle-two{width:11px;height:11px;left:0;bottom:10px}.why-intro{font-size:19px;line-height:1.55;margin-top:18px}.why-intro br{display:none}.why-section-heading h2{font-size:13px;letter-spacing:.1em}.why-section-heading{gap:12px}.why-quality-grid{grid-template-columns:1fr;gap:14px}.why-quality-card{min-height:0;padding:22px}.why-quality-card h3{font-size:24px}.why-quality-card>header{gap:16px}.why-emoji-badge{flex-basis:55px;width:55px;height:55px;border-radius:17px}.why-emoji{width:36px;height:36px}.why-quality-card>p{font-size:19px}.why-quality-card cite{font-size:14px}.why-willing-banner{padding:26px 24px;border-radius:23px;margin-top:24px}.why-willing-banner .eyebrow{font-size:12px;line-height:1.55}.why-willing-banner h2{font-size:35px}.why-impact-lines{display:grid;gap:10px;margin-top:20px}.why-impact-lines p{font-size:19px}.why-impact-promise{font-size:20px}.why-invitation{padding-top:26px;gap:20px}.why-invitation h2{font-size:33px}.why-invitation p{font-size:12px}.why-invitation .actions{flex-direction:column;align-items:stretch}.why-invitation .btn{width:100%;font-size:18px;min-height:60px}}
 @media(prefers-reduced-motion:reduce){.why-join-page,.why-quality-card,.why-emoji,.why-hero-heart,.why-sparkle{animation:none!important}.why-quality-card{transition:none}}
+
+/* Add a human focal point and playful, touch-responsive inspiration cards. */
+.why-hero{grid-template-columns:minmax(0,1.35fr) minmax(300px,.9fr);gap:36px}
+.why-hero h1{font-size:clamp(52px,6.2vw,72px)}
+.why-intro{font-size:23px}
+.why-welcome-visual{position:relative;isolation:isolate;margin:8px 0 0;min-width:0;transform:rotate(2deg)}
+.why-photo-window{height:360px;overflow:hidden;border:1px solid #8ecbeccc;border-radius:32px 32px 32px 8px;background:#063157;box-shadow:0 20px 45px #00172e70,0 0 0 7px #91cce50a}
+.why-photo-window::after{content:'';position:absolute;inset:0;border-radius:32px 32px 32px 8px;background:linear-gradient(180deg,transparent 65%,#021d3b66);pointer-events:none}
+.why-welcome-image{display:block;width:100%;height:100%;max-width:none;object-fit:cover;object-position:50% 8%;animation:why-photo-drift 14s ease-in-out infinite alternate}
+.why-welcome-visual figcaption{position:relative;display:flex;align-items:center;justify-content:center;gap:9px;padding:12px 8px;margin:0;color:#fff1bc;font-size:11px;font-weight:700;letter-spacing:.1em;transform:rotate(-2deg)}
+.why-photo-dot{width:6px;height:6px;flex:0 0 6px;background:#ffe69c;border-radius:50%;box-shadow:0 0 12px #f3d16f88}
+.why-photo-emoji{position:absolute;z-index:2;display:grid;place-items:center;width:66px;height:66px;border-radius:22px;background:linear-gradient(135deg,#fff4d1,#f1cd68);border:1px solid #fff2c4;box-shadow:0 9px 24px #00152d55;animation:why-photo-badge-float 5s ease-in-out infinite}
+.why-photo-emoji img{width:36px;height:36px;object-fit:contain}
+.photo-heart{right:-12px;top:-18px;transform:rotate(9deg)}
+.photo-hands{left:-18px;bottom:56px;animation-delay:-2.5s}
+.why-quality-card{position:relative;isolation:isolate;overflow:hidden;padding-bottom:25px;min-height:236px;border-radius:25px;--card-accent:#f3d16f}
+.why-quality-card::before{content:'';position:absolute;z-index:-1;right:-45px;top:-55px;width:160px;height:160px;border:1px solid #a6d6e71a;border-radius:50%;box-shadow:0 0 0 24px #97d5ec05,0 0 0 48px #97d5ec04;pointer-events:none}
+.why-quality-card:nth-child(3n+1){background:radial-gradient(ellipse at 0 0,#db687226,transparent 70%),linear-gradient(135deg,#123c5d,#052640);border-color:#d6a3ae60}
+.why-quality-card:nth-child(3n+2){background:radial-gradient(ellipse at 0 0,#f3cf5724,transparent 70%),linear-gradient(135deg,#244753,#052640);border-color:#f3d16f66}
+.why-quality-card:nth-child(3n){background:radial-gradient(ellipse at 0 0,#8ba5e62b,transparent 70%),linear-gradient(135deg,#193c60,#052640);border-color:#a6bee76b}
+.why-emoji-badge{flex-basis:74px;width:74px;height:74px;border-radius:23px;background:radial-gradient(circle at 35% 25%,#fff3c33b,#f3d16f13);box-shadow:inset 0 1px 0 #fff4cf30,0 5px 15px #00152d30}
+.why-emoji{width:51px;height:51px}
+.why-quality-card>header{gap:18px}
+.why-quality-card cite{max-width:calc(100% - 128px);padding-top:12px}
+.why-inspire-button{position:absolute;right:21px;bottom:18px;display:flex;align-items:center;justify-content:center;gap:7px;min-height:44px;padding:9px 12px;border:1px solid #b6d7eb45;border-radius:999px;background:#03254099;color:#dceaf5;font-size:13px;font-weight:600;transition:background .2s,border-color .2s}
+.why-inspire-button img{width:18px;height:18px;object-fit:contain;filter:grayscale(1);opacity:.65}
+.why-inspire-button:is(:hover,:focus-visible){border-color:#ffe69c;background:#16455d}
+.why-inspire-button[aria-pressed="true"]{background:#ffe59a;color:#092c45;border-color:#fff0bf}
+.why-inspire-button[aria-pressed="true"] img{filter:none;opacity:1}
+.why-quality-card.is-inspired{border-color:#ffe69c;box-shadow:inset 0 0 0 1px #ffe69c55,0 0 25px #f3d16f18}
+.why-quality-card.is-inspired .why-emoji-badge{background:radial-gradient(circle at 35% 25%,#ffeaa652,#f3d16f24);border-color:#ffe69c}
+.why-card-burst{position:absolute;right:42px;bottom:34px;width:0;height:0;pointer-events:none}
+.why-card-burst>span{position:absolute;color:#ffe69c;font-family:Georgia,serif;font-size:23px;opacity:0}
+.why-card-burst>span:nth-child(1){--burst-x:-23px;--burst-y:-48px;--burst-r:-12deg}
+.why-card-burst>span:nth-child(2){--burst-x:11px;--burst-y:-65px;--burst-r:20deg}
+.why-card-burst>span:nth-child(3){--burst-x:33px;--burst-y:-36px;--burst-r:-18deg}
+.why-quality-card.is-inspired .why-card-burst>span{animation:why-inspire-burst .7s ease-out both}
+.why-inspiration-status{margin:16px 0 0;min-height:24px;text-align:center;font-size:16px;line-height:1.5;color:#d8e7f1}
+.why-willing-banner{box-shadow:0 12px 32px #00152d33,0 0 35px #f3d16f0f}
+.why-willing-banner::after{animation:why-gold-rings 9s ease-in-out infinite alternate}
+@keyframes why-photo-drift{from{transform:scale(1)}to{transform:scale(1.035) translateY(3px)}}
+@keyframes why-photo-badge-float{0%,100%{translate:0 0;rotate:-4deg}50%{translate:0 -7px;rotate:4deg}}
+@keyframes why-inspire-burst{0%{opacity:0;transform:translate(0,0) scale(.4)}25%{opacity:1}100%{opacity:0;transform:translate(var(--burst-x),var(--burst-y)) rotate(var(--burst-r)) scale(1)}}
+@keyframes why-gold-rings{from{transform:translate(0,0)}to{transform:translate(-15px,18px)}}
+@media(max-width:950px){.why-hero{grid-template-columns:minmax(0,1.2fr) minmax(240px,.8fr);gap:26px}.why-photo-window{height:330px}.why-hero h1{font-size:58px}.why-intro{font-size:21px}.why-quality-card h3{font-size:23px}.why-emoji-badge{flex-basis:62px;width:62px;height:62px}.why-emoji{width:43px;height:43px}}
+@media(max-width:650px){.why-hero{display:flex;flex-direction:column;align-items:stretch;gap:22px;padding-top:8px}.why-hero h1{font-size:50px}.why-hero-copy .eyebrow{padding-right:0}.why-intro{font-size:19px}.why-welcome-visual{margin:0 8px 0 5px;transform:rotate(1deg)}.why-photo-window{height:300px;border-radius:25px 25px 25px 8px}.why-photo-window::after{border-radius:25px 25px 25px 8px}.why-welcome-image{object-position:50% 5%}.why-photo-emoji{width:53px;height:53px;border-radius:18px}.why-photo-emoji img{width:30px;height:30px}.photo-heart{right:-9px;top:-13px}.photo-hands{left:-13px;bottom:50px}.why-welcome-visual figcaption{font-size:10px;padding-block:12px;letter-spacing:.06em;transform:rotate(-1deg)}.why-quality-card{min-height:236px;padding:22px 22px 26px}.why-quality-card h3{font-size:24px}.why-emoji-badge{flex-basis:65px;width:65px;height:65px}.why-emoji{width:45px;height:45px}.why-quality-card cite{max-width:calc(100% - 125px);font-size:13px}.why-inspire-button{right:18px;bottom:18px;font-size:12px}.why-inspiration-status{font-size:14px}}
+@media(prefers-reduced-motion:reduce){.why-welcome-image,.why-photo-emoji,.why-willing-banner::after,.why-card-burst>span{animation:none!important}.why-inspire-button{transition:none}}
