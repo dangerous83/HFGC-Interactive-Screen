@@ -379,7 +379,7 @@
     {id:'selah',name:'Selah',image:'Selah trio.jpg'},
     {id:'alex-gonzaga',name:'Alex Gonzaga',image:'Alex Gonzaga.jpg'},
     {id:'toni-gonzaga',name:'Toni Gonzaga',image:'Toni Gonzaga.jpg'},
-    {id:'yeng-constantino',name:'Yeng Constantino',image:'Yeng Constantino.jpg'},
+    {id:'yeng-constantino',name:'Yeng Constantino',image:'Yeng Constantino’- 2.png'},
     {id:'taya',name:'Taya',image:'Taya.jpg'},
     {id:'tasha-cobbs',name:'Tasha Cobbs',image:'Tasha Cobbs.jpg'}
   ];
@@ -631,7 +631,6 @@
     if (!artist) return;
     artistDialog.querySelector('.artist-dialog-portrait').innerHTML=artistPortrait(artist,true);
     artistDialog.querySelector('#artist-dialog-title').textContent=artist.name;
-    artistDialog.querySelector('#artist-dialog-description').textContent=`We warmly welcome ${artist.name} as an HFGC guest artist. With a heart for hospitality, we are here to welcome, honor, serve, and care for our guests throughout their HFGC experience.`;
     artistDialog.querySelector('.artist-dialog-shell').scrollTop=0;
     if (!artistDialog.open) artistDialog.showModal();
     lastActivity=Date.now();

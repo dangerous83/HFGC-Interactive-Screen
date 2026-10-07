@@ -34,39 +34,32 @@
 .guest-artist-card:is(:hover,:focus-visible,:active) .artist-saber rect{animation-play-state:running}
 @keyframes artist-edge-loop{to{stroke-dashoffset:-100}}
 .guest-artists-footer{border-top:1px solid #f3d16f33;color:#e7c779;text-align:center;font-size:18px;line-height:1.5;padding-top:24px;margin:32px 0 0}
-.artist-dialog{width:min(850px,calc(100vw - 56px));max-width:none;max-height:calc(100vh - 56px);max-height:calc(100dvh - 56px);border:1px solid #f3d16f80;border-radius:26px;padding:0;background:#03223f;color:#fff7e6;overflow:hidden;box-shadow:0 30px 100px #00000066}
+.artist-dialog{width:min(850px,calc(100vw - 56px),calc((100dvh - 240px)*9/16));max-width:none;max-height:calc(100vh - 56px);max-height:calc(100dvh - 56px);border:1px solid #f3d16f80;border-radius:26px;padding:0;background:#03223f;color:#fff7e6;overflow:hidden;box-shadow:0 30px 100px #00000066}
 .artist-dialog::backdrop{background:#011324cc;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .artist-dialog[open]{animation:artist-dialog-in .28s ease-out both}
 @keyframes artist-dialog-in{from{opacity:0;transform:translateY(16px) scale(.98)}to{opacity:1;transform:none}}
 .artist-dialog-shell{position:relative;max-height:calc(100vh - 58px);max-height:calc(100dvh - 58px);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .artist-dialog-close{position:sticky;top:16px;float:right;z-index:4;margin:16px 16px -72px 0;width:56px;height:56px;min-height:56px;border-radius:50%;border:1px solid #f3d16f99;background:#021b35e6;color:#ffe69c;font-size:36px;line-height:1}
 .artist-dialog-close:focus-visible{outline:2px solid #fff0bd;outline-offset:3px}
-.artist-dialog-portrait .artist-portrait{aspect-ratio:auto;height:min(72vh,1200px);height:min(72dvh,1200px);border-radius:25px 25px 0 0}
+.artist-dialog-portrait .artist-portrait{aspect-ratio:9/16;height:auto;max-height:none;border-radius:25px 25px 0 0}
 .artist-dialog-portrait .artist-portrait img{object-fit:contain;object-position:center}
 .artist-dialog-portrait .artist-initials{font-size:100px}
-.artist-dialog-copy{padding:34px 44px 40px;text-align:center}
-.artist-dialog-copy .eyebrow{color:#f3d16f;font-size:14px;letter-spacing:.18em;margin-bottom:12px}
+.artist-dialog-copy{padding:24px 32px 30px;text-align:center}
+.artist-dialog-copy .eyebrow{color:#f3d16f;font-size:14px;letter-spacing:.18em;margin:0 0 10px}
 .artist-dialog-copy h2{color:#ffe69c;font-size:52px;line-height:1.1;font-weight:400;margin:0}
-.artist-dialog-divider{display:flex;align-items:center;gap:18px;justify-content:center;color:#f3d16f;margin:22px auto;max-width:300px}
-.artist-dialog-divider:before,.artist-dialog-divider:after{content:'';height:1px;flex:1;background:linear-gradient(90deg,transparent,#f3d16f88)}
-.artist-dialog-divider:after{transform:rotate(180deg)}
-.artist-dialog-copy>p:last-of-type{font-size:23px;line-height:1.55;color:#d4e4ef;margin:0 0 28px}
-.artist-dialog-copy .btn{min-height:56px;font-size:20px}
 [data-layout="tablet"] .guest-artists-page{padding:24px}
 [data-layout="tablet"] .guest-artists-heading h1{font-size:44px}
 [data-layout="tablet"] .guest-artists-heading>p:last-of-type{font-size:19px}
 [data-layout="tablet"] .guest-artists-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
 [data-layout="tablet"] .artist-card-copy strong{font-size:23px}
-[data-layout="tablet"] .artist-dialog{width:min(760px,calc(100vw - 32px));max-height:calc(100dvh - 32px)}
+[data-layout="tablet"] .artist-dialog{width:min(760px,calc(100vw - 32px),calc((100dvh - 190px)*9/16));max-height:calc(100dvh - 32px)}
 [data-layout="tablet"] .artist-dialog-shell{max-height:calc(100dvh - 34px)}
-[data-layout="tablet"] .artist-dialog-portrait .artist-portrait{aspect-ratio:auto;height:68vh;height:68dvh;max-height:none}
-[data-layout="tablet"] .artist-dialog-copy{padding:24px 30px 30px}
+[data-layout="tablet"] .artist-dialog-portrait .artist-portrait{aspect-ratio:9/16;height:auto;max-height:none}
+[data-layout="tablet"] .artist-dialog-copy{padding:20px 24px 24px}
 [data-layout="tablet"] .artist-dialog-copy h2{font-size:38px}
-[data-layout="tablet"] .artist-dialog-copy>p:last-of-type{font-size:19px}
 @media(min-width:900px) and (orientation:landscape){
  [data-layout="tablet"] .guest-artists-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
  [data-layout="tablet"] .guest-artists-heading{margin-bottom:24px}
- [data-layout="tablet"] .artist-dialog-portrait .artist-portrait{height:66vh;height:66dvh}
 }
 @media(max-width:650px){
  .intro-menu .intro-artist-emoji{width:25px;flex-basis:25px;font-size:25px}
