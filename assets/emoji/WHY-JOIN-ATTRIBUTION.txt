@@ -1,0 +1,8 @@
+Why Join Us emoji artwork
+
+The unmodified why-prayer.svg, why-book.svg, why-teamwork.svg and why-cross.svg
+are from Twemoji by Twitter, Inc. and contributors.
+Source: https://github.com/jdecked/twemoji/tree/main/assets/svg
+Graphics license: Creative Commons Attribution 4.0 International (CC BY 4.0).
+License: https://creativecommons.org/licenses/by/4.0/
+Full graphics license: LICENSE-GRAPHICS.txt in this directory.
