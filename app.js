@@ -461,8 +461,8 @@
   }
   function directory() {
     const areas = [
-      {id:'general',name:'#1 General Hospitality',icon:'users',description:'Intentional care for every guest.'},
-      {id:'vip',name:'#2 VIP Hospitality',icon:'honor',description:'Personalized care, every step.'}
+      {id:'general',name:'1 General Hospitality',icon:'users',description:'Intentional care for every guest.'},
+      {id:'vip',name:'2 VIP Hospitality',icon:'honor',description:'Personalized care, every step.'}
     ];
     const groups = areas.map(area=>{
       const list=teams.filter(t=>t.category===area.id);
