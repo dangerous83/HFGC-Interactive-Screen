@@ -412,7 +412,7 @@
     return `<section class="page">${back('Back to Our Four Pillars')}<div class="pillar-detail"><div class="pillar-intro"><p class="eyebrow">THE HEART OF HOSPITALITY</p>${tile(p.id)}<h2>${p.name}</h2><p>${p.tagline}</p></div><div class="pillar-body">${p.text!==p.tagline ? `<p>${p.text}</p>` : ''}<blockquote class="quote">${p.scripture}<cite>${p.reference}</cite></blockquote><div class="actions">${btn('Explore Our Teams','teams')}${btn('Join Us','join','secondary')}</div></div></div></section>`;
   }
   function general() {
-    return `<section class="page general-page">${title('','Hospitality for General Guests','In General hospitality, we give intentional care for every guest.')} ${teamCards(teams.filter(t=>t.category==='general'),true)}</section>`;
+    return `<section class="page general-page">${title('','Hospitality for General Guests','In General hospitality, we give intentional care for everyone.')} ${teamCards(teams.filter(t=>t.category==='general'),true)}</section>`;
   }
   const vipCategorySymbols={
       'church-leaders':'<path d="m3 7 4 4 5-7 5 7 4-4-2 12H5L3 7ZM6 22h12"/>',
