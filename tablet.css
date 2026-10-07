@@ -53,7 +53,7 @@
 [data-layout="tablet"] .interest-card{min-height:130px;padding:20px;font-size:21px}
 [data-layout="tablet"] .finder-foot{flex-wrap:wrap;font-size:18px}
 [data-layout="tablet"] .heart-photo-page{min-height:100%;padding:24px}
-[data-layout="tablet"] .heart-photo-heading h1{font-size:48px}
+[data-layout="tablet"] .heart-photo-heading h1{font-size:clamp(20px,6.2cqi,48px)}
 [data-layout="tablet"] .heart-orbit-stage{min-height:560px;margin-top:18px}
 [data-layout="tablet"] .heart-pillar-choices{top:42%;gap:12px;grid-template-columns:repeat(4,minmax(0,1fr))}
 [data-layout="tablet"] .heart-orbit-button{min-height:66px;padding:14px 10px;gap:8px}
@@ -156,7 +156,7 @@
  [data-layout="tablet"] .intro-pillars-row{margin-top:24px}
  [data-layout="tablet"] .heart-photo-background{background-size:cover,auto 100%;background-position:center,right center}
  [data-layout="tablet"] .heart-photo-heading,[data-layout="tablet"] .heart-orbit-stage{width:56%;text-align:left}
- [data-layout="tablet"] .heart-photo-heading h1{font-size:42px}
+ [data-layout="tablet"] .heart-photo-heading h1{font-size:clamp(20px,6.2cqi,42px)}
  [data-layout="tablet"] .heart-orbit-stage{min-height:360px;display:flex;flex-direction:column;gap:24px}
  [data-layout="tablet"] .heart-pillar-choices{position:static;grid-template-columns:repeat(2,minmax(0,1fr))}
  [data-layout="tablet"] .heart-service-choices{position:static;grid-template-columns:1fr;margin-top:auto}
@@ -185,7 +185,7 @@
  [data-layout="tablet"] .intro-pillar .pillar-dot{width:48px;height:48px}
  [data-layout="tablet"] .team-grid,[data-layout="tablet"] .finder-grid,[data-layout="tablet"] .vip-background .team-grid,[data-layout="tablet"] .general-background .general-grid{grid-template-columns:1fr}
  [data-layout="tablet"] .general-background .team-card:last-child{grid-column:auto}
- [data-layout="tablet"] .heart-photo-heading h1{font-size:38px}
+ [data-layout="tablet"] .heart-photo-heading h1{font-size:clamp(20px,6.2cqi,38px)}
  [data-layout="tablet"] .heart-orbit-stage{min-height:700px}
  [data-layout="tablet"] .heart-pillar-choices{grid-template-columns:repeat(2,minmax(0,1fr));top:32%}
  [data-layout="tablet"] .heart-service-choices{grid-template-columns:1fr;gap:12px}

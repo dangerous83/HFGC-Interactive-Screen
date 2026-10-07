@@ -227,8 +227,8 @@ main.assistance-background{
 /* Photo-led Our Heart experience, with a curved pillar menu. */
 #main.heart-photo-background{background:linear-gradient(180deg,#01172c55,transparent 36%,#01172c33 70%,#01172ccc),url('General%20Hospitality%203.png') center top/cover no-repeat}
 .heart-photo-page{min-height:100%;margin:0;padding:32px 44px 38px;display:flex;flex-direction:column}
-.heart-photo-heading{text-align:center;position:relative;z-index:1;animation:heart-heading-in .8s ease-out both}
-.heart-photo-heading h1{font-size:clamp(38px,5.8vw,68px);line-height:1.12;font-weight:400;text-shadow:0 3px 20px #01182f}
+.heart-photo-heading{container-type:inline-size;text-align:center;position:relative;z-index:1;animation:heart-heading-in .8s ease-out both}
+.heart-photo-heading h1{font-size:clamp(20px,6.2cqi,62px);white-space:nowrap;line-height:1.12;font-weight:400;text-shadow:0 3px 20px #01182f}
 .heart-photo-heading h1 em{font-style:normal;color:#ffe69c}
 .heart-photo-heading p{margin-top:20px;font-size:26px;color:#d4e9fc;letter-spacing:.05em}
 .heart-orbit-stage{position:relative;flex:1;min-height:1120px;margin-top:16px}
