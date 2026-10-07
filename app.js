@@ -461,14 +461,14 @@
   }
   function directory() {
     const areas = [
-      {id:'general',name:'General Hospitality',icon:'users',description:'Intentional care for every guest.'},
-      {id:'vip',name:'VIP Hospitality',icon:'honor',description:'Personalized care, every step.'}
+      {id:'general',name:'#1 General Hospitality',icon:'users',description:'Intentional care for every guest.'},
+      {id:'vip',name:'#2 VIP Hospitality',icon:'honor',description:'Personalized care, every step.'}
     ];
     const groups = areas.map(area=>{
       const list=teams.filter(t=>t.category===area.id);
       return `<section class="directory-area directory-${area.id}" aria-labelledby="directory-${area.id}-title"><header class="directory-area-heading">${tile(area.icon)}<div><h2 id="directory-${area.id}-title">${area.name}</h2><p>${area.description}</p></div><span class="directory-team-count">${list.length} teams</span></header><div class="directory-team-grid">${list.map(t=>`<button type="button" class="directory-team-card" data-team="${t.id}">${tile(t.icon)}<div class="directory-team-copy"><h3>${t.name}</h3><p>${t.short}</p><span class="directory-card-link">Explore team <span aria-hidden="true">↗</span></span></div></button>`).join('')}</div></section>`;
     }).join('');
-    return `<section class="page team-directory-page">${title('OUR TEAMS · NINE WAYS TO SERVE','Find your place to serve.','Two service areas. One heart for hospitality.',btn('Find a Team for Me','finder','secondary','compass'))}${state.unsure ? '<div class="section-note"><p>Explore our teams, or ask for help finding your place to serve.</p><button class="btn secondary" data-page="join">Express My Interest</button></div>' : ''}<div class="directory-areas">${groups}</div></section>`;
+    return `<section class="page team-directory-page">${title('OUR TEAMS','Find your place to serve.','Two service areas. One heart for hospitality.',btn('Find a Team for Me','finder','secondary','compass'))}${state.unsure ? '<div class="section-note"><p>Explore our teams, or ask for help finding your place to serve.</p><button class="btn secondary" data-page="join">Express My Interest</button></div>' : ''}<div class="directory-areas">${groups}</div></section>`;
   }
   function responsibilities(label, list, text='') {
     return `<details><summary>${label}</summary><div class="responsibilities" tabindex="0" role="region" aria-label="${escape(label)}">${list ? `<ul>${list.map(item=>`<li>${escape(item)}</li>`).join('')}</ul>` : ''}${text ? `<p>${escape(text)}</p>` : ''}</div></details>`;
