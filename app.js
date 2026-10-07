@@ -131,8 +131,8 @@
     "name": "Care",
     "tagline": "We make people feel remembered.",
     "text": "We make people feel remembered.",
-    "scripture": "“God is not unjust; he will not forget your work and the love you have shown him as you have helped his people and continue to help them.”",
-    "reference": "Hebrews 6:10"
+    "scripture": "“Not looking to your own interests but each of you to the interests of the others.”",
+    "reference": "Philippians 2:4"
   }
 ];
   const teams = [
