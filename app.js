@@ -364,22 +364,22 @@
   }
 ];
   const guestArtists = [
-    {id:'raffia-thomas',name:'Raffia Thomas',image:'Raffia Thomas - 2.jpg'},
-    {id:'wes-hampton',name:'Wes Hampton',image:'Wes Hampton -2.jpg'},
-    {id:'laura-story',name:'Laura Story',image:'Laura story - 2.jpg'},
-    {id:'nicole-mullen',name:'Nicole Mullen',image:'Nicole Mullen - 2.jpg'},
-    {id:'jaci-velasquez',name:'Jaci Velasquez',image:'Jaci Velasquez - 2.jpg'},
-    {id:'rachael-lampa',name:'Rachael Lampa',image:'Rachael Lampa - 2.jpg'},
-    {id:'cece-winans',name:'Cece Winans',image:'Cece Winans - 2.jpg'},
-    {id:'matthew-west',name:'Matthew West',image:'Matthew West - 2.jpg'},
-    {id:'katinas',name:'Katinas',image:'Katinas  - 2.jpg'},
-    {id:'avalon',name:'Avalon',image:'Avalon - 2.jpg'},
-    {id:'selah',name:'Selah',image:'Selah - 2.jpg'},
-    {id:'alex-gonzaga',name:'Alex Gonzaga',image:'Alex Gonzaga - 2.jpg'},
-    {id:'toni-gonzaga',name:'Toni Gonzaga',image:'Toni Gonzaga - 2.jpg'},
-    {id:'yeng-constantino',name:'Yeng Constantino',image:'Yeng Constanteno - 2.jpg'},
-    {id:'taya',name:'Taya',image:'Taya - 2.jpg'},
-    {id:'tasha-cobbs',name:'Tasha Cobbs',image:'Tasha Cobbs - 2.jpg'}
+    {id:'raffia-thomas',name:'Raffia Thomas',image:'Raffia Thomas - 2.jpg',years:'2020',appearances:['Home Free Global Crusade 1'],participation:'In person'},
+    {id:'wes-hampton',name:'Wes Hampton',image:'Wes Hampton -2.jpg',years:'2020 / 2021',appearances:['Home Free Global Crusade 2'],participation:'Online & in person'},
+    {id:'laura-story',name:'Laura Story',image:'Laura story - 2.jpg',years:'2020',appearances:['Home Free Global Crusade 3'],participation:'Online'},
+    {id:'nicole-mullen',name:'Nicole Mullen',image:'Nicole Mullen - 2.jpg',years:'2021',appearances:['Home Free Global Crusade 4'],participation:'Online'},
+    {id:'jaci-velasquez',name:'Jaci Velasquez',image:'Jaci Velasquez - 2.jpg',years:'2020',appearances:['Home Free Global Crusade 4'],participation:'Online'},
+    {id:'rachael-lampa',name:'Rachael Lampa',image:'Rachael Lampa - 2.jpg',years:'2020 / 2024',appearances:['HFGC 15: Christ the Peacemaker Tour — Los Angeles, March 16–17, 2024'],participation:'Online & in person'},
+    {id:'cece-winans',name:'CeCe Winans',image:'Cece Winans - 2.jpg',years:'2021',appearances:['Home Free Global Crusade'],participation:'Online'},
+    {id:'matthew-west',name:'Matthew West',image:'Matthew West - 2.jpg',years:'2021',appearances:['Home Free Global Crusade'],participation:'Online'},
+    {id:'katinas',name:'The Katinas',image:'Katinas  - 2.jpg',years:'2021 & 2024',appearances:['HFGC — Oct. 31, 2021','HFGC 15: Christ the Peacemaker Tour — Manila, Jan. 14, 2024'],participation:'Online & in person'},
+    {id:'avalon',name:'Avalon / Avalon Worship',image:'Avalon - 2.jpg',years:'2021, 2023, 2024 & 2025',appearances:['HFGC 2025: Rebirth in Christ Tour — Manila'],participation:'Online & in person'},
+    {id:'selah',name:'Selah',image:'Selah - 2.jpg',years:'2022, 2023 & 2024',appearances:['HFGC Canada — Nov. 13, 2022'],participation:'Online & in person'},
+    {id:'alex-gonzaga',name:'Alex Gonzaga',image:'Alex Gonzaga - 2.jpg',years:'2024',appearances:['HFGC 15: Christ the Peacemaker Tour — Los Angeles, March 16–17, 2024'],participation:'In person'},
+    {id:'toni-gonzaga',name:'Toni Gonzaga',image:'Toni Gonzaga - 2.jpg',years:'2024',appearances:['HFGC 15: Christ the Peacemaker Tour — Los Angeles, March 16–17, 2024'],participation:'In person'},
+    {id:'yeng-constantino',name:'Yeng Constantino',image:'Yeng Constanteno - 2.jpg',years:'2025 & 2026',appearances:['HFGC Bay Area','HFGC Singapore','HFGC Milan','HFGC 2026: Saved. Healed. Delivered. — Manila, Jan. 17, 2026','HFGC Canada','HFGC NY','HFGC Cyprus'],participation:'In person'},
+    {id:'taya',name:'TAYA',image:'Taya - 2.jpg',years:'2025 & 2026',appearances:['HFGC Bay Area','HFGC 2026: Saved. Healed. Delivered. — Manila, Jan. 18, 2026'],participation:'In person'},
+    {id:'tasha-cobbs',name:'Tasha Cobbs Leonard',image:'Tasha Cobbs - 2.jpg',detailsPending:true}
   ];
   const artistEdge = '<svg class="artist-saber" viewBox="0 0 320 360" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect x="2" y="2" width="316" height="356" rx="20" pathLength="100" vector-effect="non-scaling-stroke"/><rect class="artist-saber-core" x="2" y="2" width="316" height="356" rx="20" pathLength="100" vector-effect="non-scaling-stroke"/></svg>';
   function artistPortrait(artist,large=false) {
@@ -643,6 +643,19 @@
     if (!artist) return;
     artistDialog.querySelector('.artist-dialog-portrait').innerHTML=artistPortrait(artist,true);
     artistDialog.querySelector('#artist-dialog-title').textContent=artist.name;
+    const hasDetails=!artist.detailsPending && artist.years && artist.appearances?.length && artist.participation;
+    const details=artistDialog.querySelector('[data-artist-performance]');
+    const pending=artistDialog.querySelector('[data-artist-pending]');
+    details.hidden=!hasDetails;
+    pending.hidden=Boolean(hasDetails);
+    artistDialog.querySelector('[data-artist-years]').textContent=hasDetails?artist.years:'';
+    artistDialog.querySelector('[data-artist-participation]').textContent=hasDetails?artist.participation:'';
+    const list=artistDialog.querySelector('[data-artist-appearances]');
+    list.replaceChildren(...(hasDetails?artist.appearances:[]).map(appearance=>{
+      const item=document.createElement('li');
+      item.textContent=appearance;
+      return item;
+    }));
     artistDialog.querySelector('.artist-dialog-shell').scrollTop=0;
     if (!artistDialog.open) artistDialog.showModal();
     lastActivity=Date.now();
