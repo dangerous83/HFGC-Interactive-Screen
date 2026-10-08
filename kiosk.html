@@ -20,10 +20,10 @@
   <link rel="stylesheet" href="discovery.css?v=tablet-20261007">
   <link rel="stylesheet" href="tablet.css?v=heart-heading-20261007">
   <script defer src="discovery.js?v=artists-copy-bro-havi-20261007-1702"></script>
-  <link rel="stylesheet" href="artists.css?v=clean-artist-preview-20261007">
+  <link rel="stylesheet" href="artists.css?v=artist-history-20261008">
   <link rel="stylesheet" href="teams.css?v=teams-motion-20261007-1706">
   <link rel="stylesheet" href="why-join.css?v=why-visual-20261007-1754">
-  <script defer src="app.js?v=assistance-responsibilities-20261007-1832"></script>
+  <script defer src="app.js?v=artist-history-20261008"></script>
 </head>
 <body>
   <div id="intro" class="intro" aria-label="Welcome to HFGC EXPO 2026">
@@ -126,6 +126,20 @@
       <div class="artist-dialog-copy">
         <p class="eyebrow">HFGC GUEST ARTIST</p>
         <h2 id="artist-dialog-title"></h2>
+        <div class="artist-performance" data-artist-performance>
+          <div class="artist-performance-meta">
+            <div><span>YEAR</span><strong data-artist-years></strong></div>
+            <div><span>PARTICIPATION</span><strong data-artist-participation></strong></div>
+          </div>
+          <div class="artist-appearances">
+            <span>HFGC APPEARANCES</span>
+            <ul data-artist-appearances></ul>
+          </div>
+        </div>
+        <div class="artist-performance-pending" data-artist-pending hidden>
+          <span>HFGC APPEARANCE</span>
+          <p>Performance details to be confirmed.</p>
+        </div>
       </div>
     </div>
   </dialog>
